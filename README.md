@@ -10,7 +10,8 @@ Pensado para configurarse desde un panel de configuracion y crecer con modulos (
 | Tokens (fuente unica) | `tokens/tokens.json` -> `tokens/tokens.css` |
 | Componentes | `components/components.css`, `components/charts.js` |
 | Iconos y fuente | `icons/` (Lucide, ISC), `fonts/` (Inter, OFL) |
-| Tema configurable | `theme/theme.js`, `theme/theme.schema.json` |
+| Tema y marca configurables | `theme/theme.js`, `theme/theme.schema.json` |
+| Guia de marca para el cliente | `preview/guia-cliente.html` |
 | Moneda dual es-VE | `lib/format.js` |
 | Modulos | `modules/registry.json`, `modules/module.schema.json` |
 | Google Maps | `maps/` |

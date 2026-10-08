@@ -177,6 +177,8 @@ El producto es una plantilla: **el cliente pone su nombre y su logo** en Configu
 - Con logo se muestra **solo el logo**; el nombre queda como texto para lectores de pantalla (la imagen es decorativa).
 - Archivos: SVG, PNG, JPG o WebP, hasta 512 KB. Los SVG se **rechazan** si traen scripts, eventos o enlaces externos y se muestran solo con `<img>`, nunca inline. Si el logo es raster y pequeno, se avisa.
 - No hay forma de comprobar automaticamente que el logo "de menu lateral" se lea sobre el color elegido; la vista previa en vivo lo muestra y el panel avisa.
+- **Guia para el cliente**: `preview/guia-cliente.html` (con ejemplos si/no, tabla de mensajes y resumen para su disenador). Las medidas se definen una sola vez en `BRAND_SPECS` (`theme/theme.js`).
+- En el menu lateral caben ~17 letras (14 en MAYUSCULAS); el nombre completo se ve al pasar el cursor.
 - Aplicar al arrancar con `ErpTheme.applyBranding(config)`; validar subidas con `ErpTheme.validateLogoFile(file, slot)`. Esquema: `theme/theme.schema.json`. Estados en `preview/componentes.html` (seccion "Marca del cliente").
 
 ## Densidad y objetivos tactiles

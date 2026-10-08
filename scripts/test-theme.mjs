@@ -2,7 +2,8 @@
 import { createRequire } from 'node:module';
 import assert from 'node:assert/strict';
 const require = createRequire(import.meta.url);
-const { deriveTheme, ratio, brandName, initials, svgIsSafe, faviconSvg } = require('../theme/theme.js');
+const { deriveTheme, ratio, brandName, initials, svgIsSafe, faviconSvg, BRAND_SPECS } = require('../theme/theme.js');
+import { readFileSync } from 'node:fs';
 const F = require('../lib/format.js');
 
 // 1. Los valores por defecto se mantienen
@@ -54,4 +55,14 @@ for (const bad of ['<svg><script>alert(1)</script></svg>', '<svg onload="x()"></
 // 9. Favicon por defecto: monograma sobre el color de marca; sin nombre, gris neutro y sin texto; no inyecta marcado
 assert.ok(faviconSvg('TL', '#2563EB').includes('>TL<')); assert.ok(faviconSvg('', null).includes('#9CA3AF') && !faviconSvg('', null).includes('<text'));
 assert.ok(!faviconSvg('<b>', '#000').includes('<b>'));
+
+// 10. Las especificaciones publicadas al cliente (BRAND_SPECS) coinciden con lo que el CSS realmente permite
+const css = readFileSync(new URL('../components/components.css', import.meta.url), 'utf8');
+const rule = (sel) => { const m = css.match(new RegExp(sel.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ' \\{([^}]*)\\}')); assert.ok(m, 'regla no encontrada: ' + sel); return m[1]; };
+const px = (decl, prop) => Number((decl.match(new RegExp(prop + ': (\\d+)px')) || [])[1]);
+assert.equal(px(rule('.brand__logo'), 'max-height'), BRAND_SPECS.slots.onDark.maxHeight, 'alto del logo del menu');
+assert.equal(px(rule('.brand__logo'), 'max-width'), BRAND_SPECS.slots.onDark.maxWidth, 'ancho del logo del menu');
+assert.equal(px(rule('.brand--lg .brand__logo'), 'max-height'), BRAND_SPECS.slots.light.maxHeight, 'alto del logo claro');
+assert.equal(px(rule('.brand--lg .brand__logo'), 'max-width'), BRAND_SPECS.slots.light.maxWidth, 'ancho del logo claro');
+assert.equal(BRAND_SPECS.nameMax, 40); assert.equal(brandName({ brandName: 'x'.repeat(99) }).length, BRAND_SPECS.nameMax);
 console.log('theme + format + marca: todas las pruebas pasan');

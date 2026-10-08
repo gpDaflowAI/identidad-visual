@@ -3,11 +3,14 @@
 //   {{icon:nombre[:clases]}}        <svg class="icon ..."><use href="#i-nombre"/></svg>
 //   {{money:USD[:tasa[:clases]]}}   moneda dual con lib/format.js (tasa por defecto: BCV de muestra)
 //   {{modules}}                     filas de modulos desde modules/registry.json
+//   {{spec:ruta}}                   valor de BRAND_SPECS (theme/theme.js), p. ej. slots.onDark.maxHeight
+//   {{colorfix:#RRGGBB}}            como el motor de tema ajusta un color de marca (calculado, no escrito a mano)
 //   {{include:parcial[:arg]}}       preview/src/_parcial.html ; arg marca el item activo / titulo
 import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const F = require('../lib/format.js');
+const T = require('../theme/theme.js');
 const RATE = 36.52;
 const dir = new URL('../preview/src/', import.meta.url);
 const sprite = readFileSync(new URL('../icons/sprite.svg', import.meta.url), 'utf8');
@@ -22,6 +25,13 @@ function modulesHtml() {
     const state = core ? '<span class="badge">Siempre activo</span>' : missing.length ? `<span class="badge badge--warning">Requiere configurar ${missing.join(', ')}</span>` : '<span></span>';
     return `<div class="module-row${on ? '' : ' is-off'}"><span class="module-row__icon"><svg class="icon" aria-hidden="true"><use href="#i-${m.icon}"/></svg></span><div><div class="setting-row__title">${m.name}</div><div class="setting-row__desc">${m.description || ''}</div></div>${state}<label class="switch"><input type="checkbox" ${on ? 'checked' : ''} ${core || missing.length ? 'disabled' : ''} aria-label="Activar ${m.name}"></label></div>`;
   }).join('\n');
+}
+
+function colorfix(hex) {
+  const r = T.deriveTheme({ primary: hex }), fixed = r.tokens.primary, changed = fixed !== hex.toUpperCase();
+  const sw = (c) => `<span class="swatch" style="background:${c}"></span>`;
+  const warn = r.warnings.length ? ' <span class="badge badge--warning">Se parece a un color de estado</span>' : '';
+  return `${sw(hex)} <b>${hex.toUpperCase()}</b> &rarr; ${changed ? `${sw(fixed)} <b>${fixed}</b>` : '<span class="badge badge--success">Se usa tal cual</span>'}${warn}`;
 }
 
 function render(src, depth = 0) {
@@ -39,6 +49,8 @@ function render(src, depth = 0) {
       const d = F.dual(Number(usd), rate ? Number(rate) : RATE);
       return `<span class="money ${cls}"><span class="money__usd">${d.usd}</span><span class="money__bs">${d.bs}</span></span>`;
     })
+    .replace(/\{\{spec:([\w.]+)\}\}/g, (_, p) => { const v = p.split('.').reduce((o, k) => (o == null ? o : o[k]), T.BRAND_SPECS); if (v === undefined) throw new Error(`spec inexistente: ${p}`); return Array.isArray(v) ? v.join(', ') : String(v); })
+    .replace(/\{\{colorfix:(#[0-9a-fA-F]{6})\}\}/g, (_, hex) => colorfix(hex))
     .replace('{{modules}}', () => modulesHtml())
     .replace('{{sprite}}', sprite);
 }

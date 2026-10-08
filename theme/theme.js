@@ -52,12 +52,12 @@
    */
   function deriveTheme(input) {
     const notes = [], warnings = [], errors = [];
-    if (!isHex(input && input.primary)) return { errors: ['primary debe ser un hex de 6 digitos (#RRGGBB)'], notes, warnings };
+    if (!isHex(input && input.primary)) return { errors: ['El color de marca debe tener 6 dígitos hexadecimales (#RRGGBB)'], notes, warnings };
     let primary = input.primary.toUpperCase();
 
     // primary: texto blanco sobre el boton y enlaces sobre surface/background (4.5:1)
     const p = ensureContrast(primary, [SURFACE, BACKGROUND], 4.5);
-    if (p.changed) notes.push(`Color de marca oscurecido de ${primary} a ${p.hex} para cumplir contraste AA (4.5:1).`);
+    if (p.changed) notes.push(`Color de marca oscurecido de ${primary} a ${p.hex} para cumplir contraste AA (4,5:1).`);
     primary = p.hex;
     const [ph, ps] = rgb2hsl(hex2rgb(primary));
 
@@ -65,7 +65,7 @@
     if (ps > 0.25) {
       for (const [name, hue] of Object.entries(SEMANTIC_HUES)) {
         const d = hueDist(ph, hue);
-        if (d < 20) warnings.push(`El color de marca esta muy cerca del tono de "${name}" (${Math.round(d)} grados): puede confundirse con estados.`);
+        if (d < 20) warnings.push(`El color de marca está muy cerca del tono de "${name}" (${Math.round(d)} grados): puede confundirse con estados.`);
       }
     }
 
@@ -99,11 +99,22 @@
 
 
   /* ---------------- Marca del cliente: nombre y logo (ranuras vacias hasta que el cliente las configure) ---------------- */
+  /* Especificaciones de marca: UNICA fuente para la validacion, la guia del cliente (preview/src/guia-cliente.html)
+     y la prueba que comprueba que components.css las respeta (scripts/test-theme.mjs). */
+  const BRAND_SPECS = {
+    maxKB: 512, nameMax: 40, nameVisibleChars: 17, nameVisibleCharsCaps: 14,
+    formats: ['SVG', 'PNG', 'JPG', 'WebP'],
+    slots: {
+      light:  { maxHeight: 44, maxWidth: 240 },
+      onDark: { maxHeight: 28, maxWidth: 160, minRasterHeight: 56 },
+      mark:   { minSide: 128 }
+    }
+  };
   const LOGO_TYPES = ['image/svg+xml', 'image/png', 'image/jpeg', 'image/webp'];
-  const LOGO_MAX_BYTES = 512 * 1024;
+  const LOGO_MAX_BYTES = BRAND_SPECS.maxKB * 1024;
 
   /** Nombre normalizado (espacios colapsados, max 40). Cadena vacia = sin configurar (la UI muestra skeleton). */
-  function brandName(cfg) { return String((cfg && cfg.brandName) || '').trim().replace(/\s+/g, ' ').slice(0, 40); }
+  function brandName(cfg) { return String((cfg && cfg.brandName) || '').trim().replace(/\s+/g, ' ').slice(0, BRAND_SPECS.nameMax); }
   /** Monograma de 1-2 letras: iniciales de las dos primeras palabras, o las dos primeras letras de una sola. */
   function initials(name) {
     const w = String(name || '').trim().split(/\s+/).filter(Boolean).map((x) => Array.from(x));
@@ -128,9 +139,9 @@
    */
   function validateLogoFile(file, slot) {
     const errors = [], warnings = [];
-    if (!file) return Promise.resolve({ ok: false, errors: ['No se eligio ningun archivo.'], warnings });
+    if (!file) return Promise.resolve({ ok: false, errors: ['No se eligió ningún archivo.'], warnings });
     if (!LOGO_TYPES.includes(file.type)) errors.push('Formato no admitido. Usa SVG, PNG, JPG o WebP.');
-    if (file.size > LOGO_MAX_BYTES) errors.push(`El archivo pesa ${Math.round(file.size / 1024)} KB; el maximo es ${LOGO_MAX_BYTES / 1024} KB.`);
+    if (file.size > LOGO_MAX_BYTES) errors.push(`El archivo pesa ${Math.round(file.size / 1024)} KB; el máximo es ${LOGO_MAX_BYTES / 1024} KB.`);
     if (errors.length) return Promise.resolve({ ok: false, errors, warnings });
     return new Promise((resolve) => {
       const fr = new FileReader();
@@ -139,16 +150,16 @@
         const dataUrl = fr.result;
         if (file.type === 'image/svg+xml') {
           let text = ''; try { text = atob(dataUrl.split(',')[1]); } catch (e) { text = ''; }
-          if (!svgIsSafe(text)) return resolve({ ok: false, errors: ['El SVG contiene elementos no permitidos (scripts, eventos o enlaces externos). Exportalo de nuevo como SVG simple.'], warnings });
+          if (!svgIsSafe(text)) return resolve({ ok: false, errors: ['El SVG contiene elementos no permitidos (scripts, eventos o enlaces externos). Expórtalo de nuevo como SVG simple.'], warnings });
         }
         const img = new Image();
-        img.onerror = () => resolve({ ok: false, errors: ['La imagen esta danada o no se puede mostrar.'], warnings });
+        img.onerror = () => resolve({ ok: false, errors: ['La imagen está dañada o no se puede mostrar.'], warnings });
         img.onload = () => {
           const w = img.naturalWidth, h = img.naturalHeight, raster = file.type !== 'image/svg+xml';
-          if (slot === 'mark' && h && (w / h < 0.8 || w / h > 1.25)) warnings.push('El isotipo deberia ser cuadrado (1:1); se recortara o se vera deformado.');
-          if (raster && slot === 'mark' && Math.min(w, h) < 128) warnings.push('El isotipo es pequeno (menos de 128 px): se vera borroso en pantallas de alta densidad.');
-          if (raster && slot !== 'mark' && h < 56) warnings.push('El logo mide menos de 56 px de alto: se vera borroso en pantallas de alta densidad. Mejor SVG.');
-          if (slot === 'onDark') warnings.push('Comprueba en la vista previa que el logo se lea sobre el color del menu lateral (debe ser blanco o claro).');
+          if (slot === 'mark' && h && (w / h < 0.8 || w / h > 1.25)) warnings.push('El isotipo debería ser cuadrado (1:1); se recortará o se verá deformado.');
+          if (raster && slot === 'mark' && Math.min(w, h) < BRAND_SPECS.slots.mark.minSide) warnings.push('El isotipo es pequeño (menos de 128 px): se verá borroso en pantallas de alta densidad.');
+          if (raster && slot !== 'mark' && h < BRAND_SPECS.slots.onDark.minRasterHeight) warnings.push('El logo mide menos de 56 px de alto: se verá borroso en pantallas de alta densidad. Mejor SVG.');
+          if (slot === 'onDark') warnings.push('Comprueba en la vista previa que el logo se lea sobre el color del menú lateral (debe ser blanco o claro).');
           resolve({ ok: true, dataUrl, errors, warnings });
         };
         img.src = dataUrl;
@@ -172,7 +183,7 @@
       if (mainImg) { mainImg.hidden = !main; if (main) mainImg.src = main; mainImg.alt = ''; } // decorativa: el nombre ya esta en texto
       if (markImg) { markImg.hidden = !mark; if (mark) markImg.src = mark; markImg.alt = ''; }
       const ini = box.querySelector('[data-brand-initials]'); if (ini) { ini.textContent = letters; ini.hidden = !!mark; }
-      const nm = box.querySelector('[data-brand-name]'); if (nm) nm.textContent = name;
+      const nm = box.querySelector('[data-brand-name]'); if (nm) { nm.textContent = name; nm.title = name; } // el nombre completo se ve al pasar el cursor si se corta
       box.classList.toggle('has-logo', !!main);
       box.classList.toggle('is-empty', !name && !main && !mark);
       box.classList.remove('is-loading');
@@ -185,5 +196,5 @@
     link.href = logo.mark || logo.light || 'data:image/svg+xml,' + encodeURIComponent(faviconSvg(letters, name ? primary : null));
   }
 
-  return { deriveTheme, applyTheme, ratio, ensureContrast, brandName, initials, svgIsSafe, faviconSvg, validateLogoFile, applyBranding, LOGO_TYPES, LOGO_MAX_BYTES };
+  return { deriveTheme, applyTheme, ratio, ensureContrast, brandName, initials, svgIsSafe, faviconSvg, validateLogoFile, applyBranding, BRAND_SPECS, LOGO_TYPES, LOGO_MAX_BYTES };
 });

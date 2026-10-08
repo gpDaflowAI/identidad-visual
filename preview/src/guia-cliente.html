@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="es" data-page-title="Guía de marca">
+<head>
+{{include:head}}
+<title>Guía de marca para tu empresa</title>
+<style>
+  .guide { max-width: 1040px; margin: 0 auto; padding: var(--sp-8) var(--sp-6); display: grid; gap: var(--sp-6); }
+  .guide h1 { margin: 0; font-size: 1.75rem; line-height: 2.25rem; font-weight: 600; }
+  .guide h2 { margin: 0; font-size: 1.25rem; line-height: 1.75rem; font-weight: 600; }
+  .guide p { margin: 0; } .guide ul { margin: 0; padding-left: var(--sp-5); display: grid; gap: var(--sp-1); }
+  .lead { color: var(--color-text-secondary-strong); font-size: 1rem; line-height: 1.5rem; }
+  .steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--sp-3); }
+  .step { padding: var(--sp-3); display: grid; gap: var(--sp-1); align-content: start; }
+  .step b { font-size: .9375rem; } .step .n { color: var(--color-primary); font-weight: 600; font-size: var(--font-label-xs-size); }
+  .cmp { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-4); }
+  .cmp .card { display: grid; align-content: start; overflow: hidden; } .cmp .card .cap { padding: var(--sp-3) var(--sp-4); display: grid; gap: var(--sp-1); border-top: 1px solid var(--color-border); }
+  .stage { padding: var(--sp-4); display: grid; align-items: center; min-height: 92px; background: var(--color-sidebar); color: var(--color-sidebar-text); }
+  .stage .sidebar__brand { padding: 0; } .stage--light { background: var(--color-surface); }
+  .stage--narrow { width: 96px; justify-self: center; padding-inline: var(--sp-2); }
+  .spec { font: 500 .8125rem/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: var(--color-background); border: 1px solid var(--color-border); border-radius: var(--radius-control); padding: var(--sp-3) var(--sp-4); white-space: pre-wrap; color: var(--color-text-primary); }
+  .check-list { list-style: none; padding: 0 !important; } .check-list li { display: flex; gap: var(--sp-2); align-items: flex-start; }
+  .check-list .icon { color: var(--color-success-text); margin-top: 2px; }
+  td .swatch { width: 20px; height: 20px; border-radius: var(--radius-badge); vertical-align: -5px; }
+  @media (max-width: 900px) { .steps, .cmp { grid-template-columns: 1fr 1fr; } }
+  @media print { body { background: #fff; } .no-print { display: none !important; } .guide { padding: 0; } .card, .table-wrap { break-inside: avoid; } }
+</style>
+</head>
+<body>
+{{sprite}}
+<main class="guide">
+  <header class="row row--between">
+    <div class="stack" style="gap:var(--sp-2)"><h1>Guía de marca: cómo preparar tu nombre y tu logo</h1>
+      <p class="lead">Sigue estas pautas y tu marca se verá nítida y profesional en todo el sistema: menú lateral, pantalla de acceso, facturas, pestaña del navegador y favicon. Toma unos 10 minutos.</p></div>
+    <button class="btn btn--secondary no-print" onclick="window.print()">{{icon:printer}}Imprimir o guardar PDF</button>
+  </header>
+
+  <section class="stack" aria-labelledby="resumen"><h2 id="resumen">1. Lo esencial en un minuto</h2>
+    <div class="steps">
+      <div class="card step"><span class="n">1</span><b>Nombre corto</b><span class="text-secondary">Que sus primeras {{spec:nameVisibleChars}} letras ya te identifiquen.</span></div>
+      <div class="card step"><span class="n">2</span><b>Logo en blanco</b><span class="text-secondary">Una versión blanca o clara para el menú lateral (fondo azul oscuro).</span></div>
+      <div class="card step"><span class="n">3</span><b>Logo en color</b><span class="text-secondary">Tu logo normal con fondo transparente, para el acceso y las facturas.</span></div>
+      <div class="card step"><span class="n">4</span><b>Isotipo cuadrado</b><span class="text-secondary">Solo el símbolo, en un cuadrado. Para el menú reducido y la pestaña.</span></div>
+      <div class="card step"><span class="n">5</span><b>Un color de marca</b><span class="text-secondary">Uno solo, bastante oscuro. Si no cumple, el sistema lo ajusta.</span></div>
+    </div>
+    <p class="text-secondary">Todo es <b>opcional</b>: lo que no subas se reemplaza automáticamente (monograma con tus iniciales o una silueta), y puedes cambiarlo cuando quieras en <b>Configuración &rsaquo; Marca y tema</b>.</p>
+  </section>
+
+  <section class="stack" aria-labelledby="archivos"><h2 id="archivos">2. Qué archivos necesitas</h2>
+    <div class="table-wrap"><table class="table"><thead><tr><th>Qué</th><th>Dónde se ve</th><th>Cómo debe ser</th></tr></thead><tbody>
+      <tr><td><b>Logo para el menú lateral</b></td><td>Menú lateral de todo el sistema</td><td>Versión <b>blanca o muy clara</b>. SVG o PNG con <b>fondo transparente</b>. Se muestra a {{spec:slots.onDark.maxHeight}} px de alto y {{spec:slots.onDark.maxWidth}} px de ancho máximo.</td></tr>
+      <tr><td><b>Logo para fondo claro</b></td><td>Pantalla de acceso, facturas y documentos impresos</td><td>Tu logo en color o negro, fondo transparente. Hasta {{spec:slots.light.maxHeight}} px de alto.</td></tr>
+      <tr><td><b>Isotipo</b></td><td>Menú reducido, pestaña del navegador (favicon), avatar</td><td><b>Cuadrado</b> (1:1), al menos {{spec:slots.mark.minSide}} × {{spec:slots.mark.minSide}} px. Solo el símbolo, sin texto.</td></tr>
+      <tr><td><b>Nombre</b></td><td>Menú lateral, título de la pestaña, documentos</td><td>Hasta {{spec:nameMax}} caracteres.</td></tr>
+    </tbody></table></div>
+    <p class="text-secondary">Formatos: {{spec:formats}}. Peso máximo: <b>{{spec:maxKB}} KB</b> por archivo. <b>Recomendado: SVG</b> (se ve perfecto en cualquier pantalla). Si usas PNG, que tenga al menos el doble de tamaño del que se muestra.</p>
+  </section>
+
+  <section class="stack" aria-labelledby="logos"><h2 id="logos">3. Logos: así sí, así no</h2>
+    <div class="cmp">
+      <div class="card"><div class="stage"><div class="sidebar__brand brand has-logo"><img class="brand__logo" src="assets/logo-demo-dark.svg" alt="Ejemplo de logo blanco sobre el menú"></div></div><div class="cap"><span class="badge badge--success">{{icon:circle-check:icon--sm}}Sí</span><b>Logo blanco, fondo transparente</b><span class="text-secondary">Se lee perfecto sobre el color del menú.</span></div></div>
+      <div class="card"><div class="stage"><div class="sidebar__brand brand has-logo"><img class="brand__logo" src="assets/logo-demo-light.svg" alt="Ejemplo de logo oscuro sobre el menú, casi invisible"></div></div><div class="cap"><span class="badge badge--error">{{icon:circle-x:icon--sm}}No</span><b>Logo oscuro en el menú</b><span class="text-secondary">Se pierde sobre el fondo azul. Sube la versión blanca.</span></div></div>
+      <div class="card"><div class="stage"><div class="sidebar__brand brand has-logo"><img class="brand__logo" src="assets/logo-demo-boxed.svg" alt="Ejemplo de logo con recuadro blanco"></div></div><div class="cap"><span class="badge badge--error">{{icon:circle-x:icon--sm}}No</span><b>Logo con recuadro blanco</b><span class="text-secondary">Aparece un bloque blanco. Exporta con fondo transparente (PNG o SVG, no JPG).</span></div></div>
+      <div class="card"><div class="stage"><div class="sidebar__brand brand has-logo"><img class="brand__logo" src="assets/logo-demo-tall.svg" alt="Ejemplo de logo alto y apilado, diminuto"></div></div><div class="cap"><span class="badge badge--error">{{icon:circle-x:icon--sm}}No</span><b>Logo alto o con eslogan</b><span class="text-secondary">Al limitarse a {{spec:slots.onDark.maxHeight}} px de alto queda diminuto. Usa una versión horizontal y sin eslogan.</span></div></div>
+      <div class="card"><div class="stage"><div class="app--collapsed" style="display:block"><div class="stage" style="background:var(--color-sidebar);padding-inline:var(--sp-2);justify-items:center"><div class="sidebar__brand brand has-logo"><img class="brand__logo" src="assets/logo-demo-dark.svg" alt=""><span class="brand__mark" aria-hidden="true"><img src="assets/mark-demo.svg" alt=""></span></div></div></div></div><div class="cap"><span class="badge badge--success">{{icon:circle-check:icon--sm}}Sí</span><b>Isotipo cuadrado</b><span class="text-secondary">Solo el símbolo: se ve bien en el menú reducido y en la pestaña.</span></div></div>
+      <div class="card"><div class="stage"><div class="app--collapsed" style="display:block"><div class="stage" style="background:var(--color-sidebar);padding-inline:var(--sp-2);justify-items:center"><div class="sidebar__brand brand has-logo"><img class="brand__logo" src="assets/logo-demo-dark.svg" alt=""><span class="brand__mark" aria-hidden="true"><img src="assets/logo-demo-dark.svg" alt=""></span></div></div></div></div><div class="cap"><span class="badge badge--error">{{icon:circle-x:icon--sm}}No</span><b>Logo completo como isotipo</b><span class="text-secondary">Un logo ancho en un cuadrado queda minúsculo e ilegible.</span></div></div>
+    </div>
+  </section>
+
+  <section class="stack" aria-labelledby="nombre"><h2 id="nombre">4. El nombre</h2>
+    <div class="cmp">
+      <div class="card"><div class="stage"><div class="sidebar__brand brand"><span class="brand__mark" aria-hidden="true"><span>TL</span></span><span class="brand__name">Taller Los Andes</span></div></div><div class="cap"><span class="badge badge--success">{{icon:circle-check:icon--sm}}Sí</span><b>Corto y claro</b><span class="text-secondary">Se ve completo.</span></div></div>
+      <div class="card"><div class="stage"><div class="sidebar__brand brand" style="max-width:184px"><span class="brand__mark" aria-hidden="true"><span>DS</span></span><span class="brand__name">Distribuidora y Servicios Técnicos Caribe</span></div></div><div class="cap"><span class="badge badge--warning">{{icon:triangle-alert:icon--sm}}Se corta</span><b>Nombre largo</b><span class="text-secondary">Se acorta con «…». Pasando el cursor se ve completo, pero conviene que lo importante vaya primero.</span></div></div>
+      <div class="card"><div class="cap" style="border-top:0"><b>Cuánto cabe</b><span class="text-secondary">Unas <b>{{spec:nameVisibleChars}} letras</b> en minúsculas y mayúsculas mezcladas, y unas <b>{{spec:nameVisibleCharsCaps}}</b> si está todo en MAYÚSCULAS. Máximo permitido: {{spec:nameMax}} caracteres.</span><span class="text-secondary">Si tu nombre legal es largo, usa el nombre comercial: «Distribuidora Caribe» en lugar de «Distribuidora y Servicios Técnicos Caribe, C.A.».</span></div></div>
+    </div>
+  </section>
+
+  <section class="stack" aria-labelledby="color"><h2 id="color">5. El color de marca</h2>
+    <p>Puedes elegir el color que quieras. Para que los textos blancos sobre botones y los enlaces se lean bien, el sistema <b>comprueba el contraste y, si hace falta, lo oscurece por ti</b>. Así se comporta con colores típicos:</p>
+    <div class="table-wrap"><table class="table"><thead><tr><th>Color que eliges</th><th>Resultado en el sistema</th></tr></thead><tbody>
+      <tr><td>Azul intenso</td><td>{{colorfix:#2563EB}}</td></tr>
+      <tr><td>Verde azulado oscuro</td><td>{{colorfix:#0F766E}}</td></tr>
+      <tr><td>Violeta</td><td>{{colorfix:#7C3AED}}</td></tr>
+      <tr><td>Celeste claro</td><td>{{colorfix:#7DD3FC}}</td></tr>
+      <tr><td>Amarillo</td><td>{{colorfix:#FACC15}}</td></tr>
+      <tr><td>Verde</td><td>{{colorfix:#16A34A}}</td></tr>
+      <tr><td>Rojo</td><td>{{colorfix:#DC2626}}</td></tr>
+    </tbody></table></div>
+    <ul>
+      <li><b>Colores claros</b> (amarillo, celeste, naranja claro) se oscurecen bastante y pueden cambiar de carácter; mira el ejemplo del amarillo. Si tu marca es clara, <b>elige una versión más oscura</b> de ese mismo color para el sistema.</li>
+      <li><b>Evita el verde y el rojo</b> como color de marca: en el sistema significan «pagado» y «vencido» y se confundirían con los estados.</li>
+      <li>El <b>color del menú lateral</b> debe ser oscuro (el texto va en blanco). Si lo dejas vacío, se calcula a partir del color de marca.</li>
+      <li>Los colores de estado (verde, ámbar, rojo, azul de información) y el verde de WhatsApp son <b>fijos</b>: no se pueden cambiar.</li>
+    </ul>
+  </section>
+
+  <section class="stack" aria-labelledby="diseno"><h2 id="diseno">6. Para tu diseñador</h2>
+    <p>Puedes enviarle este resumen técnico tal cual:</p>
+    <div class="spec" id="spec-text">LOGO PARA EL SISTEMA — requisitos de archivos
+
+Entregar 3 archivos:
+1) logo-menu     Versión BLANCA (o muy clara) del logo horizontal. Fondo transparente.
+                 Se muestra a máx. {{spec:slots.onDark.maxHeight}} px de alto × {{spec:slots.onDark.maxWidth}} px de ancho.
+2) logo-claro    Versión a color o negra, horizontal. Fondo transparente.
+                 Se muestra a máx. {{spec:slots.light.maxHeight}} px de alto.
+3) isotipo       Solo el símbolo, cuadrado 1:1, mínimo {{spec:slots.mark.minSide}} × {{spec:slots.mark.minSide}} px.
+
+Formato: SVG (preferido), PNG, JPG o WebP. Máx. {{spec:maxKB}} KB por archivo.
+SVG: convertir TODOS los textos a curvas/contornos (las fuentes no se cargan);
+     sin scripts, sin animaciones, sin enlaces externos ni imágenes enlazadas.
+PNG: fondo transparente, tamaño al menos 2× del mostrado (p. ej. 112 px de alto para el menú).
+Modo de color RGB (no CMYK). Sin eslogan en la versión del menú. Sin márgenes sobrantes
+alrededor del logo (recortar al contenido).</div>
+    <div class="row no-print"><button class="btn btn--secondary btn--sm" id="copy-spec">{{icon:copy:icon--sm}}Copiar texto</button><span class="text-label" id="copy-msg" role="status"></span></div>
+  </section>
+
+  <section class="stack" aria-labelledby="fallos"><h2 id="fallos">7. Si algo no sale bien</h2>
+    <div class="table-wrap"><table class="table"><thead><tr><th>El sistema dice</th><th>Qué pasó</th><th>Cómo resolverlo</th></tr></thead><tbody>
+      <tr><td>«Formato no admitido…»</td><td>El archivo no es SVG, PNG, JPG ni WebP (por ejemplo PDF, AI o EPS).</td><td>Exporta el logo como SVG o PNG desde tu programa de diseño.</td></tr>
+      <tr><td>«El archivo pesa … KB; el máximo es {{spec:maxKB}} KB»</td><td>El archivo es demasiado pesado.</td><td>Usa SVG, o reduce el PNG a 2× del tamaño mostrado.</td></tr>
+      <tr><td>«El SVG contiene elementos no permitidos…»</td><td>El SVG trae scripts, eventos o enlaces externos (por seguridad no se aceptan).</td><td>Vuelve a exportarlo como «SVG simple», sin interactividad ni imágenes enlazadas.</td></tr>
+      <tr><td>«El isotipo debería ser cuadrado»</td><td>La imagen es mucho más ancha o alta que larga.</td><td>Recorta solo el símbolo en un cuadrado.</td></tr>
+      <tr><td>«…se verá borroso»</td><td>La imagen es pequeña para pantallas nítidas.</td><td>Sube una más grande, o mejor un SVG.</td></tr>
+      <tr><td>«Comprueba… que el logo se lea sobre el menú»</td><td>El sistema no puede saber si tu logo contrasta con el menú.</td><td>Mira la vista previa en vivo: debe leerse bien. Si no, sube la versión blanca.</td></tr>
+      <tr><td>«Color de marca oscurecido…»</td><td>Tu color era demasiado claro para texto legible.</td><td>Acepta el ajuste, o elige una versión más oscura de tu color.</td></tr>
+    </tbody></table></div>
+  </section>
+
+  <section class="card"><div class="card__header"><h2 class="card__title">8. Lista de verificación antes de subir</h2></div><div class="card__body">
+    <ul class="check-list">
+      <li>{{icon:circle-check}}<span>El logo del menú es <b>blanco o claro</b>, con <b>fondo transparente</b> y sin eslogan.</span></li>
+      <li>{{icon:circle-check}}Los textos del SVG están <b>convertidos a curvas</b>.</li>
+      <li>{{icon:circle-check}}El isotipo es <b>cuadrado</b> y sin texto.</li>
+      <li>{{icon:circle-check}}Cada archivo pesa <b>menos de {{spec:maxKB}} KB</b>.</li>
+      <li>{{icon:circle-check}}El nombre identifica a la empresa en sus <b>primeras {{spec:nameVisibleChars}} letras</b>.</li>
+      <li>{{icon:circle-check}}El color de marca es <b>oscuro</b> y no es verde ni rojo.</li>
+      <li>{{icon:circle-check}}Revisé la <b>vista previa en vivo</b> en Configuración antes de guardar.</li>
+    </ul></div></section>
+</main>
+<script>
+  document.getElementById('copy-spec').addEventListener('click', async () => {
+    const m = document.getElementById('copy-msg');
+    try { await navigator.clipboard.writeText(document.getElementById('spec-text').textContent); m.textContent = 'Copiado.'; }
+    catch (e) { m.textContent = 'No se pudo copiar; selecciona el texto manualmente.'; }
+  });
+</script>
+</body>
+</html>

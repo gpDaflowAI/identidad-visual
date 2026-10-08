@@ -38,6 +38,7 @@ Hallazgos de accesibilidad ya resueltos: success/warning/info planos no pasan AA
 
 ### A. Marca del cliente: nombre, logo, favicon - HECHO (como ranuras)
 Nombre y logo **los configura cada cliente** en Configuracion, no se fijan en el producto. Hay 3 ranuras de logo (fondo claro / menu lateral / isotipo) mas el nombre, todas opcionales; sin configurar se muestra un **skeleton**. Se valida el archivo (formato, 512 KB, SVG sin scripts), la pagina, el titulo del navegador y el favicon siguen a la marca. Especificacion en `DESIGN.md` y estados en `preview/componentes.html`.
+- **Directrices para el cliente**: `preview/guia-cliente.html` (imprimible / guardar como PDF). Explica en lenguaje no tecnico que archivos preparar, ejemplos visuales de si/no, como se corrige el color, que mensajes puede ver y que hacer, y trae un texto copiable para su disenador. Esta enlazada desde Configuracion; entregala al cliente al incorporarlo. Sus valores salen de `BRAND_SPECS` (`theme/theme.js`) y los ajustes de color los calcula el motor real, asi que no se desactualiza; una prueba comprueba que el CSS respeta esas especificaciones.
 - Pendiente de tu lado: la logica de **guardar** la configuracion (backend) y llamar a `ErpTheme.applyBranding(config)` al arrancar la app.
 - Recomendacion para tus clientes: pedirles SVG (version blanca para el menu lateral) y un isotipo cuadrado; un logo que se vea bien sobre `sidebar` es lo mas importante.
 

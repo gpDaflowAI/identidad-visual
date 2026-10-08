@@ -176,6 +176,7 @@ body {
 .breadcrumbs a { color: var(--color-text-secondary); text-decoration: none; } .breadcrumbs a:hover { color: var(--color-primary); text-decoration: underline; }
 .breadcrumbs li:last-child { color: var(--color-text-primary); font-weight: 500; } .breadcrumbs li + li::before { content: "/"; margin-right: var(--sp-1); color: var(--color-border-input); }
 .link { color: var(--color-primary); text-decoration: none; } .link:hover { text-decoration: underline; }
+p .link, .field__help .link, .alert .link, li .link { text-decoration: underline; text-underline-offset: 2px; } /* enlaces dentro de texto: no distinguirse solo por color */
 .progress { height: 6px; border-radius: var(--radius-pill); background: var(--color-border); overflow: hidden; } .progress > i { display: block; height: 100%; background: var(--color-primary); border-radius: inherit; }
 .pipeline { display: flex; list-style: none; margin: 0; padding: 0; counter-reset: step; }
 .pipeline li { flex: 1; display: grid; gap: var(--sp-1); justify-items: start; position: relative; padding-top: 22px; font-size: var(--font-label-xs-size); color: var(--color-text-secondary); font-weight: 500; }
