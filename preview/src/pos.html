@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+<head>
+{{include:head}}
+<title>ERP - Punto de venta</title>
+</head>
+<body>
+{{sprite}}
+<div class="app app--collapsed">
+  {{include:sidebar:pos}}
+  <div>
+    {{include:header:Punto de venta}}
+    <main class="pos">
+      <section class="pos__catalog" aria-label="Catalogo">
+        <div class="row">
+          <div class="input-icon grow">{{icon:scan-barcode}}<input class="input" style="height:var(--size-control-lg)" placeholder="Escanear codigo o buscar producto (F2)" aria-label="Buscar producto"></div>
+          <button class="btn btn--secondary btn--lg">{{icon:user}}Cliente</button>
+        </div>
+        <div class="row" role="group" aria-label="Categorias">
+          <button class="chip" aria-pressed="true">Todos</button><button class="chip" aria-pressed="false">Celulares</button><button class="chip" aria-pressed="false">Accesorios</button><button class="chip" aria-pressed="false">Repuestos</button><button class="chip" aria-pressed="false">Servicios</button>
+        </div>
+        <div class="pos__tiles">
+          <button class="tile"><span class="tile__name">Cargador USB-C 20W</span><span>{{money:12.5}}</span><span class="tile__stock">48 en stock</span></button>
+          <button class="tile"><span class="tile__name">Cable Lightning 1 m</span><span>{{money:6}}</span><span class="tile__stock">112 en stock</span></button>
+          <button class="tile"><span class="tile__name">Pantalla Samsung A14</span><span>{{money:38}}</span><span class="badge badge--warning">Stock bajo: 3</span></button>
+          <button class="tile"><span class="tile__name">Bateria iPhone 11</span><span>{{money:24}}</span><span class="tile__stock">15 en stock</span></button>
+          <button class="tile is-out" disabled><span class="tile__name">Estuche Redmi 12</span><span>{{money:4.5}}</span><span class="badge badge--error">Sin stock</span></button>
+          <button class="tile"><span class="tile__name">Mica de vidrio universal</span><span>{{money:3}}</span><span class="tile__stock">230 en stock</span></button>
+          <button class="tile"><span class="tile__name">Revision y diagnostico</span><span>{{money:8}}</span><span class="tile__stock">Servicio</span></button>
+          <button class="tile"><span class="tile__name">Audifonos Bluetooth</span><span>{{money:18}}</span><span class="tile__stock">22 en stock</span></button>
+        </div>
+      </section>
+
+      <aside class="pos__cart" aria-label="Venta actual">
+        <div class="pos__cart-head">
+          <div><div class="card__title">Venta #00418</div><div class="text-label">Cliente: Mostrador</div></div>
+          <span class="conn conn--online">En linea</span>
+        </div>
+        <ul class="cart-lines">
+          <li class="cart-line"><div><div style="font-weight:500">Cargador USB-C 20W</div><div class="text-label num">$12,50 c/u</div></div>{{money:25:36.52:money--right}}<div class="qty qty--touch" style="grid-column:1 / -1;justify-self:start"><button aria-label="Quitar uno">{{icon:minus}}</button><input value="2" aria-label="Cantidad" inputmode="numeric"><button aria-label="Agregar uno">{{icon:plus}}</button></div></li>
+          <li class="cart-line"><div><div style="font-weight:500">Mica de vidrio universal</div><div class="text-label num">$3,00 c/u</div></div>{{money:3:36.52:money--right}}<div class="qty qty--touch" style="grid-column:1 / -1;justify-self:start"><button aria-label="Quitar uno">{{icon:minus}}</button><input value="1" aria-label="Cantidad" inputmode="numeric"><button aria-label="Agregar uno">{{icon:plus}}</button></div></li>
+        </ul>
+        <div class="pos__totals">
+          <div class="totals-row"><span class="text-secondary">Subtotal</span><span class="num">$28,00</span></div>
+          <div class="totals-row"><span class="text-secondary">Descuento</span><span class="num">$0,00</span></div>
+          <div class="totals-row totals-row--grand"><span>Total</span>{{money:28:36.52:money--right money--lg}}</div>
+          <div class="pay-methods" role="group" aria-label="Metodo de pago">
+            <button class="pay-method" aria-pressed="true">{{icon:banknote}}Efectivo USD</button>
+            <button class="pay-method" aria-pressed="false">{{icon:wallet}}Pago movil</button>
+            <button class="pay-method" aria-pressed="false">{{icon:credit-card}}Punto de venta</button>
+            <button class="pay-method" aria-pressed="false">{{icon:hand-coins}}Mixto</button>
+          </div>
+          <button class="btn btn--primary btn--touch btn--block">Cobrar $28,00</button>
+          <div class="row"><button class="btn btn--secondary grow">{{icon:pause}}En espera</button><button class="btn btn--ghost grow" style="color:var(--color-error-text)">{{icon:trash-2}}Cancelar</button></div>
+        </div>
+      </aside>
+    </main>
+  </div>
+</div>
+</body>
+</html>

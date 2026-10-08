@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../fonts/fonts.css">
+<link rel="stylesheet" href="../tokens/tokens.css">
+<link rel="stylesheet" href="../components/components.css">
+
+<title>ERP - Catalogo de componentes</title>
+<style>
+  .doc { max-width: var(--space-container-max); margin: 0 auto; padding: var(--sp-6); display: grid; gap: var(--sp-6); }
+  .doc nav.toc { position: sticky; top: 0; z-index: var(--z-sticky); background: var(--color-background); padding: var(--sp-2) 0; display: flex; gap: var(--sp-2); flex-wrap: wrap; border-bottom: 1px solid var(--color-border); }
+  .demo { padding: var(--sp-4); display: grid; gap: var(--sp-4); }
+  .demo > h3 { margin: 0; font-size: var(--font-label-xs-size); font-weight: 600; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: .05em; }
+  .sw-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--sp-2); }
+  .sw { border: 1px solid var(--color-border); border-radius: var(--radius-control); overflow: hidden; background: var(--color-surface); font-size: var(--font-label-xs-size); }
+  .sw i { display: block; height: 32px; } .sw span { display: block; padding: var(--sp-1) var(--sp-2); } .sw b { display: block; }
+  .on-dark { background: var(--color-sidebar); padding: var(--sp-4); border-radius: var(--radius-card); }
+  .frame { position: relative; min-height: 260px; background: var(--color-border); border-radius: var(--radius-card); overflow: hidden; display: grid; place-items: center; padding: var(--sp-4); }
+  .frame .is-static { position: relative; }
+  .map-demo { position: relative; height: 150px; background: var(--color-border); border-radius: var(--radius-card); }
+  .pin { position: absolute; transform: translate(-50%, -100%); }
+</style>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+<symbol id="i-arrow-down" viewBox="0 0 24 24"><path d="M12 5v14" />
+  <path d="m19 12-7 7-7-7" /></symbol>
+<symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="m5 12 7-7 7 7" />
+  <path d="M12 19V5" /></symbol>
+<symbol id="i-arrow-up-down" viewBox="0 0 24 24"><path d="m21 16-4 4-4-4" />
+  <path d="M17 20V4" />
+  <path d="m3 8 4-4 4 4" />
+  <path d="M7 4v16" /></symbol>
+<symbol id="i-ban" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" />
+  <path d="M4.929 4.929 19.07 19.071" /></symbol>
+<symbol id="i-banknote" viewBox="0 0 24 24"><rect width="20" height="12" x="2" y="6" rx="2" />
+  <circle cx="12" cy="12" r="2" />
+  <path d="M6 12h.01M18 12h.01" /></symbol>
+<symbol id="i-bell" viewBox="0 0 24 24"><path d="M10.268 21a2 2 0 0 0 3.464 0" />
+  <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" /></symbol>
+<symbol id="i-building-2" viewBox="0 0 24 24"><path d="M10 12h4" />
+  <path d="M10 8h4" />
+  <path d="M14 21v-3a2 2 0 0 0-4 0v3" />
+  <path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2" />
+  <path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16" /></symbol>
+<symbol id="i-calculator" viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2" />
+  <line x1="8" x2="16" y1="6" y2="6" />
+  <line x1="16" x2="16" y1="14" y2="18" />
+  <path d="M16 10h.01" />
+  <path d="M12 10h.01" />
+  <path d="M8 10h.01" />
+  <path d="M12 14h.01" />
+  <path d="M8 14h.01" />
+  <path d="M12 18h.01" />
+  <path d="M8 18h.01" /></symbol>
+<symbol id="i-calendar" viewBox="0 0 24 24"><path d="M8 2v3" />
+  <path d="M16 2v3" />
+  <rect x="3" y="3" width="18" height="18" rx="2" />
+  <path d="M3 9h18" /></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" /></symbol>
+<symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" /></symbol>
+<symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6" /></symbol>
+<symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" /></symbol>
+<symbol id="i-chevron-up" viewBox="0 0 24 24"><path d="m18 15-6-6-6 6" /></symbol>
+<symbol id="i-chevrons-up-down" viewBox="0 0 24 24"><path d="m7 15 5 5 5-5" />
+  <path d="m7 9 5-5 5 5" /></symbol>
+<symbol id="i-circle-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" />
+  <path d="m16 9-5.5 5.5L8 12" /></symbol>
+<symbol id="i-circle-dot" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1" />
+  <circle cx="12" cy="12" r="10" /></symbol>
+<symbol id="i-circle-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" />
+  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+  <path d="M12 17h.01" /></symbol>
+<symbol id="i-circle-x" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" />
+  <path d="m15 9-6 6" />
+  <path d="m9 9 6 6" /></symbol>
+<symbol id="i-clipboard-list" viewBox="0 0 24 24"><rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+  <path d="M12 11h4" />
+  <path d="M12 16h4" />
+  <path d="M8 11h.01" />
+  <path d="M8 16h.01" /></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" />
+  <path d="M12 6v6l4 2" /></symbol>
+<symbol id="i-cloud-off" viewBox="0 0 24 24"><path d="M10.94 5.274A7 7 0 0 1 15.71 10h1.79a4.5 4.5 0 0 1 4.222 6.057" />
+  <path d="M18.796 18.81A4.5 4.5 0 0 1 17.5 19H9A7 7 0 0 1 5.79 5.78" />
+  <path d="m2 2 20 20" /></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+  <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /></symbol>
+<symbol id="i-credit-card" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" rx="2" />
+  <line x1="2" x2="22" y1="10" y2="10" />
+  <path d="M6 14h2" /></symbol>
+<symbol id="i-delete" viewBox="0 0 24 24"><path d="M10 5a2 2 0 0 0-1.344.519l-6.328 5.74a1 1 0 0 0 0 1.481l6.328 5.741A2 2 0 0 0 10 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z" />
+  <path d="m12 9 6 6" />
+  <path d="m18 9-6 6" /></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 15V3" />
+  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+  <path d="m7 10 5 5 5-5" /></symbol>
+<symbol id="i-ellipsis" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1" />
+  <circle cx="19" cy="12" r="1" />
+  <circle cx="5" cy="12" r="1" /></symbol>
+<symbol id="i-external-link" viewBox="0 0 24 24"><path d="M15 3h6v6" />
+  <path d="M10 14 21 3" />
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /></symbol>
+<symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" />
+  <circle cx="12" cy="12" r="3" /></symbol>
+<symbol id="i-file-text" viewBox="0 0 24 24"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" />
+  <path d="M14 2v5a1 1 0 0 0 1 1h5" />
+  <path d="M10 9H8" />
+  <path d="M16 13H8" />
+  <path d="M16 17H8" /></symbol>
+<symbol id="i-filter" viewBox="0 0 24 24"><path d="M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z" /></symbol>
+<symbol id="i-flag" viewBox="0 0 24 24"><path d="M4 22V4a1 1 0 0 1 .4-.8A6 6 0 0 1 8 2c3 0 5 2 7.333 2q2 0 3.067-.8A1 1 0 0 1 20 4v10a1 1 0 0 1-.4.8A6 6 0 0 1 16 16c-3 0-5-2-8-2a6 6 0 0 0-4 1.528" /></symbol>
+<symbol id="i-gauge" viewBox="0 0 24 24"><path d="m12 14 4-4" />
+  <path d="M3.34 19a10 10 0 1 1 17.32 0" /></symbol>
+<symbol id="i-hand-coins" viewBox="0 0 24 24"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17" />
+  <path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9" />
+  <path d="m2 16 6 6" />
+  <circle cx="16" cy="9" r="2.9" />
+  <circle cx="6" cy="5" r="3" /></symbol>
+<symbol id="i-house" viewBox="0 0 24 24"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+  <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></symbol>
+<symbol id="i-image" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+  <circle cx="9" cy="9" r="2" />
+  <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" /></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" /></symbol>
+<symbol id="i-layers" viewBox="0 0 24 24"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z" />
+  <path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12" />
+  <path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17" /></symbol>
+<symbol id="i-layout-dashboard" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1" />
+  <rect width="7" height="5" x="14" y="3" rx="1" />
+  <rect width="7" height="9" x="14" y="12" rx="1" />
+  <rect width="7" height="5" x="3" y="16" rx="1" /></symbol>
+<symbol id="i-loader-circle" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-6.219-8.56" /></symbol>
+<symbol id="i-locate-fixed" viewBox="0 0 24 24"><line x1="2" x2="5" y1="12" y2="12" />
+  <line x1="19" x2="22" y1="12" y2="12" />
+  <line x1="12" x2="12" y1="2" y2="5" />
+  <line x1="12" x2="12" y1="19" y2="22" />
+  <circle cx="12" cy="12" r="7" />
+  <circle cx="12" cy="12" r="3" /></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+  <path d="M7 11V7a5 5 0 0 1 10 0v4" /></symbol>
+<symbol id="i-log-out" viewBox="0 0 24 24"><path d="m16 17 5-5-5-5" />
+  <path d="M21 12H9" />
+  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" />
+  <rect x="2" y="4" width="20" height="16" rx="2" /></symbol>
+<symbol id="i-map" viewBox="0 0 24 24"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z" />
+  <path d="M15 5.764v15" />
+  <path d="M9 3.236v15" /></symbol>
+<symbol id="i-map-pin" viewBox="0 0 24 24"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+  <circle cx="12" cy="10" r="3" /></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 5h16" />
+  <path d="M4 12h16" />
+  <path d="M4 19h16" /></symbol>
+<symbol id="i-message-circle" viewBox="0 0 24 24"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" /></symbol>
+<symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14" /></symbol>
+<symbol id="i-navigation" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11" /></symbol>
+<symbol id="i-package" viewBox="0 0 24 24"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z" />
+  <path d="M12 22V12" />
+  <polyline points="3.29 7 12 12 20.71 7" />
+  <path d="m7.5 4.27 9 5.15" /></symbol>
+<symbol id="i-package-check" viewBox="0 0 24 24"><path d="M12 22V12" />
+  <path d="m16 17 2 2 4-4" />
+  <path d="M21 11.127V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.729l7 4a2 2 0 0 0 2 .001l1.32-.753" />
+  <path d="M3.29 7 12 12l8.71-5" />
+  <path d="m7.5 4.27 8.997 5.148" /></symbol>
+<symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z" />
+  <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" />
+  <circle cx="17.5" cy="10.5" r=".5" fill="currentColor" />
+  <circle cx="6.5" cy="12.5" r=".5" fill="currentColor" />
+  <circle cx="8.5" cy="7.5" r=".5" fill="currentColor" /></symbol>
+<symbol id="i-panel-left" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2" />
+  <path d="M9 3v18" /></symbol>
+<symbol id="i-pause" viewBox="0 0 24 24"><rect x="14" y="3" width="5" height="18" rx="1" />
+  <rect x="5" y="3" width="5" height="18" rx="1" /></symbol>
+<symbol id="i-pencil" viewBox="0 0 24 24"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
+  <path d="m15 5 4 4" /></symbol>
+<symbol id="i-percent" viewBox="0 0 24 24"><line x1="19" x2="5" y1="5" y2="19" />
+  <circle cx="6.5" cy="6.5" r="2.5" />
+  <circle cx="17.5" cy="17.5" r="2.5" /></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384" /></symbol>
+<symbol id="i-play" viewBox="0 0 24 24"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z" /></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14" />
+  <path d="M12 5v14" /></symbol>
+<symbol id="i-printer" viewBox="0 0 24 24"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+  <path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6" />
+  <rect x="6" y="14" width="12" height="8" rx="1" /></symbol>
+<symbol id="i-receipt" viewBox="0 0 24 24"><path d="M12 17V7" />
+  <path d="M16 8h-6a2 2 0 0 0 0 4h4a2 2 0 0 1 0 4H8" />
+  <path d="M4 3a1 1 0 0 1 1-1 1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1 1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2 1 1 0 0 1-1-1z" /></symbol>
+<symbol id="i-refresh-cw" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+  <path d="M21 3v5h-5" />
+  <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+  <path d="M8 16H3v5" /></symbol>
+<symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="3" />
+  <path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15" />
+  <circle cx="18" cy="5" r="3" /></symbol>
+<symbol id="i-save" viewBox="0 0 24 24"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" />
+  <path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7" />
+  <path d="M7 3v4a1 1 0 0 0 1 1h7" /></symbol>
+<symbol id="i-scan-barcode" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2" />
+  <path d="M17 3h2a2 2 0 0 1 2 2v2" />
+  <path d="M21 17v2a2 2 0 0 1-2 2h-2" />
+  <path d="M7 21H5a2 2 0 0 1-2-2v-2" />
+  <path d="M8 7v10" />
+  <path d="M12 7v10" />
+  <path d="M17 7v10" /></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34" />
+  <circle cx="11" cy="11" r="8" /></symbol>
+<symbol id="i-send" viewBox="0 0 24 24"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z" />
+  <path d="m21.854 2.147-10.94 10.939" /></symbol>
+<symbol id="i-settings" viewBox="0 0 24 24"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" />
+  <circle cx="12" cy="12" r="3" /></symbol>
+<symbol id="i-shield-check" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+  <path d="m9 12 2 2 4-4" /></symbol>
+<symbol id="i-shopping-cart" viewBox="0 0 24 24"><path d="m2.05 2.05 1.099-.028a1 1 0 0 1 1.008.815l2.69 14.347A1 1 0 0 0 7.83 18H18" />
+  <path d="M4.563 5h16.435a1 1 0 0 1 .981 1.204l-1.026 6.226A2 2 0 0 1 18.962 14H6.25" />
+  <circle cx="18" cy="20" r="2" />
+  <circle cx="8" cy="20" r="2" /></symbol>
+<symbol id="i-smartphone" viewBox="0 0 24 24"><rect width="14" height="20" x="5" y="2" rx="2" ry="2" />
+  <path d="M12 18h.01" /></symbol>
+<symbol id="i-store" viewBox="0 0 24 24"><path d="M15 21v-5a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v5" />
+  <path d="M17.774 10.31a1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.451 0 1.12 1.12 0 0 0-1.548 0 2.5 2.5 0 0 1-3.452 0 1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.77-3.248l2.889-4.184A2 2 0 0 1 7 2h10a2 2 0 0 1 1.653.873l2.895 4.192a2.5 2.5 0 0 1-3.774 3.244" />
+  <path d="M4 10.95V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8.05" /></symbol>
+<symbol id="i-tags" viewBox="0 0 24 24"><path d="M13.172 2a2 2 0 0 1 1.414.586l6.71 6.71a2.4 2.4 0 0 1 0 3.408l-4.592 4.592a2.4 2.4 0 0 1-3.408 0l-6.71-6.71A2 2 0 0 1 6 9.172V3a1 1 0 0 1 1-1z" />
+  <path d="M2 7v6.172a2 2 0 0 0 .586 1.414l6.71 6.71a2.4 2.4 0 0 0 3.191.193" />
+  <circle cx="10.5" cy="6.5" r=".5" fill="currentColor" /></symbol>
+<symbol id="i-timer" viewBox="0 0 24 24"><line x1="10" x2="14" y1="2" y2="2" />
+  <line x1="12" x2="15" y1="14" y2="11" />
+  <circle cx="12" cy="14" r="8" /></symbol>
+<symbol id="i-trash-2" viewBox="0 0 24 24"><path d="M10 11v6" />
+  <path d="M14 11v6" />
+  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+  <path d="M3 6h18" />
+  <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></symbol>
+<symbol id="i-triangle-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" />
+  <path d="M12 9v4" />
+  <path d="M12 17h.01" /></symbol>
+<symbol id="i-truck" viewBox="0 0 24 24"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" />
+  <path d="M15 18H9" />
+  <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14" />
+  <circle cx="17" cy="18" r="2" />
+  <circle cx="7" cy="18" r="2" /></symbol>
+<symbol id="i-undo-2" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5" />
+  <path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11" /></symbol>
+<symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 3v12" />
+  <path d="m17 8-5-5-5 5" />
+  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+  <circle cx="12" cy="7" r="4" /></symbol>
+<symbol id="i-user-round-check" viewBox="0 0 24 24"><path d="M2 21a8 8 0 0 1 13.292-6" />
+  <circle cx="10" cy="8" r="5" />
+  <path d="m16 19 2 2 4-4" /></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+  <path d="M16 3.128a4 4 0 0 1 0 7.744" />
+  <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+  <circle cx="9" cy="7" r="4" /></symbol>
+<symbol id="i-wallet" viewBox="0 0 24 24"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" />
+  <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" /></symbol>
+<symbol id="i-wifi" viewBox="0 0 24 24"><path d="M12 20h.01" />
+  <path d="M2 8.82a15 15 0 0 1 20 0" />
+  <path d="M5 12.859a10 10 0 0 1 14 0" />
+  <path d="M8.5 16.429a5 5 0 0 1 7 0" /></symbol>
+<symbol id="i-wifi-off" viewBox="0 0 24 24"><path d="M12 20h.01" />
+  <path d="M8.5 16.429a5 5 0 0 1 7 0" />
+  <path d="M5 12.859a10 10 0 0 1 5.17-2.69" />
+  <path d="M19 12.859a10 10 0 0 0-2.007-1.523" />
+  <path d="M2 8.82a15 15 0 0 1 4.177-2.643" />
+  <path d="M22 8.82a15 15 0 0 0-11.288-3.764" />
+  <path d="m2 2 20 20" /></symbol>
+<symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z" /></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18" />
+  <path d="m6 6 12 12" /></symbol>
+</svg>
+
+<main class="doc">
+  <header class="page-header">
+    <div><h1 class="text-title" style="font-size:1.5rem;line-height:2rem">Catalogo de componentes</h1><p class="text-secondary" style="margin:0">Plantilla ERP. Todos los componentes existen aunque su modulo no este activo. Solo usan tokens.</p></div>
+    <div class="row"><label class="text-label" for="den">Densidad</label><select class="select" id="den" style="width:auto"><option value="compact">Compacta</option><option value="comfortable">Comoda</option></select></div>
+  </header>
+  <nav class="toc" aria-label="Indice">
+    <a class="chip" href="#fundamentos">Fundamentos</a><a class="chip" href="#botones">Botones</a><a class="chip" href="#formularios">Formularios</a><a class="chip" href="#etiquetas">Etiquetas</a><a class="chip" href="#tarjetas">Tarjetas</a><a class="chip" href="#tablas">Tablas</a><a class="chip" href="#navegacion">Navegacion</a><a class="chip" href="#overlays">Overlays</a><a class="chip" href="#feedback">Feedback</a><a class="chip" href="#erp">Dominio ERP</a><a class="chip" href="#pos">POS</a><a class="chip" href="#mapa">Mapa y delivery</a><a class="chip" href="#graficas">Graficas</a><a class="chip" href="#iconos">Iconos</a>
+  </nav>
+
+  <section class="card" id="fundamentos"><div class="card__header"><h2 class="card__title">Fundamentos</h2></div><div class="demo">
+    <h3>Color (tokens)</h3><div class="sw-grid" id="sw"></div>
+    <h3>Tipografia - Inter</h3>
+    <div class="grid-2"><div><div class="text-title">Titulo de seccion - headline-sm 20/28 600</div><p style="margin:var(--sp-2) 0">Texto de cuerpo body-md 14/20 400. Orden de servicio OS-0412 recibida el 08/10/2026 a las 14:35.</p><div class="text-label">Etiqueta label-xs 12/16 500</div></div>
+    <div><table class="table"><tbody><tr><td>Sin tabulares</td><td style="text-align:right;font-variant-numeric:normal">1.111,11</td></tr><tr><td>Sin tabulares</td><td style="text-align:right;font-variant-numeric:normal">8.888,88</td></tr><tr><td>Tabulares (obligatorio)</td><td class="num">1.111,11</td></tr><tr><td>Tabulares (obligatorio)</td><td class="num">8.888,88</td></tr></tbody></table></div></div>
+    <h3>Radios y elevacion</h3>
+    <div class="row"><div class="card" style="padding:var(--sp-3)">Tarjeta 10 px, borde</div><button class="btn btn--secondary">Control 6 px</button><span class="badge badge--brand">Insignia 4 px</span><div class="menu is-static" style="min-width:auto"><div class="menu__item">Overlay: unica sombra</div></div></div>
+  </div></section>
+
+  <section class="card" id="botones"><div class="card__header"><h2 class="card__title">Botones</h2></div><div class="demo">
+    <h3>Variantes</h3><div class="row"><button class="btn btn--primary">Primario</button><button class="btn btn--secondary">Secundario</button><button class="btn btn--ghost">Ghost</button><button class="btn btn--danger">Peligro</button></div>
+    <h3>Con icono</h3><div class="row"><button class="btn btn--primary"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>Nueva venta</button><button class="btn btn--secondary"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Exportar</button><button class="btn btn--secondary btn--icon" aria-label="Imprimir"><svg class="icon" aria-hidden="true"><use href="#i-printer"/></svg></button><button class="btn btn--ghost btn--icon" aria-label="Mas"><svg class="icon" aria-hidden="true"><use href="#i-ellipsis"/></svg></button></div>
+    <h3>Tamanos: sm 28 · md 36 (densidad) · lg 44 · touch 48 (POS)</h3><div class="row"><button class="btn btn--primary btn--sm">Pequeno</button><button class="btn btn--primary">Mediano</button><button class="btn btn--primary btn--lg">Grande</button><button class="btn btn--primary btn--touch">Tactil</button></div>
+    <h3>Estados</h3><div class="row"><button class="btn btn--primary">Normal</button><button class="btn btn--primary" style="background:var(--color-primary-hover)">Hover</button><button class="btn btn--primary" style="outline:2px solid var(--color-focus-ring);outline-offset:2px">Foco</button><button class="btn btn--primary" disabled>Deshabilitado</button><button class="btn btn--primary is-loading" aria-busy="true">Guardando</button><button class="btn btn--secondary is-loading" aria-busy="true">Cargando</button></div>
+    <h3>Grupo / segmentado</h3><div class="btn-group" role="group"><button class="btn btn--secondary" aria-pressed="true">Dia</button><button class="btn btn--secondary" aria-pressed="false">Semana</button><button class="btn btn--secondary" aria-pressed="false">Mes</button></div>
+  </div></section>
+
+  <section class="card" id="formularios"><div class="card__header"><h2 class="card__title">Formularios</h2></div><div class="demo">
+    <div class="form-grid">
+      <div class="field"><label class="field__label" for="f1">Nombre <span class="req">*</span></label><input class="input" id="f1" placeholder="Nombre del cliente"><span class="field__help">Como aparecera en la factura.</span></div>
+      <div class="field"><label class="field__label" for="f2">RIF</label><input class="input" id="f2" value="J-12345678-0" aria-invalid="true" aria-describedby="f2e"><span class="field__error" id="f2e"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-circle-x"/></svg>El RIF no es valido.</span></div>
+      <div class="field"><label class="field__label" for="f3">Deshabilitado</label><input class="input" id="f3" value="No editable" disabled></div>
+      <div class="field"><label class="field__label" for="f4">Categoria</label><select class="select" id="f4"><option>Celulares</option><option>Accesorios</option></select></div>
+      <div class="field"><label class="field__label" for="f5">Precio de venta</label><div class="input-group"><span class="addon">USD</span><input class="input input--num" id="f5" value="12,50"></div><span class="field__help num">Bs 456,50 a tasa BCV 36,52</span></div>
+      <div class="field"><label class="field__label" for="f6">Buscar</label><div class="input-icon"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><input class="input" id="f6" placeholder="Cliente, documento o serial"></div></div>
+      <div class="field span-2"><label class="field__label" for="f7">Observaciones</label><textarea class="textarea" id="f7" placeholder="Detalle del equipo, accesorios recibidos..."></textarea></div>
+    </div>
+    <h3>Seleccion</h3>
+    <div class="row" style="gap:var(--sp-6)"><label class="check"><input type="checkbox" checked>Marcada</label><label class="check"><input type="checkbox">Sin marcar</label><label class="check"><input type="checkbox" id="ind">Mixta</label><label class="check"><input type="checkbox" disabled>Deshabilitada</label><label class="radio"><input type="radio" name="r" checked>Opcion A</label><label class="radio"><input type="radio" name="r">Opcion B</label><label class="switch"><input type="checkbox" checked>Activo</label><label class="switch"><input type="checkbox">Inactivo</label></div>
+    <h3>Cantidad (normal y tactil)</h3><div class="row"><div class="qty"><button aria-label="Menos"><svg class="icon" aria-hidden="true"><use href="#i-minus"/></svg></button><input value="3" aria-label="Cantidad"><button aria-label="Mas"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button></div><div class="qty qty--touch"><button aria-label="Menos"><svg class="icon" aria-hidden="true"><use href="#i-minus"/></svg></button><input value="3" aria-label="Cantidad"><button aria-label="Mas"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button></div></div>
+    <h3>Carga de archivos y color</h3><div class="grid-2"><div class="dropzone"><svg class="icon icon--lg" aria-hidden="true"><use href="#i-upload"/></svg><div><b>Arrastra un archivo</b> o selecciona</div><div class="text-label">PNG, JPG o PDF hasta 5 MB</div></div><div class="stack"><div class="color-field"><input type="color" value="#2563eb" aria-label="Color"><input class="input" value="#2563EB" style="max-width:120px" aria-label="Codigo de color"></div></div></div>
+  </div></section>
+
+  <section class="card" id="etiquetas"><div class="card__header"><h2 class="card__title">Insignias, chips y avatares</h2></div><div class="demo">
+    <div class="row"><span class="badge">Neutro</span><span class="badge badge--brand">Marca</span><span class="badge badge--success">Pagado</span><span class="badge badge--warning">Pendiente</span><span class="badge badge--error">Vencido</span><span class="badge badge--info">En diagnostico</span><span class="badge badge--whatsapp"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-message-circle"/></svg>WhatsApp</span><span class="badge badge--success"><span class="dot"></span>Con punto</span><span class="count">3</span></div>
+    <div class="row"><button class="chip" aria-pressed="true">Activo</button><button class="chip" aria-pressed="false">Inactivo</button><button class="chip" aria-pressed="false"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-filter"/></svg>Filtro</button></div>
+    <div class="row"><span class="avatar avatar--sm">MR</span><span class="avatar">MR</span><span class="avatar avatar--lg">MR</span></div>
+    <p class="text-label" style="margin:0">Regla: el color nunca va solo. Toda insignia lleva texto. #25D366 solo en el icono del canal WhatsApp.</p>
+  </div></section>
+
+  <section id="tarjetas"><h2 class="card__title" style="margin-bottom:var(--sp-3)">Tarjetas</h2><div class="grid-3">
+    <div class="card kpi"><span class="text-label">Ventas de hoy</span><span class="money money--lg"><span class="money__usd">$1.248,00</span><span class="money__bs">Bs 45.576,96</span></span><span class="delta delta--up num"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-arrow-up"/></svg>+8,2 %</span></div>
+    <div class="card"><div class="card__header"><h3 class="card__title">Con encabezado</h3><button class="btn btn--ghost btn--sm">Ver</button></div><div class="card__body"><dl class="dl"><dt>Cliente</dt><dd>Taller Los Andes</dd><dt>Equipo</dt><dd>Samsung A14</dd><dt>Estado</dt><dd><span class="badge badge--info">En diagnostico</span></dd></dl></div><div class="card__footer"><button class="btn btn--secondary btn--sm">Cancelar</button><button class="btn btn--primary btn--sm">Guardar</button></div></div>
+    <div class="card card--interactive" tabindex="0" role="button"><div class="card__body"><b>Tarjeta interactiva</b><p class="text-secondary" style="margin:var(--sp-1) 0 0">Borde de marca al pasar el cursor.</p></div></div>
+  </div></section>
+
+  <section class="card" id="tablas"><div class="card__header"><h2 class="card__title">Tablas</h2></div><div class="demo">
+    <h3>Completa: barra de herramientas, orden, seleccion, acciones, pie</h3>
+    <div class="table-wrap">
+      <div class="table-toolbar"><div class="input-icon grow" style="max-width:320px"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><input class="input" placeholder="Buscar" aria-label="Buscar"></div><button class="chip" aria-pressed="false"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-filter"/></svg>Estado</button><button class="chip" aria-pressed="false"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-calendar"/></svg>Hoy</button><span class="grow"></span><button class="btn btn--secondary"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Exportar</button><button class="btn btn--primary"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>Nueva</button></div>
+      <div class="bulk-bar"><span>2 seleccionados</span><button class="btn btn--secondary btn--sm"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-printer"/></svg>Imprimir</button><button class="btn btn--secondary btn--sm"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-send"/></svg>Enviar por WhatsApp</button></div>
+      <table class="table">
+        <thead><tr><th style="width:32px"><label class="check" style="min-height:0"><input type="checkbox" aria-label="Seleccionar todos" id="all"></label></th><th aria-sort="ascending">Documento <svg class="icon" aria-hidden="true"><use href="#i-arrow-up"/></svg></th><th aria-sort="none">Cliente <svg class="icon" aria-hidden="true"><use href="#i-chevrons-up-down"/></svg></th><th>Estado</th><th class="num" aria-sort="none">Total <svg class="icon" aria-hidden="true"><use href="#i-chevrons-up-down"/></svg></th><th><span class="sr-only">Acciones</span></th></tr></thead>
+        <tbody>
+          <tr aria-selected="true"><td><label class="check" style="min-height:0"><input type="checkbox" checked aria-label="Seleccionar F-00231"></label></td><td>F-00231</td><td><span class="cell-two">Taller Los Andes<small>J-30123456-7</small></span></td><td><span class="badge badge--success">Pagado</span></td><td class="num"><span class="money money--right"><span class="money__usd">$240,00</span><span class="money__bs">Bs 8.764,80</span></span></td><td class="actions"><button class="btn btn--ghost btn--icon btn--sm" aria-label="Acciones"><svg class="icon" aria-hidden="true"><use href="#i-ellipsis"/></svg></button></td></tr>
+          <tr aria-selected="true"><td><label class="check" style="min-height:0"><input type="checkbox" checked aria-label="Seleccionar F-00230"></label></td><td>F-00230</td><td><span class="cell-two">Distribuidora Caribe<small>J-40222333-1</small></span></td><td><span class="badge badge--warning">Pendiente</span></td><td class="num"><span class="money money--right"><span class="money__usd">$1.180,00</span><span class="money__bs">Bs 43.093,60</span></span></td><td class="actions"><button class="btn btn--ghost btn--icon btn--sm" aria-label="Acciones"><svg class="icon" aria-hidden="true"><use href="#i-ellipsis"/></svg></button></td></tr>
+          <tr><td><label class="check" style="min-height:0"><input type="checkbox" aria-label="Seleccionar F-00229"></label></td><td>F-00229</td><td><span class="cell-two">M. Rodriguez<small>V-12345678</small></span></td><td><span class="badge badge--error">Vencido</span></td><td class="num"><span class="money money--right"><span class="money__usd">$96,50</span><span class="money__bs">Bs 3.524,18</span></span></td><td class="actions"><button class="btn btn--ghost btn--icon btn--sm" aria-label="Acciones"><svg class="icon" aria-hidden="true"><use href="#i-ellipsis"/></svg></button></td></tr>
+        </tbody>
+      </table>
+      <div class="table-footer"><span>1-3 de 248</span><div class="pagination"><button class="btn btn--secondary btn--icon btn--sm" aria-label="Anterior" disabled><svg class="icon icon--sm" aria-hidden="true"><use href="#i-chevron-left"/></svg></button><button class="btn btn--secondary btn--sm" aria-current="page">1</button><button class="btn btn--secondary btn--sm">2</button><button class="btn btn--secondary btn--sm">3</button><button class="btn btn--secondary btn--icon btn--sm" aria-label="Siguiente"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-chevron-right"/></svg></button></div></div>
+    </div>
+    <div class="grid-2">
+      <div><h3>Cargando</h3><div class="table-wrap"><table class="table"><tbody><tr><td><span class="skeleton" style="width:60%"></span></td><td><span class="skeleton" style="width:40%"></span></td></tr><tr><td><span class="skeleton" style="width:50%"></span></td><td><span class="skeleton" style="width:70%"></span></td></tr><tr><td><span class="skeleton" style="width:65%"></span></td><td><span class="skeleton" style="width:30%"></span></td></tr></tbody></table></div></div>
+      <div><h3>Vacia</h3><div class="table-wrap"><div class="empty"><svg class="icon" aria-hidden="true"><use href="#i-file-text"/></svg><h3>Aun no hay facturas</h3><p style="margin:0">Crea la primera venta para verla aqui.</p><button class="btn btn--primary" style="margin-top:var(--sp-2)"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>Nueva venta</button></div></div></div>
+    </div>
+  </div></section>
+
+  <section class="card" id="navegacion"><div class="card__header"><h2 class="card__title">Navegacion de contenido y progreso</h2></div><div class="demo">
+    <ol class="breadcrumbs"><li><a href="#">Inicio</a></li><li><a href="#">Servicio tecnico</a></li><li>OS-0412</li></ol>
+    <div class="tabs" role="tablist"><button class="tab" role="tab" aria-selected="true">Resumen</button><button class="tab" role="tab" aria-selected="false">Historial <svg class="icon icon--sm" aria-hidden="true"><use href="#i-clock"/></svg></button><button class="tab" role="tab" aria-selected="false">Pagos <span class="badge">2</span></button><button class="tab" role="tab" aria-selected="false" disabled>Garantia</button></div>
+    <h3>Linea de estados (orden de servicio)</h3>
+    <ol class="pipeline"><li class="is-done">Recibido</li><li class="is-done">Diagnostico</li><li class="is-current">Presupuesto</li><li>Reparacion</li><li>Listo</li><li>Entregado</li></ol>
+    <h3>Cronologia</h3>
+    <ul class="timeline" style="max-width:480px"><li class="is-done"><span class="pt"></span><div>Pedido recibido<div class="text-label">Registrado por Maria</div></div><time>08:05</time></li><li class="is-current"><span class="pt"></span><div>En ruta<div class="text-label">Luis Perez · AB123CD</div></div><time>10:12</time></li><li><span class="pt"></span><div class="text-secondary">Entrega estimada</div><time>10:42</time></li></ul>
+    <h3>Progreso</h3><div class="progress" style="max-width:320px" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" aria-label="Progreso"><i style="width:60%"></i></div>
+  </div></section>
+
+  <section class="card" id="overlays"><div class="card__header"><h2 class="card__title">Overlays</h2><span class="text-label">Mostrados en linea (is-static)</span></div><div class="demo">
+    <div class="frame"><div class="modal modal--sm is-static" role="dialog" aria-labelledby="mt"><div class="modal__header"><div class="row" style="flex-wrap:nowrap;align-items:flex-start"><span class="modal__icon"><svg class="icon" aria-hidden="true"><use href="#i-triangle-alert"/></svg></span><div><h3 class="modal__title" id="mt">Anular factura F-00230</h3><p class="text-secondary" style="margin:var(--sp-1) 0 0">Esta accion no se puede deshacer. Se repondra el inventario.</p></div></div></div><div class="modal__footer"><button class="btn btn--secondary">Cancelar</button><button class="btn btn--danger">Anular factura</button></div></div></div>
+    <div class="grid-3">
+      <div><h3>Menu</h3><div class="menu is-static"><button class="menu__item"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-eye"/></svg>Ver detalle</button><button class="menu__item"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-pencil"/></svg>Editar<span class="kbd">E</span></button><button class="menu__item"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-copy"/></svg>Duplicar</button><div class="menu__sep"></div><button class="menu__item menu__item--danger"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-trash-2"/></svg>Eliminar</button></div></div>
+      <div><h3>Tooltip y popover</h3><div class="stack"><span class="tooltip" style="justify-self:start">Imprimir (Ctrl+P)</span><div class="popover is-static" style="position:relative"><b>Tasa BCV</b><p class="text-secondary" style="margin:var(--sp-1) 0 0">Actualizada hoy 08:05</p></div></div></div>
+      <div><h3>Notificaciones</h3><div class="stack" style="gap:var(--sp-2)"><div class="toast toast--success"><span class="icon-wrap"><svg class="icon" aria-hidden="true"><use href="#i-circle-check"/></svg></span><div><b>Venta registrada</b><div class="text-label">F-00232 · $28,00</div></div></div><div class="toast toast--warning"><svg class="icon" aria-hidden="true"><use href="#i-triangle-alert"/></svg><div><b>Stock bajo</b><div class="text-label">Pantalla Samsung A14: 3</div></div></div><div class="toast toast--error"><svg class="icon" aria-hidden="true"><use href="#i-circle-x"/></svg><div><b>No se pudo sincronizar</b><div class="text-label">Reintentando en 30 s</div></div></div><div class="toast toast--info"><svg class="icon" aria-hidden="true"><use href="#i-info"/></svg><div><b>Nueva tasa BCV</b><div class="text-label">Bs 36,52</div></div></div></div></div>
+    </div>
+    <div class="frame" style="min-height:300px;place-items:stretch end;padding:0"><div class="drawer is-static" style="height:300px"><div class="modal__header"><h3 class="modal__title">Detalle del cliente</h3><button class="btn btn--ghost btn--icon btn--sm" aria-label="Cerrar"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button></div><div class="modal__body"><dl class="dl"><dt>Nombre</dt><dd>Taller Los Andes</dd><dt>RIF</dt><dd>J-30123456-7</dd></dl></div><div class="modal__footer"><button class="btn btn--secondary">Cerrar</button><button class="btn btn--primary">Editar</button></div></div></div>
+  </div></section>
+
+  <section class="card" id="feedback"><div class="card__header"><h2 class="card__title">Feedback</h2></div><div class="demo">
+    <div class="alert alert--info"><svg class="icon" aria-hidden="true"><use href="#i-info"/></svg><div><p class="alert__title">Informacion</p><p>Mensaje neutro para el usuario.</p></div></div>
+    <div class="alert alert--success"><svg class="icon" aria-hidden="true"><use href="#i-circle-check"/></svg><div><p class="alert__title">Exito</p><p>Cambios guardados correctamente.</p></div></div>
+    <div class="alert alert--warning"><svg class="icon" aria-hidden="true"><use href="#i-triangle-alert"/></svg><div><p class="alert__title">Advertencia</p><p>La tasa BCV no se actualizo hoy.</p></div></div>
+    <div class="alert alert--error"><svg class="icon" aria-hidden="true"><use href="#i-circle-x"/></svg><div><p class="alert__title">Error</p><p>No se pudo guardar. Revisa los campos marcados.</p></div></div>
+    <div class="row"><span class="spinner" role="status" aria-label="Cargando"></span><span class="text-secondary">Cargando...</span></div>
+  </div></section>
+
+  <section class="card" id="erp"><div class="card__header"><h2 class="card__title">Dominio ERP</h2></div><div class="demo">
+    <h3>Moneda dual (generada con ErpFormat)</h3>
+    <div class="row" style="gap:var(--sp-8)"><span class="money "><span class="money__usd">$1.248,00</span><span class="money__bs">Bs 45.576,96</span></span> <span class="money money--lg"><span class="money__usd">$1.248,00</span><span class="money__bs">Bs 45.576,96</span></span> <span class="money money--xl"><span class="money__usd">$1.248,00</span><span class="money__bs">Bs 45.576,96</span></span> <span class="money money--neg"><span class="money__usd">-$96,50</span><span class="money__bs">-Bs 3.524,18</span></span></div>
+    <h3>Tasa BCV</h3><div class="row" style="gap:var(--sp-6)"><span class="rate">Tasa BCV <b class="num">Bs 36,52</b></span><span class="rate is-stale">Tasa BCV <b class="num">Bs 36,52</b> · del 07/10 <svg class="icon icon--sm" aria-hidden="true"><use href="#i-triangle-alert"/></svg></span></div>
+    <h3>Estado de conexion (cabecera)</h3><div class="row" style="gap:var(--sp-6)"><span class="conn conn--online">En linea, sincronizado</span><span class="conn conn--syncing">Sincronizando...</span><span class="conn conn--offline">Sin conexion <span class="count">7</span></span></div>
+    <h3>Conversacion de WhatsApp (unico lugar con #25D366 como superficie)</h3>
+    <div class="chat" style="max-width:420px;border-radius:var(--radius-card)"><div class="bubble">Hola, ya esta listo mi equipo?<time>10:41</time></div><div class="bubble bubble--out">Hola! Su Samsung A14 esta listo. Total $55,00<time>10:43 <svg class="icon icon--sm" aria-hidden="true"><use href="#i-check"/></svg></time></div></div>
+  </div></section>
+
+  <section class="card" id="pos"><div class="card__header"><h2 class="card__title">POS - componentes tactiles</h2><a class="link" href="pos.html">Ver pantalla completa</a></div><div class="demo">
+    <div class="grid-4"><button class="tile"><span class="tile__name">Cargador USB-C 20W</span><span><span class="money "><span class="money__usd">$12,50</span><span class="money__bs">Bs 456,50</span></span></span><span class="tile__stock">48 en stock</span></button><button class="tile"><span class="tile__name">Pantalla A14</span><span><span class="money "><span class="money__usd">$38,00</span><span class="money__bs">Bs 1.387,76</span></span></span><span class="badge badge--warning">Stock bajo: 3</span></button><button class="tile is-out" disabled><span class="tile__name">Estuche Redmi</span><span><span class="money "><span class="money__usd">$4,50</span><span class="money__bs">Bs 164,34</span></span></span><span class="badge badge--error">Sin stock</span></button><button class="tile is-selected"><span class="tile__name">Seleccionado</span><span><span class="money "><span class="money__usd">$3,00</span><span class="money__bs">Bs 109,56</span></span></span></button></div>
+    <div class="grid-3"><div class="stack" style="gap:var(--sp-2)"><div class="display-lcd num">$28,00</div><div class="keypad"><button>7</button><button>8</button><button>9</button><button>4</button><button>5</button><button>6</button><button>1</button><button>2</button><button>3</button><button>0</button><button>,</button><button aria-label="Borrar"><svg class="icon" aria-hidden="true"><use href="#i-delete"/></svg></button></div></div><div class="stack" style="gap:var(--sp-2)"><div class="pay-methods"><button class="pay-method" aria-pressed="true"><svg class="icon" aria-hidden="true"><use href="#i-banknote"/></svg>Efectivo USD</button><button class="pay-method" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#i-wallet"/></svg>Pago movil</button><button class="pay-method" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#i-credit-card"/></svg>Punto</button><button class="pay-method" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#i-hand-coins"/></svg>Mixto</button></div><button class="btn btn--primary btn--touch btn--block">Cobrar $28,00</button></div><div class="stack" style="gap:var(--sp-2)"><div class="totals-row"><span class="text-secondary">Subtotal</span><span class="num">$28,00</span></div><div class="totals-row totals-row--grand"><span>Total</span><span class="money money--right money--lg"><span class="money__usd">$28,00</span><span class="money__bs">Bs 1.022,56</span></span></div></div></div>
+  </div></section>
+
+  <section class="card" id="mapa"><div class="card__header"><h2 class="card__title">Mapa y delivery</h2><a class="link" href="delivery.html">Ver pantalla completa</a></div><div class="demo">
+    <h3>Marcadores de vehiculo (siempre con icono; en listas, ademas texto de estado)</h3>
+    <div class="row" style="gap:var(--sp-8);padding:var(--sp-3) var(--sp-4) var(--sp-5)">
+      <div class="stack" style="justify-items:center;gap:var(--sp-3)"><span class="marker marker--moving"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-truck"/></svg></span><span class="badge badge--info">En ruta</span></div>
+      <div class="stack" style="justify-items:center;gap:var(--sp-3)"><span class="marker marker--stopped"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-pause"/></svg></span><span class="badge badge--warning">Detenido</span></div>
+      <div class="stack" style="justify-items:center;gap:var(--sp-3)"><span class="marker marker--offline"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-wifi-off"/></svg></span><span class="badge">Sin senal</span></div>
+      <div class="stack" style="justify-items:center;gap:var(--sp-3)"><span class="marker marker--delivered"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-package-check"/></svg></span><span class="badge badge--success">Entregado</span></div>
+      <div class="stack" style="justify-items:center;gap:var(--sp-3)"><span class="marker marker--incident"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-triangle-alert"/></svg></span><span class="badge badge--error">Incidencia</span></div>
+      <div class="stack" style="justify-items:center;gap:var(--sp-3)"><span class="marker marker--moving marker--selected"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-truck"/></svg></span><span class="text-label">Seleccionado</span></div>
+      <div class="stack" style="justify-items:center;gap:var(--sp-3)"><span class="marker marker--moving marker--stale"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-truck"/></svg></span><span class="text-label">Posicion antigua</span></div>
+    </div>
+    <h3>Paradas, senal, ETA</h3>
+    <div class="row" style="gap:var(--sp-6)"><span class="stop stop--done"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-check"/></svg></span><span class="stop stop--next">3</span><span class="stop">4</span><span class="stop stop--failed"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-x"/></svg></span><span class="eta"><b>14</b><span class="text-label">min</span></span><span class="signal" data-level="4" role="img" aria-label="Senal fuerte"><i></i><i></i><i></i><i></i></span><span class="signal" data-level="2" role="img" aria-label="Senal media"><i></i><i></i><i></i><i></i></span><span class="signal" data-level="0" role="img" aria-label="Sin senal"><i></i><i></i><i></i><i></i></span></div>
+    <h3>Tarjeta de vehiculo</h3><div class="card card--flush" style="max-width:360px"><div class="vehicle-card" aria-current="true"><span class="marker marker--moving"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-truck"/></svg></span><div><div style="font-weight:500">Luis Perez · AB123CD</div><div class="text-label">Parada 3 de 5 · <span class="badge badge--info">En ruta</span></div></div><div class="eta"><b>14</b><span class="text-label">min</span></div></div></div>
+    <p class="text-label" style="margin:0">Estilo del mapa: <code>maps/google-map-style.json</code>. Integracion y reglas de Google Maps: <code>maps/README.md</code>.</p>
+  </div></section>
+
+  <section id="graficas"><h2 class="card__title" style="margin-bottom:var(--sp-3)">Graficas</h2><div class="grid-2"><div id="c1"></div><div id="c2"></div></div></section>
+
+  <section class="card" id="iconos"><div class="card__header"><h2 class="card__title">Iconos (Lucide, trazo 1,75)</h2><span class="text-label">16 / 20 / 24 px · heredan el color del texto</span></div><div class="demo"><div class="sw-grid" id="icons"></div></div></section>
+</main>
+<script src="../components/charts.js"></script>
+<script src="../lib/format.js"></script>
+<script>
+  const s = getComputedStyle(document.documentElement);
+  const names = ['primary','primary-hover','primary-subtle','sidebar','background','surface','border','border-input','text-primary','text-secondary','success','success-text','success-bg','warning','warning-text','warning-bg','error','error-text','error-bg','info','info-text','info-bg','whatsapp','whatsapp-bg','chart-1','chart-2','chart-3','chart-other'];
+  document.getElementById('sw').innerHTML = names.map((n) => { const v = s.getPropertyValue('--color-' + n).trim(); return `<div class="sw"><i style="background:var(--color-${n})"></i><span><b>${n}</b>${v}</span></div>`; }).join('');
+  document.getElementById('icons').innerHTML = [...document.querySelectorAll('symbol')].map((y) => `<div class="sw" style="padding:var(--sp-2);display:flex;gap:var(--sp-2);align-items:center"><svg class="icon icon--lg"><use href="#${y.id}"/></svg><span style="padding:0">${y.id.slice(2)}</span></div>`).join('');
+  document.getElementById('ind').indeterminate = true;
+  document.getElementById('den').addEventListener('change', (e) => document.documentElement.setAttribute('data-density', e.target.value));
+  ErpCharts.bar(document.getElementById('c1'), { level: 3, title: 'Una serie: ventas por dia', sub: 'USD, ultimos 7 dias', name: 'Ventas (USD)', xLabel: 'Dia', labels: ['Lun','Mar','Mie','Jue','Vie','Sab','Dom'], values: [620,840,710,1020,930,1248,480], fmt: ErpFormat.usd });
+  ErpCharts.line(document.getElementById('c2'), { level: 3, title: 'Tres series: ventas por canal', sub: 'USD, 8 semanas', xLabel: 'Semana', labels: ['S1','S2','S3','S4','S5','S6','S7','S8'], fmt: ErpFormat.usd, series: [{ name: 'Mostrador', values: [900,980,940,1100,1180,1150,1260,1320] }, { name: 'Mayor', values: [620,700,760,720,840,900,880,960] }, { name: 'Taller', values: [300,280,350,330,390,420,410,450] }] });
+</script>
+</body>
+</html>

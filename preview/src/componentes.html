@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="es">
+<head>
+{{include:head}}
+<title>ERP - Catalogo de componentes</title>
+<style>
+  .doc { max-width: var(--space-container-max); margin: 0 auto; padding: var(--sp-6); display: grid; gap: var(--sp-6); }
+  .doc nav.toc { position: sticky; top: 0; z-index: var(--z-sticky); background: var(--color-background); padding: var(--sp-2) 0; display: flex; gap: var(--sp-2); flex-wrap: wrap; border-bottom: 1px solid var(--color-border); }
+  .demo { padding: var(--sp-4); display: grid; gap: var(--sp-4); }
+  .demo > h3 { margin: 0; font-size: var(--font-label-xs-size); font-weight: 600; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: .05em; }
+  .sw-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--sp-2); }
+  .sw { border: 1px solid var(--color-border); border-radius: var(--radius-control); overflow: hidden; background: var(--color-surface); font-size: var(--font-label-xs-size); }
+  .sw i { display: block; height: 32px; } .sw span { display: block; padding: var(--sp-1) var(--sp-2); } .sw b { display: block; }
+  .on-dark { background: var(--color-sidebar); padding: var(--sp-4); border-radius: var(--radius-card); }
+  .frame { position: relative; min-height: 260px; background: var(--color-border); border-radius: var(--radius-card); overflow: hidden; display: grid; place-items: center; padding: var(--sp-4); }
+  .frame .is-static { position: relative; }
+  .map-demo { position: relative; height: 150px; background: var(--color-border); border-radius: var(--radius-card); }
+  .pin { position: absolute; transform: translate(-50%, -100%); }
+</style>
+</head>
+<body>
+{{sprite}}
+<main class="doc">
+  <header class="page-header">
+    <div><h1 class="text-title" style="font-size:1.5rem;line-height:2rem">Catalogo de componentes</h1><p class="text-secondary" style="margin:0">Plantilla ERP. Todos los componentes existen aunque su modulo no este activo. Solo usan tokens.</p></div>
+    <div class="row"><label class="text-label" for="den">Densidad</label><select class="select" id="den" style="width:auto"><option value="compact">Compacta</option><option value="comfortable">Comoda</option></select></div>
+  </header>
+  <nav class="toc" aria-label="Indice">
+    <a class="chip" href="#fundamentos">Fundamentos</a><a class="chip" href="#botones">Botones</a><a class="chip" href="#formularios">Formularios</a><a class="chip" href="#etiquetas">Etiquetas</a><a class="chip" href="#tarjetas">Tarjetas</a><a class="chip" href="#tablas">Tablas</a><a class="chip" href="#navegacion">Navegacion</a><a class="chip" href="#overlays">Overlays</a><a class="chip" href="#feedback">Feedback</a><a class="chip" href="#erp">Dominio ERP</a><a class="chip" href="#pos">POS</a><a class="chip" href="#mapa">Mapa y delivery</a><a class="chip" href="#graficas">Graficas</a><a class="chip" href="#iconos">Iconos</a>
+  </nav>
+
+  <section class="card" id="fundamentos"><div class="card__header"><h2 class="card__title">Fundamentos</h2></div><div class="demo">
+    <h3>Color (tokens)</h3><div class="sw-grid" id="sw"></div>
+    <h3>Tipografia - Inter</h3>
+    <div class="grid-2"><div><div class="text-title">Titulo de seccion - headline-sm 20/28 600</div><p style="margin:var(--sp-2) 0">Texto de cuerpo body-md 14/20 400. Orden de servicio OS-0412 recibida el 08/10/2026 a las 14:35.</p><div class="text-label">Etiqueta label-xs 12/16 500</div></div>
+    <div><table class="table"><tbody><tr><td>Sin tabulares</td><td style="text-align:right;font-variant-numeric:normal">1.111,11</td></tr><tr><td>Sin tabulares</td><td style="text-align:right;font-variant-numeric:normal">8.888,88</td></tr><tr><td>Tabulares (obligatorio)</td><td class="num">1.111,11</td></tr><tr><td>Tabulares (obligatorio)</td><td class="num">8.888,88</td></tr></tbody></table></div></div>
+    <h3>Radios y elevacion</h3>
+    <div class="row"><div class="card" style="padding:var(--sp-3)">Tarjeta 10 px, borde</div><button class="btn btn--secondary">Control 6 px</button><span class="badge badge--brand">Insignia 4 px</span><div class="menu is-static" style="min-width:auto"><div class="menu__item">Overlay: unica sombra</div></div></div>
+  </div></section>
+
+  <section class="card" id="botones"><div class="card__header"><h2 class="card__title">Botones</h2></div><div class="demo">
+    <h3>Variantes</h3><div class="row"><button class="btn btn--primary">Primario</button><button class="btn btn--secondary">Secundario</button><button class="btn btn--ghost">Ghost</button><button class="btn btn--danger">Peligro</button></div>
+    <h3>Con icono</h3><div class="row"><button class="btn btn--primary">{{icon:plus}}Nueva venta</button><button class="btn btn--secondary">{{icon:download}}Exportar</button><button class="btn btn--secondary btn--icon" aria-label="Imprimir">{{icon:printer}}</button><button class="btn btn--ghost btn--icon" aria-label="Mas">{{icon:ellipsis}}</button></div>
+    <h3>Tamanos: sm 28 · md 36 (densidad) · lg 44 · touch 48 (POS)</h3><div class="row"><button class="btn btn--primary btn--sm">Pequeno</button><button class="btn btn--primary">Mediano</button><button class="btn btn--primary btn--lg">Grande</button><button class="btn btn--primary btn--touch">Tactil</button></div>
+    <h3>Estados</h3><div class="row"><button class="btn btn--primary">Normal</button><button class="btn btn--primary" style="background:var(--color-primary-hover)">Hover</button><button class="btn btn--primary" style="outline:2px solid var(--color-focus-ring);outline-offset:2px">Foco</button><button class="btn btn--primary" disabled>Deshabilitado</button><button class="btn btn--primary is-loading" aria-busy="true">Guardando</button><button class="btn btn--secondary is-loading" aria-busy="true">Cargando</button></div>
+    <h3>Grupo / segmentado</h3><div class="btn-group" role="group"><button class="btn btn--secondary" aria-pressed="true">Dia</button><button class="btn btn--secondary" aria-pressed="false">Semana</button><button class="btn btn--secondary" aria-pressed="false">Mes</button></div>
+  </div></section>
+
+  <section class="card" id="formularios"><div class="card__header"><h2 class="card__title">Formularios</h2></div><div class="demo">
+    <div class="form-grid">
+      <div class="field"><label class="field__label" for="f1">Nombre <span class="req">*</span></label><input class="input" id="f1" placeholder="Nombre del cliente"><span class="field__help">Como aparecera en la factura.</span></div>
+      <div class="field"><label class="field__label" for="f2">RIF</label><input class="input" id="f2" value="J-12345678-0" aria-invalid="true" aria-describedby="f2e"><span class="field__error" id="f2e">{{icon:circle-x:icon--sm}}El RIF no es valido.</span></div>
+      <div class="field"><label class="field__label" for="f3">Deshabilitado</label><input class="input" id="f3" value="No editable" disabled></div>
+      <div class="field"><label class="field__label" for="f4">Categoria</label><select class="select" id="f4"><option>Celulares</option><option>Accesorios</option></select></div>
+      <div class="field"><label class="field__label" for="f5">Precio de venta</label><div class="input-group"><span class="addon">USD</span><input class="input input--num" id="f5" value="12,50"></div><span class="field__help num">Bs 456,50 a tasa BCV 36,52</span></div>
+      <div class="field"><label class="field__label" for="f6">Buscar</label><div class="input-icon">{{icon:search}}<input class="input" id="f6" placeholder="Cliente, documento o serial"></div></div>
+      <div class="field span-2"><label class="field__label" for="f7">Observaciones</label><textarea class="textarea" id="f7" placeholder="Detalle del equipo, accesorios recibidos..."></textarea></div>
+    </div>
+    <h3>Seleccion</h3>
+    <div class="row" style="gap:var(--sp-6)"><label class="check"><input type="checkbox" checked>Marcada</label><label class="check"><input type="checkbox">Sin marcar</label><label class="check"><input type="checkbox" id="ind">Mixta</label><label class="check"><input type="checkbox" disabled>Deshabilitada</label><label class="radio"><input type="radio" name="r" checked>Opcion A</label><label class="radio"><input type="radio" name="r">Opcion B</label><label class="switch"><input type="checkbox" checked>Activo</label><label class="switch"><input type="checkbox">Inactivo</label></div>
+    <h3>Cantidad (normal y tactil)</h3><div class="row"><div class="qty"><button aria-label="Menos">{{icon:minus}}</button><input value="3" aria-label="Cantidad"><button aria-label="Mas">{{icon:plus}}</button></div><div class="qty qty--touch"><button aria-label="Menos">{{icon:minus}}</button><input value="3" aria-label="Cantidad"><button aria-label="Mas">{{icon:plus}}</button></div></div>
+    <h3>Carga de archivos y color</h3><div class="grid-2"><div class="dropzone">{{icon:upload:icon--lg}}<div><b>Arrastra un archivo</b> o selecciona</div><div class="text-label">PNG, JPG o PDF hasta 5 MB</div></div><div class="stack"><div class="color-field"><input type="color" value="#2563eb" aria-label="Color"><input class="input" value="#2563EB" style="max-width:120px" aria-label="Codigo de color"></div></div></div>
+  </div></section>
+
+  <section class="card" id="etiquetas"><div class="card__header"><h2 class="card__title">Insignias, chips y avatares</h2></div><div class="demo">
+    <div class="row"><span class="badge">Neutro</span><span class="badge badge--brand">Marca</span><span class="badge badge--success">Pagado</span><span class="badge badge--warning">Pendiente</span><span class="badge badge--error">Vencido</span><span class="badge badge--info">En diagnostico</span><span class="badge badge--whatsapp">{{icon:message-circle:icon--sm}}WhatsApp</span><span class="badge badge--success"><span class="dot"></span>Con punto</span><span class="count">3</span></div>
+    <div class="row"><button class="chip" aria-pressed="true">Activo</button><button class="chip" aria-pressed="false">Inactivo</button><button class="chip" aria-pressed="false">{{icon:filter:icon--sm}}Filtro</button></div>
+    <div class="row"><span class="avatar avatar--sm">MR</span><span class="avatar">MR</span><span class="avatar avatar--lg">MR</span></div>
+    <p class="text-label" style="margin:0">Regla: el color nunca va solo. Toda insignia lleva texto. #25D366 solo en el icono del canal WhatsApp.</p>
+  </div></section>
+
+  <section id="tarjetas"><h2 class="card__title" style="margin-bottom:var(--sp-3)">Tarjetas</h2><div class="grid-3">
+    <div class="card kpi"><span class="text-label">Ventas de hoy</span>{{money:1248:36.52:money--lg}}<span class="delta delta--up num">{{icon:arrow-up:icon--sm}}+8,2 %</span></div>
+    <div class="card"><div class="card__header"><h3 class="card__title">Con encabezado</h3><button class="btn btn--ghost btn--sm">Ver</button></div><div class="card__body"><dl class="dl"><dt>Cliente</dt><dd>Taller Los Andes</dd><dt>Equipo</dt><dd>Samsung A14</dd><dt>Estado</dt><dd><span class="badge badge--info">En diagnostico</span></dd></dl></div><div class="card__footer"><button class="btn btn--secondary btn--sm">Cancelar</button><button class="btn btn--primary btn--sm">Guardar</button></div></div>
+    <div class="card card--interactive" tabindex="0" role="button"><div class="card__body"><b>Tarjeta interactiva</b><p class="text-secondary" style="margin:var(--sp-1) 0 0">Borde de marca al pasar el cursor.</p></div></div>
+  </div></section>
+
+  <section class="card" id="tablas"><div class="card__header"><h2 class="card__title">Tablas</h2></div><div class="demo">
+    <h3>Completa: barra de herramientas, orden, seleccion, acciones, pie</h3>
+    <div class="table-wrap">
+      <div class="table-toolbar"><div class="input-icon grow" style="max-width:320px">{{icon:search}}<input class="input" placeholder="Buscar" aria-label="Buscar"></div><button class="chip" aria-pressed="false">{{icon:filter:icon--sm}}Estado</button><button class="chip" aria-pressed="false">{{icon:calendar:icon--sm}}Hoy</button><span class="grow"></span><button class="btn btn--secondary">{{icon:download}}Exportar</button><button class="btn btn--primary">{{icon:plus}}Nueva</button></div>
+      <div class="bulk-bar"><span>2 seleccionados</span><button class="btn btn--secondary btn--sm">{{icon:printer:icon--sm}}Imprimir</button><button class="btn btn--secondary btn--sm">{{icon:send:icon--sm}}Enviar por WhatsApp</button></div>
+      <table class="table">
+        <thead><tr><th style="width:32px"><label class="check" style="min-height:0"><input type="checkbox" aria-label="Seleccionar todos" id="all"></label></th><th aria-sort="ascending">Documento {{icon:arrow-up}}</th><th aria-sort="none">Cliente {{icon:chevrons-up-down}}</th><th>Estado</th><th class="num" aria-sort="none">Total {{icon:chevrons-up-down}}</th><th><span class="sr-only">Acciones</span></th></tr></thead>
+        <tbody>
+          <tr aria-selected="true"><td><label class="check" style="min-height:0"><input type="checkbox" checked aria-label="Seleccionar F-00231"></label></td><td>F-00231</td><td><span class="cell-two">Taller Los Andes<small>J-30123456-7</small></span></td><td><span class="badge badge--success">Pagado</span></td><td class="num">{{money:240:36.52:money--right}}</td><td class="actions"><button class="btn btn--ghost btn--icon btn--sm" aria-label="Acciones">{{icon:ellipsis}}</button></td></tr>
+          <tr aria-selected="true"><td><label class="check" style="min-height:0"><input type="checkbox" checked aria-label="Seleccionar F-00230"></label></td><td>F-00230</td><td><span class="cell-two">Distribuidora Caribe<small>J-40222333-1</small></span></td><td><span class="badge badge--warning">Pendiente</span></td><td class="num">{{money:1180:36.52:money--right}}</td><td class="actions"><button class="btn btn--ghost btn--icon btn--sm" aria-label="Acciones">{{icon:ellipsis}}</button></td></tr>
+          <tr><td><label class="check" style="min-height:0"><input type="checkbox" aria-label="Seleccionar F-00229"></label></td><td>F-00229</td><td><span class="cell-two">M. Rodriguez<small>V-12345678</small></span></td><td><span class="badge badge--error">Vencido</span></td><td class="num">{{money:96.5:36.52:money--right}}</td><td class="actions"><button class="btn btn--ghost btn--icon btn--sm" aria-label="Acciones">{{icon:ellipsis}}</button></td></tr>
+        </tbody>
+      </table>
+      <div class="table-footer"><span>1-3 de 248</span><div class="pagination"><button class="btn btn--secondary btn--icon btn--sm" aria-label="Anterior" disabled>{{icon:chevron-left:icon--sm}}</button><button class="btn btn--secondary btn--sm" aria-current="page">1</button><button class="btn btn--secondary btn--sm">2</button><button class="btn btn--secondary btn--sm">3</button><button class="btn btn--secondary btn--icon btn--sm" aria-label="Siguiente">{{icon:chevron-right:icon--sm}}</button></div></div>
+    </div>
+    <div class="grid-2">
+      <div><h3>Cargando</h3><div class="table-wrap"><table class="table"><tbody><tr><td><span class="skeleton" style="width:60%"></span></td><td><span class="skeleton" style="width:40%"></span></td></tr><tr><td><span class="skeleton" style="width:50%"></span></td><td><span class="skeleton" style="width:70%"></span></td></tr><tr><td><span class="skeleton" style="width:65%"></span></td><td><span class="skeleton" style="width:30%"></span></td></tr></tbody></table></div></div>
+      <div><h3>Vacia</h3><div class="table-wrap"><div class="empty">{{icon:file-text}}<h3>Aun no hay facturas</h3><p style="margin:0">Crea la primera venta para verla aqui.</p><button class="btn btn--primary" style="margin-top:var(--sp-2)">{{icon:plus}}Nueva venta</button></div></div></div>
+    </div>
+  </div></section>
+
+  <section class="card" id="navegacion"><div class="card__header"><h2 class="card__title">Navegacion de contenido y progreso</h2></div><div class="demo">
+    <ol class="breadcrumbs"><li><a href="#">Inicio</a></li><li><a href="#">Servicio tecnico</a></li><li>OS-0412</li></ol>
+    <div class="tabs" role="tablist"><button class="tab" role="tab" aria-selected="true">Resumen</button><button class="tab" role="tab" aria-selected="false">Historial {{icon:clock:icon--sm}}</button><button class="tab" role="tab" aria-selected="false">Pagos <span class="badge">2</span></button><button class="tab" role="tab" aria-selected="false" disabled>Garantia</button></div>
+    <h3>Linea de estados (orden de servicio)</h3>
+    <ol class="pipeline"><li class="is-done">Recibido</li><li class="is-done">Diagnostico</li><li class="is-current">Presupuesto</li><li>Reparacion</li><li>Listo</li><li>Entregado</li></ol>
+    <h3>Cronologia</h3>
+    <ul class="timeline" style="max-width:480px"><li class="is-done"><span class="pt"></span><div>Pedido recibido<div class="text-label">Registrado por Maria</div></div><time>08:05</time></li><li class="is-current"><span class="pt"></span><div>En ruta<div class="text-label">Luis Perez · AB123CD</div></div><time>10:12</time></li><li><span class="pt"></span><div class="text-secondary">Entrega estimada</div><time>10:42</time></li></ul>
+    <h3>Progreso</h3><div class="progress" style="max-width:320px" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" aria-label="Progreso"><i style="width:60%"></i></div>
+  </div></section>
+
+  <section class="card" id="overlays"><div class="card__header"><h2 class="card__title">Overlays</h2><span class="text-label">Mostrados en linea (is-static)</span></div><div class="demo">
+    <div class="frame"><div class="modal modal--sm is-static" role="dialog" aria-labelledby="mt"><div class="modal__header"><div class="row" style="flex-wrap:nowrap;align-items:flex-start"><span class="modal__icon">{{icon:triangle-alert}}</span><div><h3 class="modal__title" id="mt">Anular factura F-00230</h3><p class="text-secondary" style="margin:var(--sp-1) 0 0">Esta accion no se puede deshacer. Se repondra el inventario.</p></div></div></div><div class="modal__footer"><button class="btn btn--secondary">Cancelar</button><button class="btn btn--danger">Anular factura</button></div></div></div>
+    <div class="grid-3">
+      <div><h3>Menu</h3><div class="menu is-static"><button class="menu__item">{{icon:eye:icon--sm}}Ver detalle</button><button class="menu__item">{{icon:pencil:icon--sm}}Editar<span class="kbd">E</span></button><button class="menu__item">{{icon:copy:icon--sm}}Duplicar</button><div class="menu__sep"></div><button class="menu__item menu__item--danger">{{icon:trash-2:icon--sm}}Eliminar</button></div></div>
+      <div><h3>Tooltip y popover</h3><div class="stack"><span class="tooltip" style="justify-self:start">Imprimir (Ctrl+P)</span><div class="popover is-static" style="position:relative"><b>Tasa BCV</b><p class="text-secondary" style="margin:var(--sp-1) 0 0">Actualizada hoy 08:05</p></div></div></div>
+      <div><h3>Notificaciones</h3><div class="stack" style="gap:var(--sp-2)"><div class="toast toast--success"><span class="icon-wrap">{{icon:circle-check}}</span><div><b>Venta registrada</b><div class="text-label">F-00232 · $28,00</div></div></div><div class="toast toast--warning">{{icon:triangle-alert}}<div><b>Stock bajo</b><div class="text-label">Pantalla Samsung A14: 3</div></div></div><div class="toast toast--error">{{icon:circle-x}}<div><b>No se pudo sincronizar</b><div class="text-label">Reintentando en 30 s</div></div></div><div class="toast toast--info">{{icon:info}}<div><b>Nueva tasa BCV</b><div class="text-label">Bs 36,52</div></div></div></div></div>
+    </div>
+    <div class="frame" style="min-height:300px;place-items:stretch end;padding:0"><div class="drawer is-static" style="height:300px"><div class="modal__header"><h3 class="modal__title">Detalle del cliente</h3><button class="btn btn--ghost btn--icon btn--sm" aria-label="Cerrar">{{icon:x}}</button></div><div class="modal__body"><dl class="dl"><dt>Nombre</dt><dd>Taller Los Andes</dd><dt>RIF</dt><dd>J-30123456-7</dd></dl></div><div class="modal__footer"><button class="btn btn--secondary">Cerrar</button><button class="btn btn--primary">Editar</button></div></div></div>
+  </div></section>
+
+  <section class="card" id="feedback"><div class="card__header"><h2 class="card__title">Feedback</h2></div><div class="demo">
+    <div class="alert alert--info">{{icon:info}}<div><p class="alert__title">Informacion</p><p>Mensaje neutro para el usuario.</p></div></div>
+    <div class="alert alert--success">{{icon:circle-check}}<div><p class="alert__title">Exito</p><p>Cambios guardados correctamente.</p></div></div>
+    <div class="alert alert--warning">{{icon:triangle-alert}}<div><p class="alert__title">Advertencia</p><p>La tasa BCV no se actualizo hoy.</p></div></div>
+    <div class="alert alert--error">{{icon:circle-x}}<div><p class="alert__title">Error</p><p>No se pudo guardar. Revisa los campos marcados.</p></div></div>
+    <div class="row"><span class="spinner" role="status" aria-label="Cargando"></span><span class="text-secondary">Cargando...</span></div>
+  </div></section>
+
+  <section class="card" id="erp"><div class="card__header"><h2 class="card__title">Dominio ERP</h2></div><div class="demo">
+    <h3>Moneda dual (generada con ErpFormat)</h3>
+    <div class="row" style="gap:var(--sp-8)">{{money:1248}} {{money:1248:36.52:money--lg}} {{money:1248:36.52:money--xl}} {{money:-96.5:36.52:money--neg}}</div>
+    <h3>Tasa BCV</h3><div class="row" style="gap:var(--sp-6)"><span class="rate">Tasa BCV <b class="num">Bs 36,52</b></span><span class="rate is-stale">Tasa BCV <b class="num">Bs 36,52</b> · del 07/10 {{icon:triangle-alert:icon--sm}}</span></div>
+    <h3>Estado de conexion (cabecera)</h3><div class="row" style="gap:var(--sp-6)"><span class="conn conn--online">En linea, sincronizado</span><span class="conn conn--syncing">Sincronizando...</span><span class="conn conn--offline">Sin conexion <span class="count">7</span></span></div>
+    <h3>Conversacion de WhatsApp (unico lugar con #25D366 como superficie)</h3>
+    <div class="chat" style="max-width:420px;border-radius:var(--radius-card)"><div class="bubble">Hola, ya esta listo mi equipo?<time>10:41</time></div><div class="bubble bubble--out">Hola! Su Samsung A14 esta listo. Total $55,00<time>10:43 {{icon:check:icon--sm}}</time></div></div>
+  </div></section>
+
+  <section class="card" id="pos"><div class="card__header"><h2 class="card__title">POS - componentes tactiles</h2><a class="link" href="pos.html">Ver pantalla completa</a></div><div class="demo">
+    <div class="grid-4"><button class="tile"><span class="tile__name">Cargador USB-C 20W</span><span>{{money:12.5}}</span><span class="tile__stock">48 en stock</span></button><button class="tile"><span class="tile__name">Pantalla A14</span><span>{{money:38}}</span><span class="badge badge--warning">Stock bajo: 3</span></button><button class="tile is-out" disabled><span class="tile__name">Estuche Redmi</span><span>{{money:4.5}}</span><span class="badge badge--error">Sin stock</span></button><button class="tile is-selected"><span class="tile__name">Seleccionado</span><span>{{money:3}}</span></button></div>
+    <div class="grid-3"><div class="stack" style="gap:var(--sp-2)"><div class="display-lcd num">$28,00</div><div class="keypad"><button>7</button><button>8</button><button>9</button><button>4</button><button>5</button><button>6</button><button>1</button><button>2</button><button>3</button><button>0</button><button>,</button><button aria-label="Borrar">{{icon:delete}}</button></div></div><div class="stack" style="gap:var(--sp-2)"><div class="pay-methods"><button class="pay-method" aria-pressed="true">{{icon:banknote}}Efectivo USD</button><button class="pay-method" aria-pressed="false">{{icon:wallet}}Pago movil</button><button class="pay-method" aria-pressed="false">{{icon:credit-card}}Punto</button><button class="pay-method" aria-pressed="false">{{icon:hand-coins}}Mixto</button></div><button class="btn btn--primary btn--touch btn--block">Cobrar $28,00</button></div><div class="stack" style="gap:var(--sp-2)"><div class="totals-row"><span class="text-secondary">Subtotal</span><span class="num">$28,00</span></div><div class="totals-row totals-row--grand"><span>Total</span>{{money:28:36.52:money--right money--lg}}</div></div></div>
+  </div></section>
+
+  <section class="card" id="mapa"><div class="card__header"><h2 class="card__title">Mapa y delivery</h2><a class="link" href="delivery.html">Ver pantalla completa</a></div><div class="demo">
+    <h3>Marcadores de vehiculo (siempre con icono; en listas, ademas texto de estado)</h3>
+    <div class="row" style="gap:var(--sp-8);padding:var(--sp-3) var(--sp-4) var(--sp-5)">
+      <div class="stack" style="justify-items:center;gap:var(--sp-3)"><span class="marker marker--moving">{{icon:truck:icon--sm}}</span><span class="badge badge--info">En ruta</span></div>
+      <div class="stack" style="justify-items:center;gap:var(--sp-3)"><span class="marker marker--stopped">{{icon:pause:icon--sm}}</span><span class="badge badge--warning">Detenido</span></div>
+      <div class="stack" style="justify-items:center;gap:var(--sp-3)"><span class="marker marker--offline">{{icon:wifi-off:icon--sm}}</span><span class="badge">Sin senal</span></div>
+      <div class="stack" style="justify-items:center;gap:var(--sp-3)"><span class="marker marker--delivered">{{icon:package-check:icon--sm}}</span><span class="badge badge--success">Entregado</span></div>
+      <div class="stack" style="justify-items:center;gap:var(--sp-3)"><span class="marker marker--incident">{{icon:triangle-alert:icon--sm}}</span><span class="badge badge--error">Incidencia</span></div>
+      <div class="stack" style="justify-items:center;gap:var(--sp-3)"><span class="marker marker--moving marker--selected">{{icon:truck:icon--sm}}</span><span class="text-label">Seleccionado</span></div>
+      <div class="stack" style="justify-items:center;gap:var(--sp-3)"><span class="marker marker--moving marker--stale">{{icon:truck:icon--sm}}</span><span class="text-label">Posicion antigua</span></div>
+    </div>
+    <h3>Paradas, senal, ETA</h3>
+    <div class="row" style="gap:var(--sp-6)"><span class="stop stop--done">{{icon:check:icon--sm}}</span><span class="stop stop--next">3</span><span class="stop">4</span><span class="stop stop--failed">{{icon:x:icon--sm}}</span><span class="eta"><b>14</b><span class="text-label">min</span></span><span class="signal" data-level="4" role="img" aria-label="Senal fuerte"><i></i><i></i><i></i><i></i></span><span class="signal" data-level="2" role="img" aria-label="Senal media"><i></i><i></i><i></i><i></i></span><span class="signal" data-level="0" role="img" aria-label="Sin senal"><i></i><i></i><i></i><i></i></span></div>
+    <h3>Tarjeta de vehiculo</h3><div class="card card--flush" style="max-width:360px"><div class="vehicle-card" aria-current="true"><span class="marker marker--moving">{{icon:truck:icon--sm}}</span><div><div style="font-weight:500">Luis Perez · AB123CD</div><div class="text-label">Parada 3 de 5 · <span class="badge badge--info">En ruta</span></div></div><div class="eta"><b>14</b><span class="text-label">min</span></div></div></div>
+    <p class="text-label" style="margin:0">Estilo del mapa: <code>maps/google-map-style.json</code>. Integracion y reglas de Google Maps: <code>maps/README.md</code>.</p>
+  </div></section>
+
+  <section id="graficas"><h2 class="card__title" style="margin-bottom:var(--sp-3)">Graficas</h2><div class="grid-2"><div id="c1"></div><div id="c2"></div></div></section>
+
+  <section class="card" id="iconos"><div class="card__header"><h2 class="card__title">Iconos (Lucide, trazo 1,75)</h2><span class="text-label">16 / 20 / 24 px · heredan el color del texto</span></div><div class="demo"><div class="sw-grid" id="icons"></div></div></section>
+</main>
+<script src="../components/charts.js"></script>
+<script src="../lib/format.js"></script>
+<script>
+  const s = getComputedStyle(document.documentElement);
+  const names = ['primary','primary-hover','primary-subtle','sidebar','background','surface','border','border-input','text-primary','text-secondary','success','success-text','success-bg','warning','warning-text','warning-bg','error','error-text','error-bg','info','info-text','info-bg','whatsapp','whatsapp-bg','chart-1','chart-2','chart-3','chart-other'];
+  document.getElementById('sw').innerHTML = names.map((n) => { const v = s.getPropertyValue('--color-' + n).trim(); return `<div class="sw"><i style="background:var(--color-${n})"></i><span><b>${n}</b>${v}</span></div>`; }).join('');
+  document.getElementById('icons').innerHTML = [...document.querySelectorAll('symbol')].map((y) => `<div class="sw" style="padding:var(--sp-2);display:flex;gap:var(--sp-2);align-items:center"><svg class="icon icon--lg"><use href="#${y.id}"/></svg><span style="padding:0">${y.id.slice(2)}</span></div>`).join('');
+  document.getElementById('ind').indeterminate = true;
+  document.getElementById('den').addEventListener('change', (e) => document.documentElement.setAttribute('data-density', e.target.value));
+  ErpCharts.bar(document.getElementById('c1'), { level: 3, title: 'Una serie: ventas por dia', sub: 'USD, ultimos 7 dias', name: 'Ventas (USD)', xLabel: 'Dia', labels: ['Lun','Mar','Mie','Jue','Vie','Sab','Dom'], values: [620,840,710,1020,930,1248,480], fmt: ErpFormat.usd });
+  ErpCharts.line(document.getElementById('c2'), { level: 3, title: 'Tres series: ventas por canal', sub: 'USD, 8 semanas', xLabel: 'Semana', labels: ['S1','S2','S3','S4','S5','S6','S7','S8'], fmt: ErpFormat.usd, series: [{ name: 'Mostrador', values: [900,980,940,1100,1180,1150,1260,1320] }, { name: 'Mayor', values: [620,700,760,720,840,900,880,960] }, { name: 'Taller', values: [300,280,350,330,390,420,410,450] }] });
+</script>
+</body>
+</html>

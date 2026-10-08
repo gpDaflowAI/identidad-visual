@@ -1,0 +1,2 @@
+Iconos de Lucide (https://lucide.dev), licencia ISC. Copyright (c) Lucide Icons and Contributors.
+Se usan con stroke="currentColor", 24px, trazo 2 (1.75 en la hoja de estilos).
