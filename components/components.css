@@ -106,7 +106,7 @@ body {
 .qty button:hover { background: var(--color-primary-subtle); }
 .qty input { width: 48px; text-align: center; border: 0; font: inherit; font-weight: 600; font-variant-numeric: tabular-nums; background: transparent; height: var(--density-control); }
 .qty--touch button, .qty--touch input { height: var(--size-touch); } .qty--touch button { width: var(--size-touch); }
-.form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-4) var(--sp-6); }
+.form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-4) var(--sp-6); align-items: start; }
 .form-grid .span-2 { grid-column: span 2; }
 .fieldset { border: 1px solid var(--color-border); border-radius: var(--radius-card); padding: var(--sp-4); background: var(--color-surface); }
 .fieldset > legend { padding: 0 var(--sp-2); font-weight: 600; }
@@ -229,8 +229,6 @@ body {
 .app { display: grid; grid-template-columns: var(--space-sidebar-width) minmax(0, 1fr); min-height: 100vh; }
 .app--collapsed { grid-template-columns: var(--size-sidebar-collapsed) minmax(0, 1fr); }
 .sidebar { background: var(--color-sidebar); color: var(--color-sidebar-text); padding: var(--sp-4) var(--sp-3); position: sticky; top: 0; height: 100vh; align-self: start; overflow-y: auto; display: flex; flex-direction: column; gap: var(--sp-1); }
-.sidebar__brand { display: flex; align-items: center; gap: var(--sp-2); font-weight: 600; font-size: 1.25rem; padding: var(--sp-2) var(--sp-3) var(--sp-5); }
-.sidebar__brand img { max-height: 28px; max-width: 150px; }
 .sidebar__group { padding: var(--sp-4) var(--sp-3) var(--sp-1); font-size: .6875rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--color-sidebar-text-muted); }
 .nav-item { display: flex; align-items: center; gap: var(--sp-3); height: 40px; padding: 0 var(--sp-3); border-radius: var(--radius-control); color: var(--color-sidebar-text-muted); text-decoration: none; font-weight: 500; }
 .nav-item:hover { background: rgba(255, 255, 255, .08); color: var(--color-sidebar-text); }
@@ -239,7 +237,7 @@ body {
 .nav-item .count { margin-left: auto; }
 .sidebar__footer { margin-top: auto; padding-top: var(--sp-4); border-top: 1px solid rgba(255, 255, 255, .16); }
 .app--collapsed .sidebar { padding-inline: var(--sp-2); } .app--collapsed .nav-item { justify-content: center; padding: 0; } .app--collapsed .sidebar__group { display: none; }
-.app--collapsed .nav-item span, .app--collapsed .sidebar__brand span { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } /* visibles solo para lectores de pantalla */
+.app--collapsed .nav-item span { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } /* visibles solo para lectores de pantalla */
 .header { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-4); height: var(--size-header-height); padding: 0 var(--sp-6); background: var(--color-surface); border-bottom: 1px solid var(--color-border); position: sticky; top: 0; z-index: var(--z-sticky); }
 .header__meta { display: flex; align-items: center; gap: var(--sp-5); }
 .main { padding: var(--sp-6); display: grid; gap: var(--space-gutter); align-content: start; width: 100%; max-width: var(--space-container-max); margin: 0 auto; }
@@ -372,3 +370,37 @@ body {
 .table tbody tr:hover, .table tr[aria-selected="true"], .vehicle-card:hover, .vehicle-card[aria-current="true"], .bulk-bar, .menu__item:hover,
 .settings__nav a:hover, .settings__nav a[aria-current="true"], .card--interactive:hover, .chip:hover, .chip[aria-pressed="true"], .btn--secondary:hover, .btn--ghost:hover,
 .tile:active, .dropzone:hover, .dropzone.is-over, .pay-method[aria-pressed="true"], .bubble--out { --color-text-secondary: var(--color-text-secondary-strong); }
+
+/* Marca del cliente (nombre y logo): ranuras que se llenan desde Configuracion. Ver theme/theme.js (applyBranding).
+   Sin logo -> monograma + nombre. Con logo -> solo el logo (el nombre queda para lectores de pantalla). Colapsado -> marca/monograma. */
+.brand { display: flex; align-items: center; gap: var(--sp-2); min-width: 0; }
+.brand__logo { display: block; max-height: 28px; max-width: 160px; width: auto; height: auto; }
+.brand__mark { width: 32px; height: 32px; flex: none; border-radius: var(--radius-control); background: rgba(255, 255, 255, .14); color: var(--color-sidebar-text); display: grid; place-items: center; font-weight: 600; font-size: var(--font-label-xs-size); overflow: hidden; }
+.brand__mark img { width: 100%; height: 100%; object-fit: contain; }
+.brand__name { font-weight: 600; font-size: 1.125rem; line-height: 1.5rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.sidebar__brand { padding: var(--sp-2) var(--sp-3) var(--sp-5); }
+.sidebar__brand.has-logo .brand__mark { display: none; }
+.sidebar__brand.has-logo .brand__name, .app--collapsed .brand__name { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.app--collapsed .sidebar__brand { justify-content: center; padding-inline: 0; }
+.app--collapsed .brand__logo { display: none; }
+.app--collapsed .sidebar__brand.has-logo .brand__mark { display: grid; }
+.brand--light .brand__mark { background: var(--color-primary-subtle); color: var(--color-primary); }
+.brand--light .brand__name { color: var(--color-text-primary); }
+.brand--lg .brand__mark { width: 48px; height: 48px; font-size: 1.125rem; } .brand--lg .brand__name { font-size: 1.5rem; line-height: 2rem; } .brand--lg .brand__logo { max-height: 44px; max-width: 240px; }
+.logo-slot { border: 1px solid var(--color-border); border-radius: var(--radius-card); background: var(--color-surface); overflow: hidden; display: grid; align-content: start; }
+.logo-slot__preview { height: 88px; display: grid; place-items: center; background: var(--color-background); padding: var(--sp-3); border-bottom: 1px solid var(--color-border); }
+.logo-slot__preview--dark { background: var(--color-sidebar); color: var(--color-sidebar-text-muted); }
+.logo-slot__preview img { max-width: 100%; max-height: 56px; }
+.logo-slot__body { padding: var(--sp-3); display: grid; gap: var(--sp-2); }
+.btn:focus-within { outline: 2px solid var(--color-focus-ring); outline-offset: 2px; } /* boton con <input type=file> oculto */
+
+/* Marca sin configurar = skeleton (silueta de marca + barra de nombre). Estatico si no hay marca; con brillo mientras carga (.is-loading). */
+.brand__skeleton { display: flex; align-items: center; gap: var(--sp-2); }
+.brand__sk-mark { width: 32px; height: 32px; border-radius: var(--radius-control); flex: none; } .brand__sk-name { width: 96px; height: 14px; }
+.brand--lg .brand__sk-mark { width: 48px; height: 48px; } .brand--lg .brand__sk-name { width: 140px; height: 20px; }
+.brand .skeleton { animation: none; } .brand.is-loading .skeleton { animation: shimmer 1.2s linear infinite; }
+.brand.is-empty .brand__mark, .brand.is-empty .brand__name, .brand.is-empty .brand__logo { display: none; }
+.brand:not(.is-empty) .brand__skeleton, .brand:not(.is-empty) [data-brand-empty] { display: none; }
+.app--collapsed .brand__sk-name { display: none; }
+.sidebar .skeleton, .logo-slot__preview--dark .skeleton { background: linear-gradient(90deg, rgba(255, 255, 255, .14) 25%, rgba(255, 255, 255, .26) 50%, rgba(255, 255, 255, .14) 75%); background-size: 200% 100%; }
+@media (prefers-reduced-motion: reduce) { .brand.is-loading .skeleton { animation: none; } }

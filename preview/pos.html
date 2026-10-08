@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" data-page-title="Punto de venta">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="../tokens/tokens.css">
 <link rel="stylesheet" href="../components/components.css">
 
-<title>ERP - Punto de venta</title>
+<title>Punto de venta</title>
 </head>
 <body>
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
@@ -266,7 +266,13 @@
 
 <div class="app app--collapsed">
   <aside class="sidebar" aria-label="Navegacion principal">
-  <div class="sidebar__brand"><span>ERP</span></div>
+  <div class="sidebar__brand brand is-empty" data-brand>
+    <img class="brand__logo" data-brand-logo="onDark" alt="" hidden>
+    <span class="brand__mark" data-brand-mark aria-hidden="true"><span data-brand-initials></span><img data-brand-mark-img alt="" hidden></span>
+    <span class="brand__name" data-brand-name></span>
+    <span class="brand__skeleton" aria-hidden="true"><i class="skeleton brand__sk-mark"></i><i class="skeleton brand__sk-name"></i></span>
+    <span class="sr-only" data-brand-empty>Marca sin configurar</span>
+  </div>
   <nav>
     <a class="nav-item" href="index.html" data-id="inicio"><svg class="icon" aria-hidden="true"><use href="#i-layout-dashboard"/></svg><span>Inicio</span></a>
     <a class="nav-item" href="#" data-id="ventas"><svg class="icon" aria-hidden="true"><use href="#i-receipt"/></svg><span>Ventas</span></a>

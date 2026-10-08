@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" data-page-title="Catalogo de componentes">
 <head>
 {{include:head}}
-<title>ERP - Catalogo de componentes</title>
+<title>Catalogo de componentes</title>
 <style>
   .doc { max-width: var(--space-container-max); margin: 0 auto; padding: var(--sp-6); display: grid; gap: var(--sp-6); }
   .doc nav.toc { position: sticky; top: 0; z-index: var(--z-sticky); background: var(--color-background); padding: var(--sp-2) 0; display: flex; gap: var(--sp-2); flex-wrap: wrap; border-bottom: 1px solid var(--color-border); }
@@ -26,7 +26,7 @@
     <div class="row"><label class="text-label" for="den">Densidad</label><select class="select" id="den" style="width:auto"><option value="compact">Compacta</option><option value="comfortable">Comoda</option></select></div>
   </header>
   <nav class="toc" aria-label="Indice">
-    <a class="chip" href="#fundamentos">Fundamentos</a><a class="chip" href="#botones">Botones</a><a class="chip" href="#formularios">Formularios</a><a class="chip" href="#etiquetas">Etiquetas</a><a class="chip" href="#tarjetas">Tarjetas</a><a class="chip" href="#tablas">Tablas</a><a class="chip" href="#navegacion">Navegacion</a><a class="chip" href="#overlays">Overlays</a><a class="chip" href="#feedback">Feedback</a><a class="chip" href="#erp">Dominio ERP</a><a class="chip" href="#pos">POS</a><a class="chip" href="#mapa">Mapa y delivery</a><a class="chip" href="#graficas">Graficas</a><a class="chip" href="#iconos">Iconos</a>
+    <a class="chip" href="#fundamentos">Fundamentos</a><a class="chip" href="#marca">Marca del cliente</a><a class="chip" href="#botones">Botones</a><a class="chip" href="#formularios">Formularios</a><a class="chip" href="#etiquetas">Etiquetas</a><a class="chip" href="#tarjetas">Tarjetas</a><a class="chip" href="#tablas">Tablas</a><a class="chip" href="#navegacion">Navegacion</a><a class="chip" href="#overlays">Overlays</a><a class="chip" href="#feedback">Feedback</a><a class="chip" href="#erp">Dominio ERP</a><a class="chip" href="#pos">POS</a><a class="chip" href="#mapa">Mapa y delivery</a><a class="chip" href="#graficas">Graficas</a><a class="chip" href="#iconos">Iconos</a>
   </nav>
 
   <section class="card" id="fundamentos"><div class="card__header"><h2 class="card__title">Fundamentos</h2></div><div class="demo">
@@ -36,6 +36,30 @@
     <div><table class="table"><tbody><tr><td>Sin tabulares</td><td style="text-align:right;font-variant-numeric:normal">1.111,11</td></tr><tr><td>Sin tabulares</td><td style="text-align:right;font-variant-numeric:normal">8.888,88</td></tr><tr><td>Tabulares (obligatorio)</td><td class="num">1.111,11</td></tr><tr><td>Tabulares (obligatorio)</td><td class="num">8.888,88</td></tr></tbody></table></div></div>
     <h3>Radios y elevacion</h3>
     <div class="row"><div class="card" style="padding:var(--sp-3)">Tarjeta 10 px, borde</div><button class="btn btn--secondary">Control 6 px</button><span class="badge badge--brand">Insignia 4 px</span><div class="menu is-static" style="min-width:auto"><div class="menu__item">Overlay: unica sombra</div></div></div>
+  </div></section>
+
+  <section class="card" id="marca"><div class="card__header"><h2 class="card__title">Marca del cliente: nombre y logo</h2><span class="text-label">Ranuras que configura el cliente en Configuracion</span></div><div class="demo">
+    <h3>Menu lateral: estados de la ranura</h3>
+    <div class="grid-4">
+      <div class="stack" style="gap:var(--sp-2)"><div class="sidebar" style="position:static;height:auto;border-radius:var(--radius-card)"><div class="sidebar__brand brand is-empty" style="padding-bottom:var(--sp-2)"><span class="brand__skeleton" aria-hidden="true"><i class="skeleton brand__sk-mark"></i><i class="skeleton brand__sk-name"></i></span><span class="sr-only">Marca sin configurar</span></div></div><span class="text-label">1. Sin configurar: skeleton estatico</span></div>
+      <div class="stack" style="gap:var(--sp-2)"><div class="sidebar" style="position:static;height:auto;border-radius:var(--radius-card)"><div class="sidebar__brand brand is-empty is-loading" style="padding-bottom:var(--sp-2)"><span class="brand__skeleton" aria-hidden="true"><i class="skeleton brand__sk-mark"></i><i class="skeleton brand__sk-name"></i></span><span class="sr-only">Cargando marca</span></div></div><span class="text-label">2. Cargando la configuracion: skeleton con brillo</span></div>
+      <div class="stack" style="gap:var(--sp-2)"><div class="sidebar" style="position:static;height:auto;border-radius:var(--radius-card)"><div class="sidebar__brand brand" style="padding-bottom:var(--sp-2)"><span class="brand__mark" aria-hidden="true"><span>TL</span></span><span class="brand__name">Taller Los Andes</span></div></div><span class="text-label">3. Solo nombre: monograma + nombre</span></div>
+      <div class="stack" style="gap:var(--sp-2)"><div class="sidebar" style="position:static;height:auto;border-radius:var(--radius-card)"><div class="sidebar__brand brand has-logo" style="padding-bottom:var(--sp-2)"><img class="brand__logo" src="assets/logo-demo-dark.svg" alt=""><span class="brand__mark" aria-hidden="true"><span>TL</span></span><span class="brand__name">Taller Los Andes</span></div></div><span class="text-label">4. Con logo: solo el logo (nombre solo para lectores de pantalla)</span></div>
+    </div>
+    <h3>Menu colapsado y fondo claro (login, documentos)</h3>
+    <div class="row" style="align-items:flex-start;gap:var(--sp-6)">
+      <div class="stack" style="gap:var(--sp-2);width:96px"><div class="app--collapsed" style="display:block"><div class="sidebar" style="position:static;height:auto;border-radius:var(--radius-card);padding-inline:var(--sp-2)"><div class="sidebar__brand brand is-empty" style="padding-bottom:var(--sp-2)"><span class="brand__skeleton" aria-hidden="true"><i class="skeleton brand__sk-mark"></i></span></div></div></div><span class="text-label">Vacio</span></div>
+      <div class="stack" style="gap:var(--sp-2);width:96px"><div class="app--collapsed" style="display:block"><div class="sidebar" style="position:static;height:auto;border-radius:var(--radius-card);padding-inline:var(--sp-2)"><div class="sidebar__brand brand has-logo" style="padding-bottom:var(--sp-2)"><img class="brand__logo" src="assets/logo-demo-dark.svg" alt=""><span class="brand__mark" aria-hidden="true"><img src="assets/mark-demo.svg" alt=""></span><span class="brand__name">Taller Los Andes</span></div></div></div><span class="text-label">Con isotipo</span></div>
+      <div class="stack" style="gap:var(--sp-2)"><div class="brand brand--light brand--lg"><span class="brand__skeleton" aria-hidden="true"><i class="skeleton brand__sk-mark"></i><i class="skeleton brand__sk-name"></i></span></div><div class="brand brand--light brand--lg"><span class="brand__mark" aria-hidden="true"><span>TL</span></span><span class="brand__name">Taller Los Andes</span></div><div class="brand brand--light brand--lg"><img class="brand__logo" src="assets/logo-demo-light.svg" alt="Taller Los Andes"></div><span class="text-label">Fondo claro: vacio, nombre, logo</span></div>
+    </div>
+    <h3>Especificacion de las ranuras</h3>
+    <div class="table-wrap"><table class="table"><thead><tr><th>Ranura</th><th>Donde se usa</th><th>Formato y tamano</th><th>Si falta</th></tr></thead><tbody>
+      <tr><td><b>Nombre</b></td><td>Menu lateral, pestana del navegador, documentos</td><td>Hasta 40 caracteres</td><td>Skeleton (sin inventar un nombre)</td></tr>
+      <tr><td><b>Logo fondo claro</b></td><td>Login, facturas y documentos impresos</td><td>SVG o PNG, alto maximo 44 px</td><td>Monograma + nombre; sin nombre, skeleton</td></tr>
+      <tr><td><b>Logo menu lateral</b></td><td>Menu lateral expandido</td><td>Blanco o claro; SVG o PNG transparente; alto 28 px, ancho 160 px max</td><td>Monograma + nombre</td></tr>
+      <tr><td><b>Isotipo</b></td><td>Menu colapsado, favicon, avatar</td><td>Cuadrado 1:1, minimo 128 px</td><td>Monograma de 1-2 letras; favicon con el color de marca</td></tr>
+    </tbody></table></div>
+    <p class="text-label" style="margin:0">Todos: SVG, PNG, JPG o WebP hasta 512 KB. Los SVG se rechazan si traen scripts, eventos o enlaces externos y solo se muestran con &lt;img&gt;. Aplicar con <code>ErpTheme.applyBranding(config)</code> al arrancar.</p>
   </div></section>
 
   <section class="card" id="botones"><div class="card__header"><h2 class="card__title">Botones</h2></div><div class="demo">

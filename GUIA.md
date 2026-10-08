@@ -27,7 +27,7 @@ No encontre skills externas que instalar. `small-business:brand-style` no aplica
 | 4. Componentes | `components/components.css`: ~15 familias, todos con estados (ver inventario en `DESIGN.md`) | axe-core: 0 violaciones en 5 paginas |
 | 5. Patrones ERP | Moneda dual (`lib/format.js`), tasa BCV, estado de conexion, registro sin sincronizar, linea de estados de orden de servicio, WhatsApp | Formato probado en `scripts/test-theme.mjs` |
 | 6. Plantilla y modulos | `modules/registry.json` + `module.schema.json`; Configuracion > Modulos; dependencias entre modulos e integraciones | Pagina `configuracion.html` |
-| 7. Tema configurable | `theme/theme.js`: el admin cambia marca/sidebar/densidad/logo; el motor corrige contraste y avisa | Pruebas con 10 colores; prueba en navegador |
+| 7. Tema y marca configurables | `theme/theme.js`: el admin cambia color, sidebar, densidad, **nombre y logo**; el motor corrige contraste, valida archivos y avisa | Pruebas con 10 colores; subida de logos validos e invalidos probada en navegador |
 | 8. POS | Tiles, carrito, totales, metodos de pago, teclado, controles de 48 px | `pos.html` |
 | 9. Delivery + Google Maps | Marcadores (5 estados), paradas, rutas, tarjeta de vehiculo, ETA, senal GPS; estilo de mapa generado desde tokens; `maps/markers.js` | `delivery.html` (maqueta). **Sin probar contra Google real** |
 | 10. Graficas | `components/charts.js` (barras y lineas con tooltip, leyenda, etiqueta directa, tabla) | Paleta validada con `dataviz` |
@@ -36,13 +36,10 @@ Hallazgos de accesibilidad ya resueltos: success/warning/info planos no pasan AA
 
 ## Lo que falta (PENDIENTE / TU DECISION)
 
-### A. Marca: nombre, logo, favicon - TU DECISION
-La spec solo dice "ERP". Necesito el nombre del producto y si ya hay logo o quieres un wordmark.
-- Recomendado: **wordmark en Inter SemiBold + isotipo simple de 1 color** (coherente con "sin decoracion").
-- 4 versiones: color sobre claro, **blanco sobre `sidebar`** (la mas visible), monocromo, isotipo solo (favicon 16/32/180). SVG como maestro.
-- Zona de respeto (alto de la "E") y tamano minimo (24 px en pantalla).
-- Antes de invertir: busca disponibilidad del nombre y dominio, y consulta propiedad intelectual (SAPI en Venezuela).
-- Tu panel ya tiene las tres ranuras de logo (claro / blanco para el menu / isotipo).
+### A. Marca del cliente: nombre, logo, favicon - HECHO (como ranuras)
+Nombre y logo **los configura cada cliente** en Configuracion, no se fijan en el producto. Hay 3 ranuras de logo (fondo claro / menu lateral / isotipo) mas el nombre, todas opcionales; sin configurar se muestra un **skeleton**. Se valida el archivo (formato, 512 KB, SVG sin scripts), la pagina, el titulo del navegador y el favicon siguen a la marca. Especificacion en `DESIGN.md` y estados en `preview/componentes.html`.
+- Pendiente de tu lado: la logica de **guardar** la configuracion (backend) y llamar a `ErpTheme.applyBranding(config)` al arrancar la app.
+- Recomendacion para tus clientes: pedirles SVG (version blanca para el menu lateral) y un isotipo cuadrado; un logo que se vea bien sobre `sidebar` es lo mas importante.
 
 ### B. Validar Google Maps con claves reales - PENDIENTE
 `maps/markers.js` sigue la API documentada pero no se ejecuto contra Google. Pasos: proyecto en Google Cloud con facturacion -> habilitar Maps JavaScript API y Routes API -> clave restringida por dominio -> crear estilo en la nube desde `maps/google-map-style.json` y un Map ID -> presupuesto y alertas de cuota. Detalle y decisiones (por que Map ID, Routes vs Directions) en `maps/README.md`.

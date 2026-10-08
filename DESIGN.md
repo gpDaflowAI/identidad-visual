@@ -159,9 +159,25 @@ El ERP es una **plantilla**: un nucleo (Inicio, Ventas, Inventario, Servicio tec
 
 | Configurable por el administrador | Derivado automaticamente | Bloqueado |
 |---|---|---|
-| Color de marca (`primary`), color del menu lateral, logo (claro / blanco / isotipo), nombre, densidad (40 o 48 px) | hover, fondo tenue, texto del sidebar, anillo de foco, rutas del mapa | Semanticos (exito/advertencia/error/info), WhatsApp, tipografia, radios, series de graficas |
+| Color de marca (`primary`), color del menu lateral, **nombre y logo (3 ranuras, opcionales)**, densidad (40 o 48 px) | hover, fondo tenue, texto del sidebar, anillo de foco, rutas del mapa | Semanticos (exito/advertencia/error/info), WhatsApp, tipografia, radios, series de graficas |
 
 `theme/theme.js` (`ErpTheme.deriveTheme`) **valida y corrige** el color elegido: si el contraste con texto blanco o sobre `surface` es menor a 4,5:1 lo oscurece y lo avisa; si el color se parece al verde o rojo de los estados, avisa que puede confundirse. Esquema de lo que se guarda: `theme/theme.schema.json`. Probado en `scripts/test-theme.mjs`.
+
+## Marca del cliente: nombre y logo (ranuras)
+
+El producto es una plantilla: **el cliente pone su nombre y su logo** en Configuracion. Mientras no lo haga, las ranuras no muestran un nombre inventado sino un **skeleton** (silueta de marca + barra de nombre; estatico si esta sin configurar, con brillo mientras carga la configuracion).
+
+| Ranura | Se usa en | Formato | Si falta |
+|---|---|---|---|
+| Nombre | Menu lateral, pestana del navegador, documentos | Hasta 40 caracteres | Skeleton |
+| Logo fondo claro | Login, facturas y documentos impresos | SVG o PNG, alto max 44 px | Monograma + nombre |
+| Logo menu lateral | Menu lateral expandido | Blanco o claro, SVG o PNG transparente, alto 28 px, ancho 160 px max | Monograma + nombre |
+| Isotipo | Menu colapsado, favicon, avatar | Cuadrado 1:1, minimo 128 px | Monograma de 1-2 letras; favicon con el color de marca |
+
+- Con logo se muestra **solo el logo**; el nombre queda como texto para lectores de pantalla (la imagen es decorativa).
+- Archivos: SVG, PNG, JPG o WebP, hasta 512 KB. Los SVG se **rechazan** si traen scripts, eventos o enlaces externos y se muestran solo con `<img>`, nunca inline. Si el logo es raster y pequeno, se avisa.
+- No hay forma de comprobar automaticamente que el logo "de menu lateral" se lea sobre el color elegido; la vista previa en vivo lo muestra y el panel avisa.
+- Aplicar al arrancar con `ErpTheme.applyBranding(config)`; validar subidas con `ErpTheme.validateLogoFile(file, slot)`. Esquema: `theme/theme.schema.json`. Estados en `preview/componentes.html` (seccion "Marca del cliente").
 
 ## Densidad y objetivos tactiles
 

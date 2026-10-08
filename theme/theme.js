@@ -2,6 +2,7 @@
  * Motor de tema del ERP. Lo usa el panel de configuracion.
  * El administrador elige SOLO: color de marca (primary), color de sidebar, densidad, nombre y logo.
  * Todo lo demas se deriva o esta bloqueado (semanticos, WhatsApp, tipografia).
+ * Nombre y logo son ranuras del cliente: vacias (skeleton) hasta que las configure; ver applyBranding / validateLogoFile.
  * Si un color elegido no es accesible, se CORRIGE y se avisa; nunca se aplica tal cual.
  * Funciona en navegador (globalThis.ErpTheme) y en Node (require).
  */
@@ -96,5 +97,93 @@
     el.setAttribute('data-density', result.density);
   }
 
-  return { deriveTheme, applyTheme, ratio, ensureContrast };
+
+  /* ---------------- Marca del cliente: nombre y logo (ranuras vacias hasta que el cliente las configure) ---------------- */
+  const LOGO_TYPES = ['image/svg+xml', 'image/png', 'image/jpeg', 'image/webp'];
+  const LOGO_MAX_BYTES = 512 * 1024;
+
+  /** Nombre normalizado (espacios colapsados, max 40). Cadena vacia = sin configurar (la UI muestra skeleton). */
+  function brandName(cfg) { return String((cfg && cfg.brandName) || '').trim().replace(/\s+/g, ' ').slice(0, 40); }
+  /** Monograma de 1-2 letras: iniciales de las dos primeras palabras, o las dos primeras letras de una sola. */
+  function initials(name) {
+    const w = String(name || '').trim().split(/\s+/).filter(Boolean).map((x) => Array.from(x));
+    if (!w.length) return '';
+    return (w.length > 1 ? w[0][0] + w[1][0] : w[0].slice(0, 2).join('')).toLocaleUpperCase('es');
+  }
+  /** Un SVG subido por un cliente solo se usa mediante <img> (nunca inline). Aun asi se rechazan scripts y referencias externas. */
+  function svgIsSafe(text) {
+    return !/<\s*(script|foreignObject|iframe|object|embed)\b/i.test(text) && !/\son[a-z]+\s*=/i.test(text) &&
+      !/javascript:/i.test(text) && !/(?:xlink:)?href\s*=\s*["']\s*(?:https?:)?\/\//i.test(text);
+  }
+  /** Favicon por defecto: monograma sobre el color de marca (o gris neutro si no hay nombre). */
+  function faviconSvg(letters, color) {
+    const t = letters ? `<text x="16" y="21.5" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="14" font-weight="600" fill="#fff">${letters.replace(/[<>&"']/g, '')}</text>` : '';
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="${color || '#9CA3AF'}"/>${t}</svg>`;
+  }
+
+  /**
+   * Valida un archivo de logo elegido por el cliente. Solo navegador (FileReader, Image).
+   * slot: 'light' (login/impresos) | 'onDark' (menu lateral) | 'mark' (isotipo cuadrado).
+   * -> Promise<{ ok, dataUrl?, errors[], warnings[] }>
+   */
+  function validateLogoFile(file, slot) {
+    const errors = [], warnings = [];
+    if (!file) return Promise.resolve({ ok: false, errors: ['No se eligio ningun archivo.'], warnings });
+    if (!LOGO_TYPES.includes(file.type)) errors.push('Formato no admitido. Usa SVG, PNG, JPG o WebP.');
+    if (file.size > LOGO_MAX_BYTES) errors.push(`El archivo pesa ${Math.round(file.size / 1024)} KB; el maximo es ${LOGO_MAX_BYTES / 1024} KB.`);
+    if (errors.length) return Promise.resolve({ ok: false, errors, warnings });
+    return new Promise((resolve) => {
+      const fr = new FileReader();
+      fr.onerror = () => resolve({ ok: false, errors: ['No se pudo leer el archivo.'], warnings });
+      fr.onload = () => {
+        const dataUrl = fr.result;
+        if (file.type === 'image/svg+xml') {
+          let text = ''; try { text = atob(dataUrl.split(',')[1]); } catch (e) { text = ''; }
+          if (!svgIsSafe(text)) return resolve({ ok: false, errors: ['El SVG contiene elementos no permitidos (scripts, eventos o enlaces externos). Exportalo de nuevo como SVG simple.'], warnings });
+        }
+        const img = new Image();
+        img.onerror = () => resolve({ ok: false, errors: ['La imagen esta danada o no se puede mostrar.'], warnings });
+        img.onload = () => {
+          const w = img.naturalWidth, h = img.naturalHeight, raster = file.type !== 'image/svg+xml';
+          if (slot === 'mark' && h && (w / h < 0.8 || w / h > 1.25)) warnings.push('El isotipo deberia ser cuadrado (1:1); se recortara o se vera deformado.');
+          if (raster && slot === 'mark' && Math.min(w, h) < 128) warnings.push('El isotipo es pequeno (menos de 128 px): se vera borroso en pantallas de alta densidad.');
+          if (raster && slot !== 'mark' && h < 56) warnings.push('El logo mide menos de 56 px de alto: se vera borroso en pantallas de alta densidad. Mejor SVG.');
+          if (slot === 'onDark') warnings.push('Comprueba en la vista previa que el logo se lea sobre el color del menu lateral (debe ser blanco o claro).');
+          resolve({ ok: true, dataUrl, errors, warnings });
+        };
+        img.src = dataUrl;
+      };
+      fr.readAsDataURL(file);
+    });
+  }
+
+  /**
+   * Aplica nombre y logos a las ranuras del documento. cfg = { brandName?, logo?: { light?, onDark?, mark? } } (URL o data URL).
+   * Marcado esperado: [data-brand] con [data-brand-logo="onDark"|"light"], [data-brand-mark-img], [data-brand-initials], [data-brand-name].
+   * Sin nombre ni logos -> la ranura queda en estado vacio (skeleton). Llamar al arrancar con la configuracion guardada.
+   */
+  function applyBranding(cfg, doc) {
+    doc = doc || document; cfg = cfg || {};
+    const name = brandName(cfg), logo = cfg.logo || {}, letters = initials(name);
+    doc.querySelectorAll('[data-brand]').forEach((box) => {
+      const variant = box.getAttribute('data-brand-variant') || 'onDark';
+      const main = logo[variant], mark = logo.mark;
+      const mainImg = box.querySelector('[data-brand-logo]'), markImg = box.querySelector('[data-brand-mark-img]');
+      if (mainImg) { mainImg.hidden = !main; if (main) mainImg.src = main; mainImg.alt = ''; } // decorativa: el nombre ya esta en texto
+      if (markImg) { markImg.hidden = !mark; if (mark) markImg.src = mark; markImg.alt = ''; }
+      const ini = box.querySelector('[data-brand-initials]'); if (ini) { ini.textContent = letters; ini.hidden = !!mark; }
+      const nm = box.querySelector('[data-brand-name]'); if (nm) nm.textContent = name;
+      box.classList.toggle('has-logo', !!main);
+      box.classList.toggle('is-empty', !name && !main && !mark);
+      box.classList.remove('is-loading');
+    });
+    const page = doc.documentElement.getAttribute('data-page-title');
+    doc.title = [page, name].filter(Boolean).join(' · ') || doc.title;
+    let link = doc.querySelector('link[rel~="icon"]');
+    if (!link) { link = doc.createElement('link'); link.rel = 'icon'; doc.head.appendChild(link); }
+    const primary = (getComputedStyle(doc.documentElement).getPropertyValue('--color-primary') || '').trim() || '#2563EB';
+    link.href = logo.mark || logo.light || 'data:image/svg+xml,' + encodeURIComponent(faviconSvg(letters, name ? primary : null));
+  }
+
+  return { deriveTheme, applyTheme, ratio, ensureContrast, brandName, initials, svgIsSafe, faviconSvg, validateLogoFile, applyBranding, LOGO_TYPES, LOGO_MAX_BYTES };
 });

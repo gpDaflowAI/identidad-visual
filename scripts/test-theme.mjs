@@ -2,7 +2,7 @@
 import { createRequire } from 'node:module';
 import assert from 'node:assert/strict';
 const require = createRequire(import.meta.url);
-const { deriveTheme, ratio } = require('../theme/theme.js');
+const { deriveTheme, ratio, brandName, initials, svgIsSafe, faviconSvg } = require('../theme/theme.js');
 const F = require('../lib/format.js');
 
 // 1. Los valores por defecto se mantienen
@@ -39,4 +39,19 @@ assert.equal(F.usd(-96.5), '-$96,50'); assert.equal(F.usd(0), '$0,00'); assert.e
 assert.equal(F.usd(1234567.891), '$1.234.567,89');
 assert.deepEqual(F.dual(1248, 36.52), { usd: '$1.248,00', bs: 'Bs 45.576,96' });
 assert.equal(F.pct(8.2), '+8,2 %'); assert.equal(F.pct(-2.1), '-2,1 %'); assert.equal(F.pct(0), '0,0 %');
-console.log('theme + format: todas las pruebas pasan');
+
+// 7. Marca del cliente: nombre y monograma
+assert.equal(brandName({}), ''); assert.equal(brandName({ brandName: '   ' }), ''); assert.equal(brandName(), '');
+assert.equal(brandName({ brandName: '  Taller   Los  Andes ' }), 'Taller Los Andes'); assert.equal(brandName({ brandName: 'x'.repeat(60) }).length, 40);
+assert.equal(initials('Taller Los Andes'), 'TL'); assert.equal(initials('Electro'), 'EL'); assert.equal(initials('ñandú'), 'ÑA');
+assert.equal(initials('A'), 'A'); assert.equal(initials(''), ''); assert.equal(initials('😀 Tienda'), '😀T');
+
+// 8. SVG de cliente: se rechaza lo peligroso, se acepta un logo normal
+assert.ok(svgIsSafe('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><path d="M0 0h10v10H0z" fill="#fff"/></svg>'));
+for (const bad of ['<svg><script>alert(1)</script></svg>', '<svg onload="x()"></svg>', '<svg><a href="javascript:alert(1)"/></svg>',
+  '<svg><image href="https://evil.example/x.png"/></svg>', '<svg><foreignObject/></svg>', '<svg><image xlink:href="//evil.example/x"/></svg>']) assert.ok(!svgIsSafe(bad), bad);
+
+// 9. Favicon por defecto: monograma sobre el color de marca; sin nombre, gris neutro y sin texto; no inyecta marcado
+assert.ok(faviconSvg('TL', '#2563EB').includes('>TL<')); assert.ok(faviconSvg('', null).includes('#9CA3AF') && !faviconSvg('', null).includes('<text'));
+assert.ok(!faviconSvg('<b>', '#000').includes('<b>'));
+console.log('theme + format + marca: todas las pruebas pasan');

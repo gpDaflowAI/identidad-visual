@@ -57,6 +57,10 @@ Ver `maps/README.md`. Marcadores con `ErpMaps.vehicleMarker`; estado siempre en 
 
 El panel de configuracion solo cambia `primary`, `sidebar`, logo, nombre y densidad, siempre a traves de `ErpTheme.deriveTheme` (corrige contraste y avisa). Nunca aplicar un color de marca directamente.
 
+## Marca del cliente (nombre y logo)
+
+Nombre y logo son **ranuras que configura el cliente**: nunca escribas un nombre ni un logo fijo en una pantalla. Usa el marcado `[data-brand]` del sidebar (`preview/src/_sidebar.html`) y `ErpTheme.applyBranding`. Sin configurar = **skeleton**, no texto de relleno. Subidas: `ErpTheme.validateLogoFile` (formatos, 512 KB, SVG sin scripts); un SVG de cliente solo va en `<img>`, jamas inline.
+
 ## Si falta algo
 
 Si un componente necesita un valor que no existe, anadelo primero a `tokens/tokens.json` (marcado "(propuesto)"),
