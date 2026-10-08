@@ -1,0 +1,56 @@
+/* GENERADO por scripts/build-tokens.mjs desde tokens.json. No editar a mano. */
+:root {
+  --color-primary: #2563EB;
+  --color-primary-hover: #1D4ED8;
+  --color-primary-subtle: #EFF4FF;
+  --color-sidebar: #1E3A8A;
+  --color-sidebar-text: #FFFFFF;
+  --color-sidebar-text-muted: #B4C5FF;
+  --color-background: #F5F7FA;
+  --color-surface: #FFFFFF;
+  --color-border: #E5E7EB;
+  --color-border-input: #8A919E;
+  --color-text-primary: #111827;
+  --color-text-secondary: #6B7280;
+  --color-success: #16A34A;
+  --color-success-text: #15803D;
+  --color-success-bg: #DCFCE7;
+  --color-warning: #F59E0B;
+  --color-warning-text: #B45309;
+  --color-warning-bg: #FEF3C7;
+  --color-error: #DC2626;
+  --color-error-text: #B91C1C;
+  --color-error-bg: #FEE2E2;
+  --color-info: #0EA5E9;
+  --color-info-text: #0369A1;
+  --color-info-bg: #E0F2FE;
+  --color-whatsapp: #25D366;
+  --color-whatsapp-bg: #E8FBEF;
+  --font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-headline-sm-size: 1.25rem;
+  --font-headline-sm-weight: 600;
+  --font-headline-sm-line: 1.75rem;
+  --font-body-md-size: 0.875rem;
+  --font-body-md-weight: 400;
+  --font-body-md-line: 1.25rem;
+  --font-table-num-size: 0.875rem;
+  --font-table-num-weight: 600;
+  --font-table-num-line: 1.25rem;
+  --font-table-num-tracking: 0.01em;
+  --font-label-xs-size: 0.75rem;
+  --font-label-xs-weight: 500;
+  --font-label-xs-line: 1rem;
+  --radius-badge: 4px;
+  --radius-control: 6px;
+  --radius-card: 10px;
+  --radius-pill: 9999px;
+  --space-sidebar-width: 240px;
+  --space-table-row-height: 40px;
+  --space-container-max: 1440px;
+  --space-gutter: 1rem;
+  --elevation-none: none;
+  --elevation-overlay: 0 8px 24px rgba(17, 24, 39, 0.12);
+}
+
+/* Numeros tabulares obligatorios en cifras, fechas, horas y porcentajes. */
+.num, table td.num, .kpi-value { font-variant-numeric: tabular-nums; }

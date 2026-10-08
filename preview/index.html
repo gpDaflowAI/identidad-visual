@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ERP - Muestra de identidad visual</title>
+<link rel="stylesheet" href="../tokens/tokens.css">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--color-background); color: var(--color-text-primary);
+    font: var(--font-body-md-weight) var(--font-body-md-size)/var(--font-body-md-line) var(--font-family);
+  }
+  .app { display: grid; grid-template-columns: var(--space-sidebar-width) minmax(0, 1fr); min-height: 100vh; }
+  /* Sidebar */
+  aside { background: var(--color-sidebar); color: var(--color-sidebar-text); padding: 16px 12px; position: sticky; top: 0; height: 100vh; align-self: start; overflow-y: auto; }
+  .brand { font-weight: 600; font-size: 1.25rem; padding: 8px 12px 20px; }
+  nav a { display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px; border-radius: var(--radius-control);
+          color: var(--color-sidebar-text-muted); text-decoration: none; font-weight: 500; }
+  nav a[aria-current="page"] { background: rgba(255,255,255,.14); color: var(--color-sidebar-text); }
+  nav a:focus-visible { outline: 2px solid var(--color-sidebar-text); outline-offset: 2px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; opacity: .7; }
+  /* Header */
+  header { display: flex; align-items: center; justify-content: space-between; height: 56px; padding: 0 24px;
+           background: var(--color-surface); border-bottom: 1px solid var(--color-border); }
+  .meta { display: flex; align-items: center; gap: 20px; }
+  .label { font-size: var(--font-label-xs-size); font-weight: var(--font-label-xs-weight); line-height: var(--font-label-xs-line); color: var(--color-text-secondary); }
+  .num { font-variant-numeric: tabular-nums; }
+  .status { display: inline-flex; align-items: center; gap: 6px; font-size: .75rem; font-weight: 500; color: var(--color-success-text); }
+  .status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--color-success); }
+  main { padding: 24px; display: grid; gap: var(--space-gutter); align-content: start; width: 100%; max-width: var(--space-container-max); margin: 0 auto; }
+  h1 { margin: 0; font-size: var(--font-headline-sm-size); font-weight: var(--font-headline-sm-weight); line-height: var(--font-headline-sm-line); }
+  /* Cards */
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-gutter); }
+  .card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-card); padding: 16px; }
+  .kpi-value { font-size: 1.5rem; font-weight: 600; line-height: 2rem; margin-top: 4px; }
+  .bs { font-size: .75rem; color: var(--color-text-secondary); }
+  .delta-up { color: var(--color-success-text); font-weight: 600; font-size: .75rem; }
+  .delta-down { color: var(--color-error); font-weight: 600; font-size: .75rem; }
+  /* Table */
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; height: 40px; padding: 0 12px; font-size: .75rem; font-weight: 500; color: var(--color-text-secondary); border-bottom: 1px solid var(--color-border); }
+  td { height: 40px; padding: 0 12px; border-bottom: 1px solid var(--color-border); }
+  th.num, td.num { text-align: right; }
+  td.num .usd { font-weight: 600; display: block; line-height: 1.1; }
+  td.num .bs { display: block; line-height: 1.1; }
+  tbody tr:hover { background: var(--color-primary-subtle); }
+  /* Badges */
+  .badge { display: inline-flex; align-items: center; gap: 4px; height: 20px; padding: 0 8px; border-radius: var(--radius-badge); font-size: .75rem; font-weight: 500; }
+  .b-success { background: var(--color-success-bg); color: var(--color-success-text); }
+  .b-warning { background: var(--color-warning-bg); color: var(--color-warning-text); }
+  .b-error   { background: var(--color-error-bg);   color: var(--color-error-text); }
+  .b-info    { background: var(--color-info-bg);    color: var(--color-info-text); }
+  .b-wa      { background: var(--color-whatsapp-bg); color: var(--color-text-primary); }
+  .b-wa svg  { color: var(--color-whatsapp); }
+  /* Controls */
+  .row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  button, input { font: inherit; height: 36px; border-radius: var(--radius-control); }
+  .btn-primary { background: var(--color-primary); color: var(--color-surface); border: 0; padding: 0 16px; font-weight: 500; cursor: pointer; }
+  .btn-primary:hover { background: var(--color-primary-hover); }
+  .btn-secondary { background: var(--color-surface); color: var(--color-text-primary); border: 1px solid var(--color-border-input); padding: 0 16px; font-weight: 500; cursor: pointer; }
+  .btn-danger { background: var(--color-error); color: var(--color-surface); border: 0; padding: 0 16px; font-weight: 500; cursor: pointer; }
+  input { border: 1px solid var(--color-border-input); padding: 0 12px; background: var(--color-surface); color: var(--color-text-primary); width: 240px; }
+  :focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+  .swatches { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+  .sw { border: 1px solid var(--color-border); border-radius: var(--radius-control); overflow: hidden; background: var(--color-surface); }
+  .sw i { display: block; height: 36px; }
+  .sw span { display: block; padding: 6px 8px; font-size: .75rem; }
+  .sw b { display: block; font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside>
+    <div class="brand">ERP</div>
+    <nav aria-label="Principal">
+      <a href="#" aria-current="page"><span class="dot"></span>Inicio</a>
+      <a href="#"><span class="dot"></span>Ventas</a>
+      <a href="#"><span class="dot"></span>Inventario</a>
+      <a href="#"><span class="dot"></span>Servicio tecnico</a>
+      <a href="#"><span class="dot"></span>WhatsApp</a>
+    </nav>
+  </aside>
+  <div>
+    <header>
+      <h1>Inicio</h1>
+      <div class="meta">
+        <span class="label">Tasa BCV <b class="num" style="color:var(--color-text-primary)">Bs 36,52</b></span>
+        <span class="status" role="status">En linea, sincronizado</span>
+      </div>
+    </header>
+    <main>
+      <section class="grid" aria-label="Indicadores">
+        <div class="card"><div class="label">Ventas de hoy</div><div class="kpi-value num">$1.248,00</div><div class="bs num">Bs 45.576,96</div><span class="delta-up num">+8,2 %</span></div>
+        <div class="card"><div class="label">Por cobrar</div><div class="kpi-value num">$3.420,50</div><div class="bs num">Bs 124.917,46</div><span class="delta-down num">-2,1 %</span></div>
+        <div class="card"><div class="label">Equipos en taller</div><div class="kpi-value num">27</div><div class="bs">6 listos para entrega</div></div>
+        <div class="card"><div class="label">Productos con stock bajo</div><div class="kpi-value num">14</div><div class="bs">3 sin stock</div></div>
+      </section>
+
+      <section class="card" style="padding:0">
+        <table>
+          <thead><tr><th>Documento</th><th>Cliente</th><th>Canal</th><th>Estado</th><th class="num">Total</th></tr></thead>
+          <tbody>
+            <tr><td class="num" style="text-align:left">F-00231</td><td>Taller Los Andes</td><td><span class="badge b-wa"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="6" fill="currentColor"/></svg>WhatsApp</span></td><td><span class="badge b-success">Pagado</span></td><td class="num"><span class="usd">$240,00</span><span class="bs">Bs 8.764,80</span></td></tr>
+            <tr><td class="num" style="text-align:left">F-00230</td><td>Distribuidora Caribe</td><td><span class="label">Mostrador</span></td><td><span class="badge b-warning">Pendiente</span></td><td class="num"><span class="usd">$1.180,00</span><span class="bs">Bs 43.093,60</span></td></tr>
+            <tr><td class="num" style="text-align:left">F-00229</td><td>M. Rodriguez</td><td><span class="label">Mostrador</span></td><td><span class="badge b-error">Vencido</span></td><td class="num"><span class="usd">$96,50</span><span class="bs">Bs 3.524,18</span></td></tr>
+            <tr><td class="num" style="text-align:left">OS-0412</td><td>Electro Centro</td><td><span class="label">Taller</span></td><td><span class="badge b-info">En diagnostico</span></td><td class="num"><span class="usd">$55,00</span><span class="bs">Bs 2.008,60</span></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="card">
+        <div class="row">
+          <button class="btn-primary">Nueva venta</button>
+          <button class="btn-secondary">Exportar</button>
+          <button class="btn-danger">Anular</button>
+          <label class="label" for="q">Buscar</label>
+          <input id="q" placeholder="Cliente, documento o serial">
+        </div>
+      </section>
+
+      <section class="card" aria-label="Paleta">
+        <div class="swatches" id="sw"></div>
+      </section>
+    </main>
+  </div>
+</div>
+<script>
+  const names = ['primary','sidebar','background','surface','border','text-primary','text-secondary','success','warning','error','info','whatsapp'];
+  const s = getComputedStyle(document.documentElement);
+  document.getElementById('sw').innerHTML = names.map(n => {
+    const v = s.getPropertyValue('--color-' + n).trim();
+    return `<div class="sw"><i style="background:${v}"></i><span><b>${n}</b>${v}</span></div>`;
+  }).join('');
+</script>
+</body>
+</html>
