@@ -1,0 +1,9 @@
+{
+  "name": "identidad-visual",
+  "private": true,
+  "description": "Identidad visual y kit de componentes de la plantilla ERP",
+  "scripts": {
+    "build": "node scripts/build-tokens.mjs && node scripts/build-icons.mjs && node scripts/build-map-style.mjs && node scripts/build-preview.mjs",
+    "test": "node scripts/check-contrast.mjs && node scripts/test-theme.mjs"
+  }
+}

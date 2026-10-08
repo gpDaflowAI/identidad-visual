@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+<head>
+{{include:head}}
+<title>ERP - Inicio</title>
+</head>
+<body>
+{{sprite}}
+<div class="app">
+  {{include:sidebar:inicio}}
+  <div>
+    {{include:header:Inicio}}
+    <main class="main">
+      <div class="alert alert--warning" role="alert">
+        {{icon:triangle-alert}}
+        <div><p class="alert__title">La tasa BCV de hoy aun no esta cargada</p><p>Se usa la tasa de ayer (Bs 36,52). Los importes en Bs pueden diferir.</p></div>
+      </div>
+
+      <section class="grid-4" aria-label="Indicadores">
+        <div class="card kpi"><span class="text-label">Ventas de hoy</span><span class="kpi-value num">$1.248,00</span><span class="money__bs num" style="color:var(--color-text-secondary);font-size:var(--font-label-xs-size)">Bs 45.576,96</span><span class="delta delta--up num">{{icon:arrow-up:icon--sm}}+8,2 %</span></div>
+        <div class="card kpi"><span class="text-label">Por cobrar</span><span class="kpi-value num">$3.420,50</span><span class="num" style="color:var(--color-text-secondary);font-size:var(--font-label-xs-size)">Bs 124.917,46</span><span class="delta delta--down num">{{icon:arrow-down:icon--sm}}-2,1 %</span></div>
+        <div class="card kpi"><span class="text-label">Equipos en taller</span><span class="kpi-value num">27</span><span class="text-label">6 listos para entrega</span></div>
+        <div class="card kpi"><span class="text-label">Productos con stock bajo</span><span class="kpi-value num">14</span><span class="text-label">3 sin stock</span></div>
+      </section>
+
+      <section class="grid-2">
+        <div id="c-ventas"></div>
+        <div id="c-canal"></div>
+      </section>
+
+      <section class="table-wrap" aria-label="Documentos recientes">
+        <div class="table-toolbar"><h2 class="card__title grow">Documentos recientes</h2><a class="link" href="#">Ver todos</a></div>
+        <table class="table">
+          <thead><tr><th>Documento</th><th>Cliente</th><th>Canal</th><th>Estado</th><th class="num">Total</th></tr></thead>
+          <tbody>
+            <tr><td class="num" style="text-align:left">F-00231</td><td>Taller Los Andes</td><td><span class="badge badge--whatsapp">{{icon:message-circle:icon--sm}}WhatsApp</span></td><td><span class="badge badge--success">Pagado</span></td><td class="num">{{money:240:36.52:money--right}}</td></tr>
+            <tr><td class="num" style="text-align:left">F-00230</td><td>Distribuidora Caribe</td><td class="text-secondary">Mostrador</td><td><span class="badge badge--warning">Pendiente</span></td><td class="num">{{money:1180:36.52:money--right}}</td></tr>
+            <tr class="unsynced"><td class="num" style="text-align:left">F-00229</td><td>M. Rodriguez</td><td class="text-secondary">Mostrador</td><td><span class="badge badge--error">Vencido</span> <span class="badge">{{icon:cloud-off:icon--sm}}Sin sincronizar</span></td><td class="num">{{money:96.5:36.52:money--right}}</td></tr>
+            <tr><td class="num" style="text-align:left">OS-0412</td><td>Electro Centro</td><td class="text-secondary">Taller</td><td><span class="badge badge--info">En diagnostico</span></td><td class="num">{{money:55:36.52:money--right}}</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+</div>
+<script src="../components/charts.js"></script>
+<script src="../lib/format.js"></script>
+<script>
+  ErpCharts.bar(document.getElementById('c-ventas'), {
+    title: 'Ventas por dia', sub: 'Ultimos 7 dias, USD', name: 'Ventas (USD)', xLabel: 'Dia',
+    labels: ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'], values: [620, 840, 710, 1020, 930, 1248, 480], fmt: ErpFormat.usd
+  });
+  ErpCharts.line(document.getElementById('c-canal'), {
+    title: 'Ventas por canal', sub: 'Ultimas 8 semanas, USD', xLabel: 'Semana',
+    labels: ['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8'], fmt: ErpFormat.usd,
+    series: [
+      { name: 'Mostrador', values: [900, 980, 940, 1100, 1180, 1150, 1260, 1320] },
+      { name: 'Mayor', values: [620, 700, 760, 720, 840, 900, 880, 960] },
+      { name: 'Taller', values: [300, 280, 350, 330, 390, 420, 410, 450] }
+    ]
+  });
+</script>
+</body>
+</html>

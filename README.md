@@ -1,16 +1,25 @@
 # identidad-visual
 
-Identidad visual del ERP (servicio tecnico y venta mayor/detal, Venezuela).
+Identidad visual y kit de componentes de la **plantilla ERP** (servicio tecnico y venta mayor/detal, Venezuela).
+Pensado para configurarse desde un panel de configuracion y crecer con modulos (POS, delivery con Google Maps, ...).
 
-- `GUIA.md` - pasos y recomendaciones para completar la identidad.
-- `DESIGN.md` - sistema visual (colores, tipografia, moneda dual, forma).
-- `tokens/tokens.json` - fuente unica de valores; `tokens/tokens.css` se genera.
-- `preview/index.html` - muestra de componentes (`preview/muestra.png` es la captura).
-- `.claude/skills/identidad-visual/` - skill con las reglas para Claude y colaboradores.
-
-## Comandos
+| Que | Donde |
+|---|---|
+| Pasos y recomendaciones | `GUIA.md` |
+| Sistema visual (reglas, inventario, decisiones) | `DESIGN.md` |
+| Tokens (fuente unica) | `tokens/tokens.json` -> `tokens/tokens.css` |
+| Componentes | `components/components.css`, `components/charts.js` |
+| Iconos y fuente | `icons/` (Lucide, ISC), `fonts/` (Inter, OFL) |
+| Tema configurable | `theme/theme.js`, `theme/theme.schema.json` |
+| Moneda dual es-VE | `lib/format.js` |
+| Modulos | `modules/registry.json`, `modules/module.schema.json` |
+| Google Maps | `maps/` |
+| Catalogo y pantallas | `preview/*.html` (generadas desde `preview/src/`), capturas en `preview/capturas/` |
+| Skill del proyecto | `.claude/skills/identidad-visual/` |
 
 ```
-node scripts/build-tokens.mjs     # regenera tokens/tokens.css
-node scripts/check-contrast.mjs   # valida contraste WCAG de los pares declarados
+npm run build   # regenera tokens.css, sprite de iconos, estilo de mapa y paginas de preview
+npm test        # contraste WCAG de todos los pares + pruebas del motor de tema y del formato de moneda
 ```
+
+Abrir `preview/componentes.html` directamente en el navegador (no requiere servidor).

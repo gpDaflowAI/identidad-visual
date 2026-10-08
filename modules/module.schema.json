@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Manifiesto de modulo del ERP",
+  "description": "Cada modulo (POS, delivery, ...) se declara asi. El shell construye navegacion, permisos y seccion de configuracion a partir de aqui, usando solo componentes de components/components.css.",
+  "type": "object",
+  "required": ["id", "name", "icon", "kind", "nav"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "name": { "type": "string" },
+    "description": { "type": "string" },
+    "icon": { "type": "string", "description": "Nombre en icons/icons.json" },
+    "kind": { "enum": ["core", "optional"], "description": "core: siempre activo; optional: se activa en Configuracion > Modulos" },
+    "enabled": { "type": "boolean", "default": false },
+    "nav": { "type": "object", "required": ["group", "order", "route"], "properties": {
+      "group": { "enum": ["principal", "modulos"] }, "order": { "type": "integer" }, "route": { "type": "string" }, "layout": { "enum": ["page", "full-bleed"], "default": "page", "description": "full-bleed: POS y mapas ocupan todo el area sin .main" } } },
+    "requires": { "type": "array", "items": { "type": "string", "pattern": "^(integration|module):[a-z0-9-]+$" }, "description": "Dependencias; si no se cumplen, el interruptor se bloquea y se explica por que" },
+    "permissions": { "type": "array", "items": { "type": "string" } },
+    "settingsSections": { "type": "array", "items": { "type": "string" } },
+    "uses": { "type": "array", "items": { "type": "string" }, "description": "Familias de componentes que consume (documentacion/auditoria)" }
+  },
+  "additionalProperties": false
+}

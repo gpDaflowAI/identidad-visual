@@ -1,82 +1,69 @@
 # Como crear la identidad visual del ERP - pasos y recomendaciones
 
-Punto de partida: `DESIGN.md`. Estado de cada paso: HECHO (ya en este repo), TU DECISION (necesito un dato tuyo), PENDIENTE.
+Punto de partida: `DESIGN.md`. Estados: HECHO (en este repo y verificado) · TU DECISION (necesito un dato tuyo) · PENDIENTE.
+Para ver el resultado: abre `preview/componentes.html` (catalogo) y las pantallas `index`, `pos`, `delivery`, `configuracion` (capturas en `preview/capturas/`).
 
 ## Skills usadas y recomendadas
 
 | Skill | Para que | Estado |
 |---|---|---|
-| `identidad-visual` (nueva, `.claude/skills/`) | Reglas del ERP; la aplican Claude y cualquier colaborador | HECHO |
-| `design:design-system` | Auditar tokens, documentar y extender componentes | Usar en pasos 4-5 |
-| `design:accessibility-review` | Revision WCAG de pantallas reales | Usar en paso 7 |
-| `design:design-critique` | Critica de pantallas antes de aprobarlas | Usar en paso 7 |
-| `design:design-handoff` | Especificaciones para desarrollo | Usar en paso 8 |
-| `design:ux-copy` | Mensajes de error, vacios, confirmaciones en espanol (es-VE) | Usar en paso 6 |
-| `dataviz` | Graficas coherentes (con la paleta del ERP) | Usar en paso 6 |
-| Conector Figma / Canva | Biblioteca de componentes y piezas de marca | Requieren autorizacion en tus conectores de claude.ai; hoy no estan disponibles para esta sesion |
+| `identidad-visual` (nueva, `.claude/skills/`) | Reglas del ERP, mapa del repo, como crear modulos nuevos | HECHO |
+| `design:design-system` | Marco para tokens/componentes/patrones y auditorias | Usada; repetir `audit` cuando haya 5+ pantallas nuevas |
+| `dataviz` | Validar la paleta de graficas (script de la skill, todos los pares) | Usada: paleta de 3 series validada |
+| `design:accessibility-review`, `design:design-critique` | Revision de pantallas reales de cada modulo | Usar al construir cada modulo |
+| `design:design-handoff` | Especificaciones para desarrollo | PENDIENTE (cuando se elija el stack) |
+| `design:ux-copy` | Textos de error/vacio/confirmacion en es-VE | PENDIENTE |
+| Conectores Figma / Canva | Biblioteca visual y piezas de marca | Requieren autorizacion en claude.ai; no disponibles en esta sesion |
 
-No encontre skills adicionales que instalar: las anteriores cubren el flujo. `small-business:brand-style` no aplica (esta pensada para dueños de pymes y guarda datos en otro contexto).
+No encontre skills externas que instalar. `small-business:brand-style` no aplica (esta pensada para duenos de pymes, no para un ERP con spec propia).
 
-## Pasos
+## Que se construyo (HECHO)
 
-### 1. Auditar y consolidar la spec - HECHO
-- El DESIGN.md original tenia YAML y cuerpo contradictorios (primary #004AC6 vs #2563EB, radios, fondo, error). Se resolvio a favor del cuerpo y se dejo la tabla de decisiones en `DESIGN.md`.
-- **Recomendacion**: toda herramienta (Stitch, Figma, Tailwind) debe leer de `tokens/tokens.json`, nunca de copias.
+| Paso | Entregable | Verificacion |
+|---|---|---|
+| 1. Spec consolidada | `DESIGN.md` (resuelve las contradicciones YAML/cuerpo; tabla de decisiones) | - |
+| 2. Tokens | `tokens/tokens.json` (fuente unica) -> `tokens.css`; escalas, capas, movimiento, densidad, graficas, mapa | `npm test`: 30+ pares de contraste |
+| 3. Fuente e iconos | Inter auto-alojada (OFL) en `fonts/`; 88 iconos Lucide (ISC) en `icons/sprite.svg` | sin dependencia de CDN (offline-first) |
+| 4. Componentes | `components/components.css`: ~15 familias, todos con estados (ver inventario en `DESIGN.md`) | axe-core: 0 violaciones en 5 paginas |
+| 5. Patrones ERP | Moneda dual (`lib/format.js`), tasa BCV, estado de conexion, registro sin sincronizar, linea de estados de orden de servicio, WhatsApp | Formato probado en `scripts/test-theme.mjs` |
+| 6. Plantilla y modulos | `modules/registry.json` + `module.schema.json`; Configuracion > Modulos; dependencias entre modulos e integraciones | Pagina `configuracion.html` |
+| 7. Tema configurable | `theme/theme.js`: el admin cambia marca/sidebar/densidad/logo; el motor corrige contraste y avisa | Pruebas con 10 colores; prueba en navegador |
+| 8. POS | Tiles, carrito, totales, metodos de pago, teclado, controles de 48 px | `pos.html` |
+| 9. Delivery + Google Maps | Marcadores (5 estados), paradas, rutas, tarjeta de vehiculo, ETA, senal GPS; estilo de mapa generado desde tokens; `maps/markers.js` | `delivery.html` (maqueta). **Sin probar contra Google real** |
+| 10. Graficas | `components/charts.js` (barras y lineas con tooltip, leyenda, etiqueta directa, tabla) | Paleta validada con `dataviz` |
 
-### 2. Accesibilidad de la paleta - HECHO
-- `node scripts/check-contrast.mjs` valida 23 pares. Hallazgos: success/warning/info planos no pasan AA como texto (3,30 / 2,15 / 2,77:1), el borde #E5E7EB da 1,24:1 como contorno de input, #25D366 da 1,98:1.
-- Solucion: variantes `-text`/`-bg` y `border-input` (#8A919E, 3,17:1). Siguen dentro de "un solo color de marca".
-- **Recomendacion**: correr el script en CI para que nadie rompa un contraste sin darse cuenta.
+Hallazgos de accesibilidad ya resueltos: success/warning/info planos no pasan AA como texto (variantes `-text`); el borde `#E5E7EB` no sirve como contorno de input (`border-input`); `text-secondary` baja a 4,39:1 sobre filas tintadas (`text-secondary-strong`); WhatsApp `#25D366` da 1,98:1 (siempre con texto).
 
-### 3. Marca: nombre, logo, favicon - TU DECISION
-La spec solo dice "ERP"; no hay nombre comercial. Necesito:
-1. Nombre del producto (o de la empresa que lo usa).
-2. Si ya existe un logo o si quieres un wordmark.
+## Lo que falta (PENDIENTE / TU DECISION)
 
-Recomendaciones para un acabado profesional:
-- Un **wordmark en Inter SemiBold** + un isotipo simple (letra o forma geometrica de 1 color) es suficiente y coherente con "sin decoracion".
-- Entregar 4 versiones: color sobre fondo claro, **blanco sobre `sidebar`** (la que mas se vera), monocromo, e isotipo solo (favicon 16/32/180 px y avatar).
-- Definir zona de respeto (alto de la letra "E" alrededor) y tamano minimo (24 px de alto en pantalla).
-- Verificar el nombre antes de invertir: busqueda en el SAPI (registro de marcas de Venezuela) y dominio. Consulta a un abogado de propiedad intelectual.
-- SVG optimizado como formato maestro; PNG solo para WhatsApp/email.
+### A. Marca: nombre, logo, favicon - TU DECISION
+La spec solo dice "ERP". Necesito el nombre del producto y si ya hay logo o quieres un wordmark.
+- Recomendado: **wordmark en Inter SemiBold + isotipo simple de 1 color** (coherente con "sin decoracion").
+- 4 versiones: color sobre claro, **blanco sobre `sidebar`** (la mas visible), monocromo, isotipo solo (favicon 16/32/180). SVG como maestro.
+- Zona de respeto (alto de la "E") y tamano minimo (24 px en pantalla).
+- Antes de invertir: busca disponibilidad del nombre y dominio, y consulta propiedad intelectual (SAPI en Venezuela).
+- Tu panel ya tiene las tres ranuras de logo (claro / blanco para el menu / isotipo).
 
-### 4. Componentes base - PENDIENTE (siguiente iteracion)
-Construir y documentar con `design:design-system document`, cada uno con estados default / hover / active / focus / disabled / loading / error:
-Boton (primary, secondary, danger, ghost), input y select, checkbox/radio, tabla densa (ordenable, fila seleccionada, vacia, cargando), insignia de estado, tarjeta KPI, sidebar (item activo/inactivo), cabecera (BCV + conexion), modal de confirmacion destructiva, toast, paginacion, selector de fecha.
-- Hay una muestra de varios en `preview/index.html`.
-- **Recomendacion**: construirlos en codigo (Storybook o similar) antes de dibujarlos todos en Figma; en un ERP el codigo es la fuente de verdad.
+### B. Validar Google Maps con claves reales - PENDIENTE
+`maps/markers.js` sigue la API documentada pero no se ejecuto contra Google. Pasos: proyecto en Google Cloud con facturacion -> habilitar Maps JavaScript API y Routes API -> clave restringida por dominio -> crear estilo en la nube desde `maps/google-map-style.json` y un Map ID -> presupuesto y alertas de cuota. Detalle y decisiones (por que Map ID, Routes vs Directions) en `maps/README.md`.
 
-### 5. Patrones propios de este ERP - PENDIENTE
-Son los que diferencian un ERP profesional de uno generico:
-- **Moneda dual**: componente unico `<Monto usd=... tasa=...>` para que nadie formatee a mano. Mostrar tambien la fecha/hora de la tasa y que hacer si no hay tasa del dia. Mostrar como se redondea Bs.
-- **Offline-first**: tres estados de conexion en cabecera, cola de pendientes visible, y como se ve un registro "no sincronizado" en tablas.
-- **Punto de venta / mostrador** (venta al detal): objetivos tactiles de 44 px minimo y atajos de teclado, aunque el resto sea denso.
-- **Servicio tecnico**: linea de estados de la orden de servicio (recibido, diagnostico, presupuesto, reparacion, listo, entregado) con insignias y orden fijo.
-- **Conversaciones WhatsApp**: unica pantalla donde aparece #25D366.
+### C. Implementacion en tu stack - PENDIENTE
+El kit es CSS + HTML + JS sin framework, portable a cualquiera. Cuando elijas stack (React/Vue/etc.), envolver cada componente en el framework (con `design:design-handoff`) y mantener `tokens.json` como unica fuente (si usas Tailwind, mapearlo al `theme`). Recomendado Storybook para documentar y probar estados.
 
-### 6. Contenido, graficas y textos - PENDIENTE
-- `design:ux-copy`: voz en español neutro, "tu/usted" a elegir una vez; mensajes que dicen que paso y que hacer. Formato es-VE.
-- `dataviz`: paleta de series derivada de `primary` + neutros; los semanticos solo para significado; nunca `whatsapp`.
+### D. Revisiones antes de produccion - PENDIENTE
+- Probar a **1366x768** (resolucion comun): con sidebar de 240 px quedan ~1126 px de contenido; decidir si el sidebar se contrae por defecto (ya existe la variante colapsada de 64 px).
+- Probar en monitor economico y brillo bajo, y navegar solo con teclado.
+- Textos con `design:ux-copy` (es-VE, tu/usted elegido una vez).
+- **Formatos impresos** (factura, nota de entrega, presupuesto, orden de servicio): mismos tokens, legibles en blanco y negro; los fiscales tienen requisitos legales: confirmalos con tu contador.
+- Plantillas de WhatsApp: si usas la API oficial requieren aprobacion previa de Meta.
+- Privacidad del rastreo GPS: consentimiento de conductores, solo durante el turno, politica de retencion (ver `maps/README.md`).
 
-### 7. Revision con pantallas reales - PENDIENTE
-- `design:accessibility-review` y `design:design-critique` sobre las primeras 3 pantallas (inicio, venta, orden de servicio).
-- Probar a **1366x768** (resolucion comun en equipos de oficina y taller): tu spec es 1440, pero con sidebar de 240 px quedan solo ~1126 px de contenido. Decidir si la sidebar se contrae.
-- Probar en un monitor economico y con brillo bajo: los grises `text-secondary` sobre `background` quedan justo en 4,5:1.
-- Navegar solo con teclado y confirmar el anillo de foco.
+### E. Gobernanza - PENDIENTE
+- Un responsable de aprobar cambios a `tokens.json`; changelog corto.
+- CI: `npm test` (contraste + tema + formato) en cada cambio.
+- **Modo oscuro**: fuera de alcance por ahora; los nombres semanticos de token ya lo permiten (habra que re-validar todos los pares y la paleta de graficas en superficie oscura).
 
-### 8. Entrega a desarrollo - PENDIENTE
-- `design:design-handoff` + `tokens.css` como unica fuente; si usan Tailwind, mapear `tokens.json` al theme.
-- **Auto-alojar Inter** (archivos woff2 en el proyecto). Con conectividad inestable y un sistema offline-first, no depender de Google Fonts.
-- Prohibir hex literales en el codigo de UI (regla de lint o revision).
-
-### 9. Documentos y canales externos - PENDIENTE
-- Factura, nota de entrega, presupuesto y orden de servicio impresos: mismos tokens, en blanco y negro legibles (muchos talleres imprimen en monocromo). Los formatos fiscales tienen requisitos legales: confirmalos con tu contador antes de disenar.
-- Plantillas de mensajes de WhatsApp: texto claro; si usas la API oficial, las plantillas requieren aprobacion previa de Meta.
-
-### 10. Gobernanza - PENDIENTE
-- Un responsable de aprobar cambios a `tokens.json`.
-- Versionar (changelog corto) y hacer una auditoria con `design:design-system audit` cada vez que haya 5+ pantallas nuevas.
-- Modo oscuro: dejarlo para una ronda posterior; ya hay nombres semanticos de token que lo permiten.
-
-## Orden sugerido
-3 (marca, requiere tu respuesta) en paralelo con 4-5 (componentes) → 6 → 7 → 8 → 9. El paso 7 antes de la entrega evita retrabajo.
+## Como se agrega un modulo nuevo
+1. Declarar en `modules/registry.json` (icono de `icons/icons.json`, dependencias, permisos).
+2. Armar pantallas solo con `components.css`; si falta algo, anadirlo ahi + `preview/src/componentes.html` con todos sus estados.
+3. `npm run build && npm test` y auditar con axe-core a 1366 y 1920 px.

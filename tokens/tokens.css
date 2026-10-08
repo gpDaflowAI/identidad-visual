@@ -26,6 +26,22 @@
   --color-info-bg: #E0F2FE;
   --color-whatsapp: #25D366;
   --color-whatsapp-bg: #E8FBEF;
+  --color-chart-1: #2A78D6;
+  --color-chart-2: #E87BA4;
+  --color-chart-3: #4A3AA7;
+  --color-chart-other: #6B7280;
+  --color-text-secondary-strong: #4B5563;
+  --color-map-route-active: var(--color-primary);
+  --color-map-route-done: var(--color-text-secondary);
+  --color-map-route-planned: var(--color-border-input);
+  --color-map-vehicle-moving: var(--color-primary);
+  --color-map-vehicle-stopped: var(--color-warning);
+  --color-map-vehicle-offline: var(--color-text-secondary);
+  --color-map-vehicle-delivered: var(--color-success);
+  --color-map-vehicle-incident: var(--color-error);
+  --color-map-stop-pending: var(--color-surface);
+  --color-focus-ring: var(--color-primary);
+  --color-pos-total-bg: var(--color-sidebar);
   --font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-headline-sm-size: 1.25rem;
   --font-headline-sm-weight: 600;
@@ -48,9 +64,55 @@
   --space-table-row-height: 40px;
   --space-container-max: 1440px;
   --space-gutter: 1rem;
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  --size-control-sm: 28px;
+  --size-control-md: 36px;
+  --size-control-lg: 44px;
+  --size-touch: 48px;
+  --size-icon-sm: 16px;
+  --size-icon-md: 20px;
+  --size-icon-lg: 24px;
+  --size-header-height: 56px;
+  --size-sidebar-collapsed: 64px;
+  --size-drawer-width: 440px;
+  --size-modal-sm: 400px;
+  --size-modal-md: 560px;
+  --size-modal-lg: 800px;
+  --size-map-panel-width: 360px;
+  --size-pos-keypad-key: 64px;
+  --z-dropdown: 1000;
+  --z-sticky: 1100;
+  --z-drawer: 1200;
+  --z-modal: 1300;
+  --z-toast: 1400;
+  --z-tooltip: 1500;
+  --motion-fast: 100ms;
+  --motion-base: 160ms;
+  --motion-slow: 240ms;
+  --motion-easing: cubic-bezier(0.2, 0, 0, 1);
   --elevation-none: none;
   --elevation-overlay: 0 8px 24px rgba(17, 24, 39, 0.12);
+  --density-row: 40px;
+  --density-control: 36px;
+}
+
+[data-density="comfortable"] {
+  --density-row: 48px;
+  --density-control: 40px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --motion-fast: 0ms; --motion-base: 0ms; --motion-slow: 0ms; }
 }
 
 /* Numeros tabulares obligatorios en cifras, fechas, horas y porcentajes. */
-.num, table td.num, .kpi-value { font-variant-numeric: tabular-nums; }
+.num, td.num, th.num, .kpi-value { font-variant-numeric: tabular-nums; }

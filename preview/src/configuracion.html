@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="es">
+<head>
+{{include:head}}
+<title>ERP - Configuracion</title>
+</head>
+<body>
+{{sprite}}
+<div class="app">
+  {{include:sidebar:config}}
+  <div>
+    {{include:header:Configuracion}}
+    <main class="main">
+      <div class="settings">
+        <nav class="settings__nav" aria-label="Secciones de configuracion">
+          <a href="#marca" aria-current="true">{{icon:palette}}Marca y tema</a>
+          <a href="#modulos">{{icon:layers}}Modulos</a>
+          <a href="#moneda">{{icon:banknote}}Moneda y tasa</a>
+          <a href="#integraciones">{{icon:map}}Integraciones</a>
+        </nav>
+
+        <div class="stack">
+          <!-- MARCA Y TEMA -->
+          <section class="card" id="marca">
+            <div class="card__header"><h2 class="card__title">Marca y tema</h2><button class="btn btn--ghost btn--sm" id="reset">{{icon:undo-2:icon--sm}}Restablecer</button></div>
+            <div class="card__body stack">
+              <p class="text-secondary" style="margin:0">Cambia la marca de tu empresa. Los colores de estado (exito, advertencia, error, informacion), WhatsApp y la tipografia son fijos para que el significado no cambie. Si eliges un color con poco contraste, se ajusta automaticamente. <b>Prueba: esta pagina se recolorea en vivo.</b></p>
+              <div class="form-grid">
+                <div class="field"><label class="field__label" for="brand">Nombre de la empresa <span class="req">*</span></label><input class="input" id="brand" value="ERP" maxlength="40"></div>
+                <div class="field"><span class="field__label">Densidad de tablas</span>
+                  <div class="row" role="radiogroup" aria-label="Densidad"><label class="radio"><input type="radio" name="dens" value="compact" checked>Compacta (40 px)</label><label class="radio"><input type="radio" name="dens" value="comfortable">Comoda (48 px)</label></div></div>
+                <div class="field"><label class="field__label" for="primary">Color de marca</label>
+                  <div class="color-field"><input type="color" id="primary-picker" value="#2563eb" aria-label="Selector de color de marca"><input class="input" id="primary" value="#2563EB" maxlength="7" style="max-width:120px" spellcheck="false"></div>
+                  <span class="field__help">Botones, enlaces, seleccion y foco.</span></div>
+                <div class="field"><label class="field__label" for="sidebar">Color del menu lateral</label>
+                  <div class="color-field"><input type="color" id="sidebar-picker" value="#1e3a8a" aria-label="Selector de color del menu lateral"><input class="input" id="sidebar" value="#1E3A8A" maxlength="7" style="max-width:120px" spellcheck="false"></div>
+                  <span class="field__help">Vacio = se calcula desde el color de marca.</span></div>
+                <div class="field span-2"><span class="field__label">Logo</span>
+                  <div class="grid-3">
+                    <div class="dropzone">{{icon:image:icon--lg}}<div><b>Fondo claro</b></div><div class="text-label">SVG o PNG</div></div>
+                    <div class="dropzone" style="background:var(--color-sidebar);color:var(--color-sidebar-text-muted);border-color:var(--color-sidebar-text-muted)">{{icon:image:icon--lg}}<div><b>Para menu lateral</b></div><div class="text-label" style="color:inherit">Version blanca</div></div>
+                    <div class="dropzone">{{icon:image:icon--lg}}<div><b>Isotipo</b></div><div class="text-label">Cuadrado, favicon</div></div>
+                  </div></div>
+              </div>
+              <div id="theme-msgs" class="stack" style="gap:var(--sp-2)" aria-live="polite"></div>
+              <fieldset class="fieldset"><legend>Vista previa</legend>
+                <div class="row"><button class="btn btn--primary">Primario</button><button class="btn btn--secondary">Secundario</button><button class="btn btn--ghost">Ghost</button><a class="link" href="#marca">Enlace</a><span class="badge badge--brand">Etiqueta de marca</span><span class="badge badge--success">Pagado</span><span class="badge badge--error">Vencido</span><span class="badge badge--whatsapp">{{icon:message-circle:icon--sm}}WhatsApp</span></div>
+                <div class="table-wrap" style="margin-top:var(--sp-3)"><table class="table"><tbody><tr aria-selected="true"><td>Fila seleccionada</td><td class="num">{{money:240:36.52:money--right}}</td></tr><tr><td>Fila normal</td><td class="num">{{money:55:36.52:money--right}}</td></tr></tbody></table></div>
+              </fieldset>
+              <details><summary class="text-label" style="cursor:pointer">Ver valores finales y contraste</summary><div class="table-wrap" style="margin-top:var(--sp-2)"><table class="table" id="theme-table"><thead><tr><th>Token</th><th>Valor</th><th class="num">Contraste</th></tr></thead><tbody></tbody></table></div></details>
+            </div>
+            <div class="card__footer"><button class="btn btn--secondary">Cancelar</button><button class="btn btn--primary">Guardar cambios</button></div>
+          </section>
+
+          <!-- MODULOS -->
+          <section class="card card--flush" id="modulos">
+            <div class="card__header"><h2 class="card__title">Modulos</h2><span class="text-label">Se activan o desactivan sin tocar el resto del sistema</span></div>
+            <div>{{modules}}</div>
+          </section>
+
+          <!-- MONEDA -->
+          <section class="card" id="moneda">
+            <div class="card__header"><h2 class="card__title">Moneda y tasa</h2></div>
+            <div class="card__body form-grid">
+              <div class="field"><label class="field__label" for="rs">Fuente de la tasa</label><select class="select" id="rs"><option>BCV (automatica)</option><option>Manual</option></select></div>
+              <div class="field"><label class="field__label" for="rt">Tasa actual</label><div class="input-group"><span class="addon">Bs</span><input class="input input--num" id="rt" value="36,52"></div><span class="field__help">Actualizada hoy 08:05. Si pasa un dia sin actualizar se muestra un aviso en la cabecera.</span></div>
+              <div class="field span-2"><span class="field__label">Formato</span><div class="row text-secondary"><span class="badge">es-VE</span><span>USD <b class="num" style="color:var(--color-text-primary)">$1.248,00</b></span><span>Bs <b class="num" style="color:var(--color-text-primary)">Bs 45.576,96</b></span></div></div>
+            </div>
+          </section>
+
+          <!-- INTEGRACIONES -->
+          <section class="card" id="integraciones">
+            <div class="card__header"><h2 class="card__title">Google Maps</h2><span class="badge badge--warning">Sin configurar</span></div>
+            <div class="card__body stack">
+              <div class="alert alert--info">{{icon:info}}<div><p class="alert__title">Requerido por el modulo Delivery</p><p>Necesitas un proyecto en Google Cloud con facturacion activa. La clave debe restringirse por dominio para evitar uso indebido.</p></div></div>
+              <div class="form-grid">
+                <div class="field"><label class="field__label" for="gk">Clave de API (navegador)</label><input class="input" id="gk" type="password" placeholder="AIza..." autocomplete="off"><span class="field__help">Restringida por referente HTTP a tu dominio.</span></div>
+                <div class="field"><label class="field__label" for="gm">ID de mapa (Map ID)</label><input class="input" id="gm" placeholder="ej. 1a2b3c4d5e6f7a8b"><span class="field__help">Estilo en la nube. Obligatorio para marcadores avanzados.</span></div>
+              </div>
+              <div class="row"><button class="btn btn--secondary">{{icon:refresh-cw}}Probar conexion</button><span class="text-label">APIs necesarias: Maps JavaScript API y Routes API.</span></div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="../theme/theme.js"></script>
+<script>
+  const $ = (id) => document.getElementById(id), DEFAULT = { primary: '#2563EB', sidebar: '#1E3A8A' };
+  const picker = { primary: $('primary-picker'), sidebar: $('sidebar-picker') }, text = { primary: $('primary'), sidebar: $('sidebar') };
+  const isHex = (v) => /^#[0-9a-f]{6}$/i.test(v);
+  function apply() {
+    const input = { primary: isHex(text.primary.value) ? text.primary.value : DEFAULT.primary, sidebar: isHex(text.sidebar.value) ? text.sidebar.value : undefined,
+      density: document.querySelector('input[name=dens]:checked').value };
+    const r = ErpTheme.deriveTheme(input); ErpTheme.applyTheme(r);
+    $('theme-msgs').innerHTML =
+      r.notes.map((n) => `<div class="alert alert--info">${'{{icon:info}}'}<p>${n}</p></div>`).join('') +
+      r.warnings.map((n) => `<div class="alert alert--warning">${'{{icon:triangle-alert}}'}<p>${n}</p></div>`).join('');
+    $('theme-table').tBodies[0].innerHTML = Object.entries(r.tokens).map(([k, v]) => {
+      const bg = k.startsWith('sidebar-text') ? r.tokens.sidebar : '#FFFFFF', c = ErpTheme.ratio(v, bg);
+      return `<tr><td>${k}</td><td><span class="swatch" style="background:${v}"></span> ${v}</td><td class="num">${k.includes('subtle') ? '-' : c.toFixed(2) + ':1'}</td></tr>`;
+    }).join('');
+    picker.primary.value = r.tokens.primary.toLowerCase(); picker.sidebar.value = r.tokens.sidebar.toLowerCase();
+  }
+  for (const k of ['primary', 'sidebar']) {
+    picker[k].addEventListener('input', () => { text[k].value = picker[k].value.toUpperCase(); apply(); });
+    text[k].addEventListener('input', () => { if (isHex(text[k].value) || (k === 'sidebar' && !text[k].value)) apply(); });
+  }
+  document.querySelectorAll('input[name=dens]').forEach((e) => e.addEventListener('change', apply));
+  $('reset').addEventListener('click', () => { text.primary.value = DEFAULT.primary; text.sidebar.value = DEFAULT.sidebar; apply(); });
+  apply();
+</script>
+</body>
+</html>

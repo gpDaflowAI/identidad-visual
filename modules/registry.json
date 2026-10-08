@@ -1,0 +1,14 @@
+{
+  "integrations": {
+    "google-maps": { "name": "Google Maps", "configured": false }
+  },
+  "modules": [
+    { "id": "inicio", "name": "Inicio", "icon": "layout-dashboard", "kind": "core", "enabled": true, "nav": { "group": "principal", "order": 1, "route": "/" }, "uses": ["kpi", "chart", "table"] },
+    { "id": "ventas", "name": "Ventas", "description": "Facturas, presupuestos, cobranzas y moneda dual.", "icon": "receipt", "kind": "core", "enabled": true, "nav": { "group": "principal", "order": 2, "route": "/ventas" }, "uses": ["table", "form", "money"] },
+    { "id": "inventario", "name": "Inventario", "description": "Productos, existencias y movimientos.", "icon": "package", "kind": "core", "enabled": true, "nav": { "group": "principal", "order": 3, "route": "/inventario" }, "uses": ["table", "form"] },
+    { "id": "servicio-tecnico", "name": "Servicio tecnico", "description": "Ordenes de servicio con linea de estados.", "icon": "wrench", "kind": "core", "enabled": true, "nav": { "group": "principal", "order": 4, "route": "/servicio" }, "uses": ["pipeline", "table", "form"] },
+    { "id": "whatsapp", "name": "WhatsApp", "description": "Conversaciones y notificaciones por este canal.", "icon": "message-circle", "kind": "core", "enabled": true, "nav": { "group": "principal", "order": 5, "route": "/whatsapp" }, "uses": ["chat", "badge-whatsapp"] },
+    { "id": "pos", "name": "Punto de venta", "description": "Venta rapida al detal en mostrador, tactil, con codigo de barras.", "icon": "store", "kind": "optional", "enabled": true, "nav": { "group": "modulos", "order": 10, "route": "/pos", "layout": "full-bleed" }, "permissions": ["pos.sell", "pos.close-shift"], "settingsSections": ["Cajas", "Metodos de pago", "Impresora de tickets"], "uses": ["tile", "keypad", "qty-touch", "pay-method", "money"] },
+    { "id": "delivery", "name": "Delivery", "description": "Seguimiento GPS de transporte y rutas con Google Maps.", "icon": "truck", "kind": "optional", "enabled": false, "nav": { "group": "modulos", "order": 20, "route": "/delivery", "layout": "full-bleed" }, "requires": ["integration:google-maps"], "permissions": ["delivery.view", "delivery.assign"], "settingsSections": ["Zonas", "Vehiculos y conductores", "Google Maps"], "uses": ["map-split", "marker", "stop", "vehicle-card", "eta", "timeline"] }
+  ]
+}

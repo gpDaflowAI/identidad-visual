@@ -14,6 +14,7 @@ colors:
   border-input: '#8A919E'
   text-primary: '#111827'
   text-secondary: '#6B7280'
+  text-secondary-strong: '#4B5563'
   success: '#16A34A'
   success-text: '#15803D'
   success-bg: '#DCFCE7'
@@ -28,6 +29,10 @@ colors:
   info-bg: '#E0F2FE'
   whatsapp: '#25D366'
   whatsapp-bg: '#E8FBEF'
+  chart-1: '#2A78D6'
+  chart-2: '#E87BA4'
+  chart-3: '#4A3AA7'
+  chart-other: '#6B7280'
 typography:
   headline-sm: { fontFamily: Inter, fontSize: 1.25rem, fontWeight: '600', lineHeight: 1.75rem }
   body-md:     { fontFamily: Inter, fontSize: 0.875rem, fontWeight: '400', lineHeight: 1.25rem }
@@ -123,6 +128,53 @@ o sin conexion con contador de cambios pendientes.
 - Elevacion minima: separar con borde #E5E7EB antes que con sombra.
 - Escritorio 1440 px. Modo oscuro previsto en los tokens pero no se disena en esta ronda.
 
+## Plantilla ERP y modulos
+
+El ERP es una **plantilla**: un nucleo (Inicio, Ventas, Inventario, Servicio tecnico, WhatsApp) mas **modulos opcionales** que se activan en Configuracion (hoy POS y Delivery; vendran mas). La identidad visual por tanto incluye **todos los componentes aunque no esten en uso**; un modulo nuevo se arma con ellos y no introduce estilos propios.
+
+- Cada modulo se declara en `modules/registry.json` (esquema: `modules/module.schema.json`): navegacion, permisos, secciones de configuracion y dependencias (p. ej. Delivery requiere la integracion Google Maps; si falta, el interruptor se bloquea y explica por que).
+- Dos tipos de pantalla: **con `.main`** (listas, detalle, formularios, dashboard, configuracion) y **a pantalla completa** (`layout: full-bleed`: POS y mapas).
+- Si un componente falta, se anade primero a `components/components.css` y al catalogo (`preview/componentes.html`), con todos sus estados; nunca dentro del modulo.
+
+## Inventario de componentes (`components/components.css`)
+
+| Familia | Componentes |
+|---|---|
+| Base | iconos (Lucide, 88), botones (4 variantes, 4 tamanos, estados, cargando, grupo), spinner, kbd |
+| Formularios | campo (etiqueta/ayuda/error), input, select, textarea, grupo con addon, input con icono, checkbox, radio, interruptor, cantidad (normal y tactil), carga de archivos, selector de color, fieldset |
+| Etiquetas | insignias (neutro, marca, 4 estados, WhatsApp), contador, chip, avatar |
+| Contenedores | tarjeta (encabezado/pie/interactiva), KPI, lista de descripcion |
+| Tablas | tabla densa (orden, seleccion, acciones, fila de 2 lineas), barra de herramientas, barra de seleccion multiple, pie con paginacion, cargando (skeleton), vacia |
+| Navegacion | pestanas, migas de pan, enlace, progreso, linea de estados (pipeline), cronologia |
+| Overlays | modal (sm/md/lg, destructivo), drawer, menu, tooltip, popover, toasts (4) |
+| Feedback | alertas (4), estado vacio, skeleton |
+| Layout | shell (sidebar normal y colapsado, cabecera), encabezado de pagina, barra de filtros, detalle + lateral, acciones fijas |
+| Dominio ERP | moneda dual, tasa BCV (y "desactualizada"), estado de conexion (3), registro sin sincronizar, conversacion de WhatsApp |
+| POS | tile de producto, carrito, totales, metodos de pago, teclado numerico, pantalla LCD, cantidad tactil |
+| Delivery / mapa | split mapa+panel, marcadores de vehiculo (5 estados + seleccionado + antiguo), paradas, tarjeta de vehiculo, ETA, senal GPS, leyenda, controles, tarjeta flotante, circulo de precision |
+| Graficas | barras y lineas (`components/charts.js`) con tooltip, leyenda, etiqueta directa y vista de tabla |
+| Configuracion | secciones, filas de ajuste, filas de modulo, selector de color de marca, zona de logos |
+
+## Configurabilidad (panel de configuracion)
+
+| Configurable por el administrador | Derivado automaticamente | Bloqueado |
+|---|---|---|
+| Color de marca (`primary`), color del menu lateral, logo (claro / blanco / isotipo), nombre, densidad (40 o 48 px) | hover, fondo tenue, texto del sidebar, anillo de foco, rutas del mapa | Semanticos (exito/advertencia/error/info), WhatsApp, tipografia, radios, series de graficas |
+
+`theme/theme.js` (`ErpTheme.deriveTheme`) **valida y corrige** el color elegido: si el contraste con texto blanco o sobre `surface` es menor a 4,5:1 lo oscurece y lo avisa; si el color se parece al verde o rojo de los estados, avisa que puede confundirse. Esquema de lo que se guarda: `theme/theme.schema.json`. Probado en `scripts/test-theme.mjs`.
+
+## Densidad y objetivos tactiles
+
+Escritorio compacto por defecto (fila 40 px, control 36 px); cómoda: 48/40 px. **Los modulos tactiles (POS) usan controles de 48 px** (`btn--touch`, `qty--touch`, tiles, teclado de 64 px) sin importar la densidad.
+
+## Graficas
+
+Reglas verificadas con la skill `dataviz` y su validador: **maximo 3 series** con color propio (azul `#2A78D6`, magenta `#E87BA4`, violeta `#4A3AA7`; validadas en todos los pares); desde la 4.a se agrupa en "Otros" (`chart-other`) o se divide en graficas pequenas. Los colores de estado y el de WhatsApp **no** se usan como series. Una sola serie usa `chart-1`. El magenta no llega a 3:1 sobre blanco: por eso toda grafica lleva etiqueta directa, leyenda y vista de tabla. Un solo eje; marcas finas; texto en tinta de texto, nunca en el color de la serie.
+
+## Mapas y delivery
+
+Ver `maps/README.md`. Resumen: Google Maps con estilo en la nube (Map ID) generado desde los tokens, marcadores propios (icono + color + texto de estado), ruta restante en `primary`, recorrida en gris, planificada discontinua; en la lista siempre esta el estado en texto y el panel de lista es la alternativa accesible al mapa.
+
 ## Decisiones tomadas al consolidar
 
 La spec original traia dos juegos de valores que se contradecian. Se resolvio asi:
@@ -136,4 +188,4 @@ La spec original traia dos juegos de valores que se contradecian. Se resolvio as
 | Tokens M3 (on-*, container, fixed) | Si | No | **Eliminados**: no se usan en esta spec y confunden |
 
 Anadidos para cumplir WCAG AA (verificados por `node scripts/check-contrast.mjs`):
-variantes `-text` y `-bg` de estados, `border-input`, `primary-hover`, `primary-subtle`, colores de sidebar.
+variantes `-text` y `-bg` de estados, `border-input`, `primary-hover`, `primary-subtle`, colores de sidebar y `text-secondary-strong` (el gris secundario baja a 4,39:1 sobre filas tintadas; en esas superficies se usa la variante fuerte). Auditoria con axe-core sobre las 5 pantallas de `preview/`: 0 violaciones.

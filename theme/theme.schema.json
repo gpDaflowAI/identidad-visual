@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Configuracion de tema del ERP (panel de configuracion)",
+  "type": "object",
+  "required": ["brandName", "primary"],
+  "properties": {
+    "brandName": { "type": "string", "minLength": 1, "maxLength": 40 },
+    "logo": { "type": "object", "properties": {
+      "light": { "type": "string", "description": "SVG o PNG sobre fondo claro" },
+      "onDark": { "type": "string", "description": "Version blanca para el sidebar" },
+      "mark": { "type": "string", "description": "Isotipo cuadrado (favicon, sidebar colapsado)" } } },
+    "primary": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$", "default": "#2563EB" },
+    "sidebar": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$", "default": "#1E3A8A", "description": "Opcional: si falta se deriva de primary" },
+    "density": { "enum": ["compact", "comfortable"], "default": "compact" },
+    "locale": { "const": "es-VE" },
+    "currency": { "type": "object", "properties": {
+      "primary": { "const": "USD" }, "secondary": { "const": "VES" }, "rateSource": { "enum": ["BCV", "manual"], "default": "BCV" } } }
+  },
+  "additionalProperties": false,
+  "$comment": "Los colores semanticos, WhatsApp y la tipografia NO son configurables."
+}
